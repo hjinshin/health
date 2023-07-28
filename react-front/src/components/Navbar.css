@@ -1,0 +1,22 @@
+.navbar {
+    height: 30px;
+    width: 100%;
+    background-color: white;
+    text-align: center;
+    line-height: 30px; 
+    vertical-align: middle;
+    border-top: 1px solid lightgray;
+    border-bottom: 1px solid lightgray;
+    
+}
+
+.navbarMenu {
+    color: black;
+    text-decoration: none;
+    display: inline-block;
+    width: 150px;
+}
+
+.navbarMenu:hover {
+    background-color: lightgray;
+}
