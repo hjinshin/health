@@ -1,9 +1,10 @@
 import React from 'react';
+import './Header.css'
 
 function Header() {
     return (
         <div>
-            <h1>health.gg</h1>
+            <a href='/'><h1>health.gg</h1></a>
         </div>
     );
 }
