@@ -4,7 +4,7 @@ import './Header.css'
 function Header() {
     return (
         <div>
-            <a href='/'><h1>health.gg</h1></a>
+            <a href='/'><h2>health.gg</h2></a>
         </div>
     );
 }

@@ -1,30 +1,29 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { Route, Routes } from 'react-router-dom';
+import axios from 'axios';
 
 import Search from '../../services/Search';
 import Info from '../info/Info'
 import './Home.css' 
 
+
+const SERVER_SEARCH_URL = 'http://localhost:8080';
+
 function Home() {
-
-    const [mode, setMode] = useState('HOME');
-    const [userNm, setUserNm] = useState('');
-    
-    let content = null;
-
-    function handleNameSearch(name) {
-        setUserNm(name);
-        setMode("INFO");
-    }
-
-    if(mode === 'HOME') {
-        content = <Search handleNameSearch={handleNameSearch} />
-    } else if(mode === 'INFO') {
-        content = <Info userNm={userNm} />
+    async function handleSearchSubmit(searchTerm) {
+        if(searchTerm !== "" && searchTerm !==null) {
+            const res = await axios.get(SERVER_SEARCH_URL+`/api/search?query=${encodeURIComponent(searchTerm)}`)
+            
+            window.location.href = '/search/' + res.data.userNm;
+        }
     }
 
     return (
         <div>
-            {content}
+            <Routes>
+                <Route path='/' element={<Search onSubmit={handleSearchSubmit} />} />
+                <Route path='/search/:query' element={<Info/>} />
+            </Routes>
         </div>
     );
     

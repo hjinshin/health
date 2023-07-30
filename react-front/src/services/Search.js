@@ -1,22 +1,14 @@
-import React from 'react';
-import axios from 'axios';
+import React, {useState} from 'react';
 
 import './Search.css'
 import bodybuildingIcon from '../images/Bodybuilding-icon.png'
 
-const SERVER_SEARCH_URL = 'http://localhost:8080/api/search';
+function Search({onSubmit}) {
+    const [searchTerm, setSearchTerm] = useState('');
 
-function Search({handleNameSearch}) {
-
-    async function onSubmit(e) {
+    function handleSubmit(e) {
         e.preventDefault();
-        
-        const name = e.target.search.value;
-        if(name !== "" && name !== null) {
-            const res = await axios.get(SERVER_SEARCH_URL + "/" + name);
-            handleNameSearch(res.data);
-        }
-        
+        onSubmit(searchTerm);
     }
 
     return (
@@ -26,7 +18,7 @@ function Search({handleNameSearch}) {
             </div>
             <div className='search-container'>
                 <div>
-                    <form className='search' onSubmit={onSubmit}>
+                    <form className='search' onSubmit={handleSubmit}>
                         <label className='label' htmlFor='searchHome'>Search</label>
                         <div className='  '>
                             <input 
@@ -35,6 +27,7 @@ function Search({handleNameSearch}) {
                                 placeholder='사용자명...'
                                 name='search'
                                 id='searchHome'
+                                onChange={(e)=>setSearchTerm(e.target.value)}
                                 />                                    
                         </div>
                         <button className='button' type='submit'>검색</button>
