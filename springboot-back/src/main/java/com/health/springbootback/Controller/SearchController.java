@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin
 @RestController
-public class searchController {
+public class SearchController {
     @GetMapping("/api/search/{userName}")
     public String search(@PathVariable String userName) {
         System.out.println(userName);
