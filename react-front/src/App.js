@@ -5,6 +5,7 @@ import Navbar from "./components/Navbar"
 import Home from "./pages/home/Home"
 import UserRank from "./pages/user-ranking/UserRank"
 import FitnessRank from "./pages/fitness-ranking/FitnessRank"
+import Login from "./pages/login/Login"
 import Footer from "./components/Footer"
 
 function App() {
@@ -14,9 +15,10 @@ function App() {
         <Header/>
         <Navbar/>
         <Routes>
-          <Route path='*' element={<Home />} />
+          <Route path='*' element={<Home />}/>
           <Route path='/userRank' element={<UserRank />}/>
           <Route path='/fitnessRank' element={<FitnessRank />}/>
+          <Route path='/login' element={<Login />}/>
         </Routes>
         <Footer/>
       </div>

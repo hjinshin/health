@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import axios from 'axios';
 
-import Search from '../../services/Search';
+import Search from '../../services/search/Search';
 import Info from '../info/Info'
 import './Home.css' 
 

@@ -1,7 +1,33 @@
-a {
-    display: block;
-    color: black;
+h2 {
+    margin: 10px;
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: 200px;
+}
+  
+.logo-container {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.logo {
     text-decoration: none;
-    width: 180px;
-    margin: 0 auto;
+    color: #000;
+}
+
+.login-button {
+    margin-right: 100px;
+    width: 100px;
+    height: 30px;
+    border-radius: 30px;
+    border: none;
+}
+
+.login-button:hover {
+    background-color: gray;
 }

@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 
 import './Search.css'
-import bodybuildingIcon from '../images/Bodybuilding-icon.png'
+import bodybuildingIcon from '../../images/Bodybuilding-icon.png'
 
 function Search({onSubmit}) {
     const [searchTerm, setSearchTerm] = useState('');
