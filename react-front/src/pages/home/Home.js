@@ -13,9 +13,13 @@ function Home() {
     async function handleSearchSubmit(searchTerm) {
         if(searchTerm !== "" && searchTerm !==null) {
             const res = await axios.get(SERVER_SEARCH_URL+`/api/search?query=${encodeURIComponent(searchTerm)}`)
-            
+                                .catch((error) => {
+                                    console.error(error);
+                                });
+
             window.location.href = '/search/' + res.data.userNm;
         }
+        
     }
 
     return (

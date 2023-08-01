@@ -15,8 +15,8 @@ function App() {
         <Header/>
         <Navbar/>
         <Routes>
-          <Route path='*' element={<Home />}/>
-          <Route path='/userRank' element={<UserRank />}/>
+          <Route path='/*' element={<Home />}/>
+          <Route path='/userRank/*' element={<UserRank />}/>
           <Route path='/fitnessRank' element={<FitnessRank />}/>
           <Route path='/login' element={<Login />}/>
         </Routes>

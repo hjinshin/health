@@ -7,8 +7,7 @@ import lombok.*;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class SearchBase {
-
+public class UserList {
     private String userNm;
-
+    private int tier;
 }
