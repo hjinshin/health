@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
 import './Header.css'
 
@@ -14,9 +13,9 @@ function Header() {
                     <h2>health.gg</h2>
                 </a>
             </div>
-            <Link to={'/login'}>
+            <a href={'/login'}>
                 <button type='button' className='login-button' onClick={onClick}>Login</button>
-            </Link>
+            </a>
         </div>
     );
 }

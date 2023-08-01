@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link, Routes, Route  } from 'react-router-dom';
 
-import './UserRank.css';
 import Fourmajor from './Fourmajor'
 import Freestyle from './Freestyle';
 import Barebody from './Barebody';
+import './UserRank.css';
 
 function UserRank() {
 

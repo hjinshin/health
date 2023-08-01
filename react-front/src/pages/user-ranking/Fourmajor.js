@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import Table from '../../services/table/Table';
+import Table from './table/Table';
 import './UserRank.css';
 
 function Fourmajor(props) {

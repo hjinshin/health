@@ -1,6 +1,6 @@
 import React, {useMemo} from 'react';
 import {useTable} from 'react-table';
-import {COLUMNS} from '../../pages/user-ranking/columns';
+import {COLUMNS} from '../columns';
 import './Table.css'
 
 function Table(props) {   
