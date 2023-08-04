@@ -6,6 +6,7 @@ import Home from "./pages/home/Home"
 import UserRank from "./pages/user-ranking/UserRank"
 import FitnessRank from "./pages/fitness-ranking/FitnessRank"
 import Login from "./pages/login/Login"
+import LoginHandler from './services/loginHandler/LoginHandler';
 import Footer from "./components/Footer"
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
           <Route path='/userRank/*' element={<UserRank />}/>
           <Route path='/fitnessRank/*' element={<FitnessRank />}/>
           <Route path='/login' element={<Login />}/>
+          <Route path='/auth/kakao/callback' element={<LoginHandler />}/>
         </Routes>
         <Footer/>
       </div>
