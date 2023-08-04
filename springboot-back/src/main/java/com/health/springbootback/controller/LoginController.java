@@ -7,9 +7,11 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin
 @RestController
 public class LoginController {
-
+    private final AuthService authService;
     @Autowired
-    private AuthService authService;
+    public LoginController(AuthService authService) {
+        this.authService = authService;
+    }
 
     @GetMapping("/auth/kakao/callback")
     public String kakaoCallback(@RequestParam String code) {

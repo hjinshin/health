@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.health.springbootback.model.KakaoProfile;
 import com.health.springbootback.model.OAuthToken;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -15,6 +16,10 @@ import org.springframework.web.client.RestTemplate;
 
 @Service
 public class AuthServiceImpl implements AuthService {
+    @Value("${kakao_client_id}")
+    private String client_id;
+    @Value("${kakao_redirect_uri}")
+    private String redirect_uri;
     @Override
     public String getKakaoAccessToken(String code) {
         // HttpHeader 오브젝트 생성
@@ -24,8 +29,8 @@ public class AuthServiceImpl implements AuthService {
         // HttpBody 오브젝트 생성
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("grant_type", "authorization_code");
-        params.add("client_id", "메모장 참조");
-        params.add("redirect_uri ", "메모장 참조");
+        params.add("client_id", client_id);
+        params.add("redirect_uri", redirect_uri);
         params.add("code", code);
 
         // HttpHeader와 HttpBody를 하나의 오브젝트에 담기
