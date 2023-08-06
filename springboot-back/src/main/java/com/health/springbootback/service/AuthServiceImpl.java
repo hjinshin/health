@@ -18,7 +18,7 @@ import org.springframework.web.client.RestTemplate;
 public class AuthServiceImpl implements AuthService {
     @Value("${kakao_client_id}")
     private String client_id;
-    @Value("${kakao_redirect_uri}")
+    @Value("${kakao_redirect_url}")
     private String redirect_uri;
     @Override
     public String getKakaoAccessToken(String code) {
