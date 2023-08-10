@@ -8,10 +8,9 @@ import org.springframework.web.bind.annotation.*;
 public class SearchController {
 
     @GetMapping("/api/search")
-    public SearchBase search(@RequestParam String query) {
-        System.out.println(query);
+    public SearchBase search(@RequestParam String userNm) {
+        System.out.println(userNm);
 
-        String userNm = query;
         return new SearchBase(userNm);
     }
 }

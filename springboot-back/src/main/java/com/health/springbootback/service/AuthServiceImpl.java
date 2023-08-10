@@ -2,24 +2,36 @@ package com.health.springbootback.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.health.springbootback.model.KakaoProfile;
-import com.health.springbootback.model.OAuthToken;
+import com.health.springbootback.dto.KakaoAccountDto;
+import com.health.springbootback.dto.KakaoTokenDto;
+import com.health.springbootback.dto.LoginResponseDto;
+import com.health.springbootback.dto.UserInfoDto;
+import com.health.springbootback.entity.User;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 @Service
 public class AuthServiceImpl implements AuthService {
+
+    private final UserService userService;
+
     @Value("${kakao_client_id}")
     private String client_id;
     @Value("${kakao_redirect_uri}")
     private String redirect_uri;
+
+    public AuthServiceImpl(UserService userService) {
+        this.userService = userService;
+    }
+
     @Override
     public String getKakaoAccessToken(String code) {
         // HttpHeader 오브젝트 생성
@@ -49,20 +61,20 @@ public class AuthServiceImpl implements AuthService {
 
         // json parsing
         ObjectMapper objectMapper = new ObjectMapper();
-        OAuthToken oauthToken = null;
+        KakaoTokenDto kakaoTokenDto = null;
         try {
-            oauthToken = objectMapper.readValue(response.getBody(), OAuthToken.class);
+            kakaoTokenDto = objectMapper.readValue(response.getBody(), KakaoTokenDto.class);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
 
-        assert oauthToken != null;
+        assert kakaoTokenDto != null;
 
-        return oauthToken.getAccess_token();
+        return kakaoTokenDto.getAccess_token();
     }
 
     @Override
-    public String getKakaoProfile(String kakaoAccessToken) {
+    public User getKakaoProfile(String kakaoAccessToken) {
         // HttpHeader 오브젝트 생성
         HttpHeaders headers = new HttpHeaders();
         headers.add("Authorization", "Bearer " + kakaoAccessToken);
@@ -84,24 +96,41 @@ public class AuthServiceImpl implements AuthService {
 
         // json parsing
         ObjectMapper objectMapper = new ObjectMapper();
-        KakaoProfile kakaoProfile = null;
+        KakaoAccountDto kakaoAccountDto = null;
         try {
-            kakaoProfile = objectMapper.readValue(response.getBody(), KakaoProfile.class);
+            kakaoAccountDto = objectMapper.readValue(response.getBody(), KakaoAccountDto.class);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
 
-        assert kakaoProfile != null;
-        System.out.println("카카오 아이디: " + kakaoProfile.getId());
+        assert kakaoAccountDto != null;
+        return User.builder()
+                .id(kakaoAccountDto.getId())
+                .nickname(kakaoAccountDto.getKakao_account().getProfile().getNickname())
+                .build();
+    }
 
+    @Override
+    public ResponseEntity<LoginResponseDto> kakaoLogin(String kakaoAccessToken) {
+        User user = getKakaoProfile(kakaoAccessToken);
 
-        // 회원가입 처리
-        /*
-        db 연동 후 작성
-        ........
-         */
+        LoginResponseDto loginResponseDto = new LoginResponseDto();
+        UserInfoDto userInfoDto = new UserInfoDto();
+        User existUser = userService.findMember(user.getId());
+        try {
+            if(existUser == null) {
+                System.out.println("처음 로그인 하는 회원입니다.");
+                userService.signUp(user);
+            }
 
+            userInfoDto = userService.findNicknameAndRoleById(user.getId());
+            loginResponseDto.setUserInfo(userInfoDto);
+            loginResponseDto.setLoginSuccess(true);
 
-        return "test";
+            return ResponseEntity.ok().body(loginResponseDto);
+        } catch (Exception e) {
+            loginResponseDto.setLoginSuccess(false);
+            return ResponseEntity.badRequest().body(loginResponseDto);
+        }
     }
 }

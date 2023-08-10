@@ -1,9 +1,9 @@
-package com.health.springbootback.model;
+package com.health.springbootback.dto;
 
 import lombok.Data;
 
 @Data
-public class OAuthToken {
+public class KakaoTokenDto {
     private String access_token;
     private String token_type;
     private String refresh_token;
