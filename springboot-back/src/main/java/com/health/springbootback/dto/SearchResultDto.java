@@ -1,14 +1,17 @@
 package com.health.springbootback.dto;
 
-import com.health.springbootback.enums.RoleType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class UserInfoDto {
+public class SearchResultDto {
+    public boolean searchSuccess;
     public String nickname;
-    public RoleType role;
+    public List<RecordsDto> recordsDtoList;
+    // 리더보드
 }

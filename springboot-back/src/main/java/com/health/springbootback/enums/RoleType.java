@@ -1,4 +1,4 @@
-package com.health.springbootback.entity;
+package com.health.springbootback.enums;
 
 public enum RoleType {
     ADMIN, USER

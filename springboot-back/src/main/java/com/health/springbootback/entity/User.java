@@ -1,5 +1,6 @@
 package com.health.springbootback.entity;
 
+import com.health.springbootback.enums.RoleType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,7 +17,7 @@ import java.sql.Timestamp;
 @Builder
 public class User {
     @Id
-    private Long id;    // 아이디(카카오 인증 아이디)
+    private Long uid;    // 아이디(카카오 인증 아이디)
 
     @Column(nullable = false, length = 10)
     private String nickname;  // 닉네임

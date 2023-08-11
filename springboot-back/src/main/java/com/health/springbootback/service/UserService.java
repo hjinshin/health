@@ -2,7 +2,7 @@ package com.health.springbootback.service;
 
 import com.health.springbootback.dto.LoginResponseDto;
 import com.health.springbootback.dto.UserInfoDto;
-import com.health.springbootback.entity.RoleType;
+import com.health.springbootback.enums.RoleType;
 import com.health.springbootback.entity.User;
 import com.health.springbootback.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,9 +25,19 @@ public class UserService {
         return userRepository.findById(id).orElse(null);
     }
 
+    @Transactional(readOnly = true)
     public UserInfoDto findNicknameAndRoleById(Long id) {
         User user = userRepository.findById(id).orElse(null);
         assert user != null;
         return new UserInfoDto(user.getNickname(), user.getRole());
+    }
+
+    @Transactional(readOnly = true)
+    public Long findUidByNickname(String nickname) {
+        User user = userRepository.findByNickname(nickname);
+        if(user == null) {
+            return (long) -1;
+        }
+        return user.getUid();
     }
 }
