@@ -112,7 +112,7 @@ public class AuthService {
         User user = getKakaoProfile(kakaoAccessToken);
 
         LoginResponseDto loginResponseDto = new LoginResponseDto();
-        UserInfoDto userInfoDto = new UserInfoDto();
+        UserInfoDto userInfoDto;
         User existUser = userService.findMember(user.getUid());
         try {
             if(existUser == null) {

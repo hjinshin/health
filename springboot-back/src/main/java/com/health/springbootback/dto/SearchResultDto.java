@@ -11,7 +11,7 @@ import java.util.List;
 @Data
 public class SearchResultDto {
     public boolean searchSuccess;
-    public String nickname;
+    public ProfileDto profileDto;
     public List<RecordsDto> recordsDtoList;
-    // 리더보드
+    public List<BestRecordDto> bestRecordDtoList;
 }

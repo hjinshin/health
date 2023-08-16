@@ -30,6 +30,5 @@ public class PersonalBestRecord {
     @Column(nullable = false)
     private float bestRecordValue;  // 기록 값
 
-    @CreationTimestamp
     private Timestamp bestRecordDate; // 기록일
 }

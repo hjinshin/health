@@ -4,8 +4,6 @@ import com.health.springbootback.dto.UserInfoDto;
 import com.health.springbootback.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import javax.persistence.EntityManager;
-
 
 // DAO
 // 자동으로 bean 등록이 된다(@Repository 생략 가능)

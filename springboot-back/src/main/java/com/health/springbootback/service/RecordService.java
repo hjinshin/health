@@ -1,45 +1,73 @@
 package com.health.springbootback.service;
 
+import com.health.springbootback.dto.BestRecordDto;
+import com.health.springbootback.dto.Profile;
+import com.health.springbootback.dto.ProfileDto;
 import com.health.springbootback.dto.RecordsDto;
-import com.health.springbootback.entity.ExerciseCategory;
-import com.health.springbootback.entity.ExerciseRecord;
-import com.health.springbootback.entity.ExerciseType;
-import com.health.springbootback.repository.CategoryRepository;
-import com.health.springbootback.repository.ExerciseRepository;
+import com.health.springbootback.enums.CategoryType;
+import com.health.springbootback.repository.BestRepository;
 import com.health.springbootback.repository.RecordRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class RecordService {
     @Autowired
     private RecordRepository recordRepository;
     @Autowired
-    private ExerciseRepository exerciseRepository;
-    @Autowired
-    private CategoryRepository categoryRepository;
+    private BestRepository bestRepository;
 
     @Transactional
-    public List<RecordsDto> findAllRecords(Long uid) {
-        List<RecordsDto> res = new ArrayList<>();
-        List<ExerciseRecord> lists = recordRepository.findByUid_Uid(uid);
+    public List<RecordsDto> findRecords(Long uid, String category) {
+        //  category가 whole이면
+        if (Objects.equals(category, "whole"))
+            return recordRepository.findByUid(uid);
+            // category가 4major이면
+        else if (Objects.equals(category, "4major"))
+            return recordRepository.findByUidAndCid(uid, CategoryType.FOURMAJOR);
+            //  category가 free-style이면
+        else if (Objects.equals(category, "free-style"))
+            return recordRepository.findByUidAndCid(uid, CategoryType.FREESTYLE);
+            //  category가 bare-body이면
+        else if (Objects.equals(category, "bare-body"))
+            return recordRepository.findByUidAndCid(uid, CategoryType.BAREBODY);
 
-        for(ExerciseRecord list: lists) {
-            RecordsDto dto = new RecordsDto();
-            ExerciseType et = exerciseRepository.findById(list.getEid().getEid()).get();
-            ExerciseCategory ct = categoryRepository.findById(et.getCid().getCid()).get();
-            dto.setCategoryName(ct.getCategoryName());
-            dto.setExerciseName(et.getExerciseName());
-            dto.setRecordValue(list.getRecordValue());
-            dto.setDate(list.getRecordDate());
+        return null;
+    }
 
-            res.add(dto);
-        }
+    @Transactional
+    public ProfileDto findRanking(String userNm) {
+        List<Profile> profileList = bestRepository.findallf("FOURMAJOR");
+        ProfileDto profileDto = profileList.stream()
+                .filter(profile -> profile.getNickname().equals(userNm))
+                .map(profile -> {
+            String nickname = profile.getNickname();
+            int ranking = profile.getRanking();
+            float b_sum = profile.getB_sum();
 
-        return res;
+            return new ProfileDto(nickname, ranking, b_sum);
+        }).findFirst().orElse(null);
+        System.out.println(profileDto);
+        return profileDto;
+    }
+
+    @Transactional
+    public List<BestRecordDto> findPBR(Long uid, String category) {
+        CategoryType c = null;
+
+        if (Objects.equals(category, "4major"))
+            c = CategoryType.FOURMAJOR;
+            //  category가 free-style이면
+        else if (Objects.equals(category, "free-style"))
+            c = CategoryType.FREESTYLE;
+            //  category가 bare-body이면
+        else if (Objects.equals(category, "bare-body"))
+            c = CategoryType.BAREBODY;
+
+        return bestRepository.findPBRByCategory(uid, c);
     }
 }
