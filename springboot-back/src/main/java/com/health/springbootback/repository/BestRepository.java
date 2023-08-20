@@ -29,7 +29,7 @@ public interface BestRepository extends JpaRepository<PersonalBestRecord, Intege
             "INNER JOIN ExerciseType et ON et.eid = br.eid " +
             "INNER JOIN User u ON u.uid = br.uid " +
             "WHERE et.cid = :cid " +
-            "GROUP BY u.nickname " +
+            "GROUP BY u.uid " +
             "ORDER BY b_sum DESC", nativeQuery = true)
     List<UserList> findByCategory(String cid);
 
@@ -42,7 +42,7 @@ public interface BestRepository extends JpaRepository<PersonalBestRecord, Intege
             "INNER JOIN User u ON u.uid = br.uid " +
             "WHERE et.cid = :cid " +
             "AND et.eid = :eid " +
-            "GROUP BY u.nickname " +
+            "GROUP BY u.uid " +
             "ORDER BY b_sum DESC", nativeQuery = true)
     List<UserList> findByCategoryAndSubC(String cid, String eid);
 
@@ -52,6 +52,6 @@ public interface BestRepository extends JpaRepository<PersonalBestRecord, Intege
             "INNER JOIN ExerciseType ON ExerciseType.eid = PersonalBestRecord.eid " +
             "INNER JOIN User ON User.uid = PersonalBestRecord.uid " +
             "WHERE cid = :cid " +
-            "GROUP BY User.nickname", nativeQuery = true)
+            "GROUP BY User.uid", nativeQuery = true)
     List<Profile> findallf(@Param("cid") String cid);
 }
