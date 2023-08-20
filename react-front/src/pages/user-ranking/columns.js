@@ -5,10 +5,14 @@ export const COLUMNS = [
     },
     {
         Header: '사용자',
-        accessor: 'userNm'
+        accessor: 'nickname'
     },
     {
-        Header: '티어',
-        accessor: 'tier'
+        Header: '점수',
+        accessor: 'b_sum'
+    },
+    {
+        Header: '모스트',
+        accessor: 'most'
     }
 ]

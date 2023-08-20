@@ -1,13 +1,10 @@
 package com.health.springbootback.model;
 
-import lombok.*;
+import com.health.springbootback.enums.SubCategoryType;
 
-@Getter
-@Setter
-@ToString
-@AllArgsConstructor
-@NoArgsConstructor
-public class UserList {
-    private String userNm;
-    private int tier;
+public interface UserList {
+    String getNickname();
+
+    float getB_sum();
+    SubCategoryType getMost();
 }

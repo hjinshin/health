@@ -1,4 +1,4 @@
-package com.health.springbootback.dto;
+package com.health.springbootback.model;
 
 public interface Profile {
     String getNickname();

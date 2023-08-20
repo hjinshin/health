@@ -1,7 +1,7 @@
 package com.health.springbootback.service;
 
 import com.health.springbootback.dto.BestRecordDto;
-import com.health.springbootback.dto.Profile;
+import com.health.springbootback.model.Profile;
 import com.health.springbootback.dto.ProfileDto;
 import com.health.springbootback.dto.RecordsDto;
 import com.health.springbootback.enums.CategoryType;
