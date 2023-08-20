@@ -40,4 +40,9 @@ public class UserService {
         }
         return user.getUid();
     }
+
+    @Transactional(readOnly = true)
+    public int countNickname(String nickname) {
+        return userRepository.countByNicknameLike(nickname);
+    }
 }

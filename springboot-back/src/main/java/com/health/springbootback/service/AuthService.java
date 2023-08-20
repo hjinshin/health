@@ -102,9 +102,12 @@ public class AuthService {
         }
 
         assert kakaoAccountDto != null;
+        String name = kakaoAccountDto.getKakao_account().getProfile().getNickname();
+        int num = userService.countNickname(name) + 1;
+        System.out.println(num);
         return User.builder()
                 .uid(kakaoAccountDto.getId())
-                .nickname(kakaoAccountDto.getKakao_account().getProfile().getNickname())
+                .nickname(name + num)
                 .build();
     }
 
