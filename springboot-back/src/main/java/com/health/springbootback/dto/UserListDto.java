@@ -9,5 +9,5 @@ import lombok.*;
 public class UserListDto {
     private String nickname;
     private float b_sum;
-    private SubCategoryType most;
+    private String most;
 }

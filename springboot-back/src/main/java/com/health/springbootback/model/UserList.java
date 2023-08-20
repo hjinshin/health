@@ -6,5 +6,5 @@ public interface UserList {
     String getNickname();
 
     float getB_sum();
-    SubCategoryType getMost();
+    String getMost();
 }

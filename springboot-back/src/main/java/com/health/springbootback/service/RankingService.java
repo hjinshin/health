@@ -36,7 +36,7 @@ public class RankingService {
                 .map(ul -> {
                     String nickname = ul.getNickname();
                     float b_sum = ul.getB_sum();
-                    SubCategoryType most = ul.getMost();
+                    String most = ul.getMost();
 
                     return new UserListDto(nickname, b_sum, most);
                 }) .collect(Collectors.toList());
