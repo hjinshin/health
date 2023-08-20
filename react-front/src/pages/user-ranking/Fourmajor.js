@@ -26,7 +26,7 @@ function Fourmajor(props) {
 
     return (
         <div className='tier-list-container'>
-            <div style={{'height': '50px'}}></div>
+            <div style={{'height': '50px','backgroundcolor':'red'}}></div>
             <Table data={userList} />
         </div>
     );

@@ -1,7 +1,7 @@
 import React, {useMemo} from 'react';
 import {useTable} from 'react-table';
 import {COLUMNS} from '../columns';
-import './Table.css'
+import './Table2.css'
 
 function Table(props) {   
     const columns = useMemo(() => COLUMNS, []);
@@ -21,7 +21,7 @@ function Table(props) {
     } = tableInstance;
 
     return (
-        <table {...getTableProps()}>
+        <table className='table1' {...getTableProps()}>
             <thead>
                 {
                     headerGroups.map((headerGroup) => (
