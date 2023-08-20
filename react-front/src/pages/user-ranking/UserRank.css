@@ -7,11 +7,15 @@
 }
 
 .category-button {
+    margin: 50px;
     margin-left: 10px;
     margin-right: 10px;
-    border-radius: 5px;
-    width: 100px;
-    height: 50px;
+    border-radius: 10px;
+    width: 250px;
+    height: 60px;
+    border: 3px solid #333;
+    font-size: 30px;
+    
 }
 
 .category-button:hover {
@@ -23,14 +27,14 @@
     margin: 10px auto;
     width: 800px;
     border-radius: 10px;
-    background-color: #9ECBDA;
+    background-color: #7C878B; 
 }
 
 .subcategory-button-container {
     display: inline-block;
     margin: 20px auto;
     border-radius: 10px;
-    background-color: #5CA2B8;
+    background-color: #177394;
     width: 760px;
     height: 100px;
 }
