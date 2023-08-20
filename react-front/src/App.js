@@ -22,7 +22,7 @@ function App() {
           <Route path='/login' element={<Login />}/>
           <Route path='/auth/kakao/callback' element={<LoginHandler />}/>
         </Routes>
-        <Footer/>
+        {/* <Footer/> */}
       </div>
     </BrowserRouter>
   );

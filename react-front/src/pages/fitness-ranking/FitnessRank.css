@@ -7,17 +7,17 @@
 
 .details_style{
     color: white;
-    border: #9ECBDA solid 1px;
-    background-color:#98B9C8;
+    border: #7C878B solid 1px;
+    background-color:#7C878B;
     display: inline-block;
     width: 90px;
     height:40px;
 }
 
-.tier-list-container {
+.fi-tier-list-container {
     position: relative;
     margin: 10px auto;
     width: 800px;
     border-radius: 10px;
-    background-color: #9ECBDA;
+    background-color: #7C878B;
 }

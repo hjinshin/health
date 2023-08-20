@@ -21,7 +21,7 @@ function Table(props) {
     } = tableInstance;
 
     return (
-        <table {...getTableProps()}>
+        <table className='table2' {...getTableProps()}>
             <thead>
                 {
                     headerGroups.map((headerGroup) => (

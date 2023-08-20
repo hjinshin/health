@@ -2,6 +2,9 @@ import React from 'react';
 
 import './Header.css'
 
+import muscleleft from '../images/muscleleft.png'
+import muscleright from '../images/muscleright.png'
+
 function Header() {
     function onClick(e) {
         console.log('click'); 
@@ -10,7 +13,9 @@ function Header() {
         <div className='header-container'>
             <div className='logo-container'>
                 <a href='/' className='logo'>
-                    <h2>health.gg</h2>
+                    <img className='muscleleft' src={muscleleft} alt='ml' />
+                    <p className='health-logo'>HEALTH.GG</p>
+                    <img className='muscleright' src={muscleright} alt='mr' />
                 </a>
             </div>
             <a href={'/login'}>

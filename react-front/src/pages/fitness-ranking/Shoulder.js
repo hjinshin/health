@@ -25,7 +25,7 @@ function Shoulder(props) {
     }, []);
 
     return (
-        <div className='tier-list-container'>
+        <div className='fi-tier-list-container'>
             <div style={{'height': '50px'}}></div>
             <Table data={FitnessList} />
         </div>

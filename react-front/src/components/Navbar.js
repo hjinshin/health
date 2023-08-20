@@ -5,13 +5,13 @@ function Navbar() {
     return (
         <div>
             <div className='navbar'>
-                <span>|</span>
-                <a className='navbarMenu' href={'/'}>홈</a>
-                <span>|</span>
-                <a className='navbarMenu' href={'/userRank'}>사용자 랭킹</a>
-                <span>|</span>
-                <a className='navbarMenu' href={'/fitnessRank'}>운동 랭킹</a>
-                <span>|</span>
+                <span className='navbarline'>|</span>
+                <a className='navbarMenu' href={'/'}>Home</a>
+                <span className='navbarline'>|</span>
+                <a className='navbarMenu' href={'/userRank'}>User ranking</a>
+                <span className='navbarline'>|</span>
+                <a className='navbarMenu' href={'/fitnessRank'}>Exercise</a>    
+                <span className='navbarline'>|</span>
             </div>
         </div>
     );

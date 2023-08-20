@@ -1,20 +1,25 @@
 .navbar {
-    height: 30px;
-    width: 100%;
+    height: 40px;
+    width: 97%;
     background-color: white;
     text-align: center;
-    line-height: 30px; 
+    margin: 0 auto;
+    line-height: 40px;  
     vertical-align: middle;
-    border-top: 1px solid lightgray;
-    border-bottom: 1px solid lightgray;
+    border-top: 3px solid rgb(0, 0, 0);
+    border-bottom: 3px solid rgb(0, 0, 0);
     
 }
-
+.navbarline{
+    font-size: 20px;
+}
 .navbarMenu {
     color: black;
     text-decoration: none;
+    font-size: 20px;
     display: inline-block;
-    width: 150px;
+    width: 250px;
+
 }
 
 .navbarMenu:hover {

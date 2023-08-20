@@ -27,6 +27,7 @@ function Fourmajor(props) {
 
     return (
         <div className='tier-list-container'>
+
             <div className='subcategory-button-container'>
                 <button className='subcategory-button' onClick={()=>setSubcategory('sum')}>합계</button>
                 <button className='subcategory-button' onClick={()=>setSubcategory('bench')}>벤치</button>

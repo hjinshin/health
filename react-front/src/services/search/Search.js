@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 
 import './Search.css'
 import bodybuildingIcon from '../../images/Bodybuilding-icon.png'
+import searchIcon from '../../images/search.png'
 
 function Search({onSubmit}) {
     const [searchTerm, setSearchTerm] = useState('');
@@ -19,7 +20,7 @@ function Search({onSubmit}) {
             <div className='search-container'>
                 <div>
                     <form className='search' onSubmit={handleSubmit}>
-                        <label className='label' htmlFor='searchHome'>Search</label>
+                        <label className='label' htmlFor='searchHome'>HEALTH.GG</label>
                         <div className='  '>
                             <input 
                                 className='search-bar'
@@ -30,7 +31,9 @@ function Search({onSubmit}) {
                                 onChange={(e)=>setSearchTerm(e.target.value)}
                                 />                                    
                         </div>
-                        <button className='button' type='submit'>검색</button>
+                        <button className='button' type='submit'>
+                            <img className='search-icon' src={searchIcon} alt='BodyBUilding-Icon' />
+                        </button>
                     </form>
                 </div>
             </div>            
