@@ -23,26 +23,35 @@ public interface BestRepository extends JpaRepository<PersonalBestRecord, Intege
 
     @Query(value = "SELECT " +
             "u.nickname as nickname, SUM(br.bestRecordValue) AS b_sum, " +
-            "first_value(et.exerciseName) " +
-            "OVER(PARTITION BY u.nickname ORDER BY bestRecordValue DESC) AS most " +
+            "(" +
+            "   SELECT et_sub.exerciseName " +
+            "   FROM personalbestrecord br_sub " +
+            "   INNER JOIN exercisetype et_sub ON br_sub.eid = et_sub.eid " +
+            "   WHERE et_sub.cid = :cid" +
+            "   ORDER BY br_sub.bestRecordValue DESC LIMIT 1" +
+            ") as most " +
             "FROM PersonalBestRecord br " +
             "INNER JOIN ExerciseType et ON et.eid = br.eid " +
             "INNER JOIN User u ON u.uid = br.uid " +
             "WHERE et.cid = :cid " +
-            "GROUP BY u.uid " +
+            "GROUP BY u.nickname " +
             "ORDER BY b_sum DESC", nativeQuery = true)
     List<UserList> findByCategory(String cid);
 
     @Query(value = "SELECT " +
             "u.nickname as nickname, SUM(br.bestRecordValue) AS b_sum, " +
-            "first_value(et.exerciseName) " +
-            "OVER(PARTITION BY u.nickname ORDER BY bestRecordValue DESC) AS most " +
+            "(" +
+            "   SELECT et_sub.exerciseName " +
+            "   FROM personalbestrecord br_sub " +
+            "   INNER JOIN exercisetype et_sub ON br_sub.eid = et_sub.eid " +
+            "   WHERE et_sub.cid = :cid AND et_sub.eid = :eid " +
+            "   ORDER BY br_sub.bestRecordValue DESC LIMIT 1" +
+            ") as most " +
             "FROM PersonalBestRecord br " +
             "INNER JOIN ExerciseType et ON et.eid = br.eid " +
             "INNER JOIN User u ON u.uid = br.uid " +
-            "WHERE et.cid = :cid " +
-            "AND et.eid = :eid " +
-            "GROUP BY u.uid " +
+            "WHERE et.cid = :cid AND et.eid = :eid " +
+            "GROUP BY u.nickname " +
             "ORDER BY b_sum DESC", nativeQuery = true)
     List<UserList> findByCategoryAndSubC(String cid, String eid);
 
@@ -53,5 +62,6 @@ public interface BestRepository extends JpaRepository<PersonalBestRecord, Intege
             "INNER JOIN User ON User.uid = PersonalBestRecord.uid " +
             "WHERE cid = :cid " +
             "GROUP BY User.uid", nativeQuery = true)
+
     List<Profile> findallf(@Param("cid") String cid);
 }
