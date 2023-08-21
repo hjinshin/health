@@ -45,8 +45,8 @@ public class SearchController {
     }
 
     @GetMapping("/api/search/records")
-    public SearchResultDto searchRecords(/*@RequestParam String category,*/ String userNm) {
-        String category1 = "whole";
+    public SearchResultDto searchRecords(@RequestParam String category, String userNm) {
+        String category1 = category;
 
         Long uid = userService.findUidByNickname(userNm);
         List<RecordsDto> recordsDtos;
@@ -58,8 +58,8 @@ public class SearchController {
     }
 
     @GetMapping("/api/search/pbr")
-    public SearchResultDto searchPersonalBestRecord(/*@RequestParam String category,*/ String userNm) {
-        String category2 = "4major";
+    public SearchResultDto searchPersonalBestRecord(@RequestParam String category,String userNm) {
+        String category2 = category;
 
         Long uid = userService.findUidByNickname(userNm);
         List<BestRecordDto> bestRecordDtos;

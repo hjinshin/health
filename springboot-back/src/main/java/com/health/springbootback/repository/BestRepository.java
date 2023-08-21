@@ -19,7 +19,7 @@ public interface BestRepository extends JpaRepository<PersonalBestRecord, Intege
             "INNER JOIN et.cid ec " +
             "WHERE br.uid.uid = :uid " +
             "AND ec.cid = :cid ")
-    List<BestRecordDto> findPBRByCategory(Long uid, CategoryType cid);
+    List<BestRecordDto> findPBRByCategory(@Param("uid") Long uid, @Param("cid") CategoryType cid);
 
     @Query(value = "SELECT " +
             "u.nickname as nickname, SUM(br.bestRecordValue) AS b_sum, " +
