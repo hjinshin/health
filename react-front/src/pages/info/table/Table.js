@@ -1,10 +1,22 @@
 import React, {useMemo} from 'react';
 import {useTable} from 'react-table';
 import {COLUMNS} from '../columns';
+import {COLUMNS2} from '../columns2';
 import './Table.css'
-
+import './Table2.css'
 function Table(props) {
-    const columns = useMemo(() => COLUMNS, []);
+    let cl;
+    let tablecss;
+    if (props.name === 1){
+        cl = COLUMNS;
+        tablecss='infoTable2';
+    }
+    else{
+        cl = COLUMNS2;
+        tablecss='infoTable';
+    }
+
+    const columns = useMemo(() => cl, []);
     const data = useMemo(() => props.data, [props.data]);
 
     const tableInstance = useTable({
@@ -21,7 +33,7 @@ function Table(props) {
     } = tableInstance;
 
     return (
-        <table {...getTableProps()}>
+        <table className={tablecss} {...getTableProps()}>
             <thead>
                 {
                     headerGroups.map((headerGroup) => (

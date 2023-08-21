@@ -1,0 +1,39 @@
+.left{
+    width: 40%;
+    background-color: white;
+    display: inline-block;
+}
+
+.left_high{
+    text-aligh: center;
+}
+
+.left_middle{
+    text-aligh: center;
+}
+
+.left_low{
+    background-color: white;
+}
+
+
+.right{
+    width: 60%;
+    display: inline-block;
+}
+
+.right button{
+    color: white;
+    border: #9ECBDA solid 1px;
+    background-color:#98B9C8;
+    width: 90px;
+    height:40px;
+}
+
+.left_low button{
+    color: white;
+    border: #9ECBDA solid 1px;
+    background-color:#98B9C8;
+    width: 90px;
+    height:40px;
+}
