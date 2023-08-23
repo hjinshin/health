@@ -20,7 +20,7 @@ const buttons = [
     {id: 7, label: "덤벨컬", type: SC_TYPE.DUMBCURL},
     {id: 8, label: "라잉익스텐션", type: SC_TYPE.LYINGEXTENSION},
     {id: 9, label: "케이블 푸쉬다운", type: SC_TYPE.CABLEPUSHDOWN},
-    {id: 9, label: "레그프레스", type: SC_TYPE.LEGRAISE},
+    {id: 10, label: "레그프레스", type: SC_TYPE.LEGRAISE},
 ]
 
 function FreeStyle(props) {
@@ -54,7 +54,7 @@ function FreeStyle(props) {
                     <button className='subcategory-button' key={button.id} onClick={()=>setSubcategory(button.type)}>{button.label}</button>    
                 ))}
             </div>
-            <Table data={userList} />
+            <Table data={userList} onSubmit={props.onSubmit}/>
         </div>
     );
 }

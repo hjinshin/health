@@ -52,7 +52,7 @@ function Barebody(props) {
                     <button className='subcategory-button' key={button.id} onClick={()=>setSubcategory(button.type)}>{button.label}</button>    
                 ))}
             </div>
-            <Table data={userList} />
+            <Table data={userList} onSubmit={props.onSubmit}/>
         </div>
     );
 }

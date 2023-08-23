@@ -3,10 +3,14 @@ import {useTable} from 'react-table';
 import {COLUMNS} from '../columns';
 import './Table.css'
 
-function Table(props) {   
+function Table(props) {
+    function handleSubmit(row) {
+        //e.preventDefault();
+        console.log(row);
+    }
+
     const columns = useMemo(() => COLUMNS, []);
     const data = useMemo(() => props.data, [props.data]);
-
     const tableInstance = useTable({
         columns,
         data
@@ -42,7 +46,9 @@ function Table(props) {
                     rows.map(row => {
                         prepareRow(row);
                         return (
-                            <tr className='list' {...row.getRowProps()}>
+                            <tr className='list'
+                                {...row.getRowProps()}
+                                >
                                 {
                                     row.cells.map((cell) => {
                                         return (

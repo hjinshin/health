@@ -6,7 +6,7 @@ import Freestyle from './Freestyle';
 import Barebody from './Barebody';
 import './UserRank.css';
 
-function UserRank() {
+function UserRank({onSubmit}) {
 
     return (
         <div className='user-ranking-container'>
@@ -22,9 +22,9 @@ function UserRank() {
                 </Link>
             </div>
             <Routes>
-                <Route path='/4-major' element={<Fourmajor />}/>
-                <Route path='/freestyle' element={<Freestyle />}/>
-                <Route path='/bare-body' element={<Barebody />}/>
+                <Route path='/4-major' element={<Fourmajor onSubmit={onSubmit}/>} />
+                <Route path='/freestyle' element={<Freestyle onSubmit={onSubmit}/>}/>
+                <Route path='/bare-body' element={<Barebody onSubmit={onSubmit}/>}/>
             </Routes>
         </div>
     );
