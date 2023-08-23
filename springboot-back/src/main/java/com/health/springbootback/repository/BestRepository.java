@@ -36,7 +36,7 @@ public interface BestRepository extends JpaRepository<PersonalBestRecord, Intege
             "WHERE et.cid = :cid " +
             "GROUP BY u.nickname " +
             "ORDER BY b_sum DESC", nativeQuery = true)
-    List<UserList> findByCategory(String cid);
+    List<UserList> findByCategory(@Param("cid")String cid);
 
     @Query(value = "SELECT " +
             "u.nickname as nickname, SUM(br.bestRecordValue) AS b_sum, " +
@@ -53,7 +53,7 @@ public interface BestRepository extends JpaRepository<PersonalBestRecord, Intege
             "WHERE et.cid = :cid AND et.eid = :eid " +
             "GROUP BY u.nickname " +
             "ORDER BY b_sum DESC", nativeQuery = true)
-    List<UserList> findByCategoryAndSubC(String cid, String eid);
+    List<UserList> findByCategoryAndSubC(@Param("cid")String cid,@Param("eid") String eid);
 
     @Query(value = "SELECT " +
             "User.nickname as nickname, rank() over (order by sum(bestRecordValue) desc) as ranking, sum(bestRecordValue) as b_sum " +
