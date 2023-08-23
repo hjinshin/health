@@ -4,11 +4,6 @@ import {COLUMNS} from '../columns';
 import './Table.css'
 
 function Table(props) {
-    function handleSubmit(row) {
-        //e.preventDefault();
-        console.log(row);
-    }
-
     const columns = useMemo(() => COLUMNS, []);
     const data = useMemo(() => props.data, [props.data]);
     const tableInstance = useTable({
@@ -48,6 +43,7 @@ function Table(props) {
                         return (
                             <tr className='list'
                                 {...row.getRowProps()}
+                                onClick={()=>props.onSubmit(row.original.nickname)}
                                 >
                                 {
                                     row.cells.map((cell) => {
