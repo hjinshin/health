@@ -81,24 +81,31 @@ function Info(props) {
         <div>
             <div className='left'>
                 <div className='left_high'>
-                    <h2>{profile.nickname}</h2>
+                    <h1>{profile.nickname}</h1>
                 </div>
                 <div className='left_middle'>
-                    <h2>sadasd</h2>
+                    <p>랭킹:</p>
+                    <p>분류:</p>
+                    <p>Tier:</p>
+                    <p>3대:</p>
+                    <p>최근 갱신일:</p>
                 </div>
                 <div className='left_low'>
-                    <button onClick={()=>changeBpr('4major')}>4대운동</button>
-                    <button onClick={()=>changeBpr('free-style')}>자유운동</button>
-                    <button onClick={()=>changeBpr('bare-body')}>맨몸운동</button>
+                    <div className='left_low_button'>
+                        <button onClick={()=>changeBpr('4major')}>4대운동</button>
+                        <button onClick={()=>changeBpr('free-style')}>자유운동</button>
+                        <button onClick={()=>changeBpr('bare-body')}>맨몸운동</button>
+                    </div>
                     <Table data={bpr} name={0}/>
                 </div>
             </div>
-
             <div className='right'>
-                <button onClick={()=>change('whole')}>전체</button>
-                <button onClick={()=>change('4major')}>4대운동</button>
-                <button onClick={()=>change('free-style')}>자유운동</button>
-                <button onClick={()=>change('bare-body')}>맨몸운동</button>
+                <div className='right_button'>
+                    <button onClick={()=>change('whole')}>전체</button>
+                    <button onClick={()=>change('4major')}>4대운동</button>
+                    <button onClick={()=>change('free-style')}>자유운동</button>
+                    <button onClick={()=>change('bare-body')}>맨몸운동</button>
+                </div>
                 <Table data={searchResult} name={1}/>
             </div>
         </div>

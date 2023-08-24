@@ -26,28 +26,28 @@ function Table(props) {
 
     const {
         getTableProps, 
-        getTableBodyProps, 
-        headerGroups, 
-        rows, 
+        getTableBodyProps,
+        rows,
+        headerGroups,
         prepareRow,
     } = tableInstance;
 
     return (
         <table className={tablecss} {...getTableProps()}>
             <thead>
-                {
-                    headerGroups.map((headerGroup) => (
-                        <tr className='header' {...headerGroup.getHeaderGroupProps()}>
-                            {
-                                headerGroup.headers.map((column) => (
-                                    <th {...column.getHeaderProps()}>
-                                        {column.render('Header')}
-                                    </th>
-                                ))
-                            }
-                        </tr>                        
-                    ))
-                }
+            {
+                headerGroups.map((headerGroup) => (
+                    <tr className='header' {...headerGroup.getHeaderGroupProps()}>
+                        {
+                            headerGroup.headers.map((column) => (
+                                <th {...column.getHeaderProps()}>
+                                    {column.render('Header')}
+                                </th>
+                            ))
+                        }
+                    </tr>
+                ))
+            }
             </thead>
             <tbody {...getTableBodyProps()}>
                 {
