@@ -1,15 +1,15 @@
 package com.health.springbootback.service;
 
 import com.health.springbootback.dto.BestRecordDto;
+import com.health.springbootback.entity.ExerciseRecord;
+import com.health.springbootback.entity.PersonalBestRecord;
 import com.health.springbootback.model.Profile;
 import com.health.springbootback.dto.ProfileDto;
 import com.health.springbootback.dto.RecordsDto;
 import com.health.springbootback.enums.CategoryType;
 import com.health.springbootback.repository.BestRepository;
 import com.health.springbootback.repository.RecordRepository;
-import org.hibernate.annotations.Parameter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,6 +22,17 @@ public class RecordService {
     private RecordRepository recordRepository;
     @Autowired
     private BestRepository bestRepository;
+
+    @Transactional
+    public void updateRecords(ExerciseRecord er) {
+        recordRepository.save(er);
+        PersonalBestRecord pbr = bestRepository.findByUid_UidAndEid_Eid(er.getUid().getUid(), er.getEid().getEid());
+        if(pbr == null)
+            bestRepository.save(new PersonalBestRecord(0, er.getUid(), er.getEid(), er.getRecordValue(), er.getRecordDate()));
+        else if(pbr.getBestRecordValue() < er.getRecordValue())
+            bestRepository.save(new PersonalBestRecord(pbr.getBid(), er.getUid(), er.getEid(), er.getRecordValue(), er.getRecordDate()));
+
+    }
 
     @Transactional
     public List<RecordsDto> findRecords(Long uid, String category) {
@@ -43,7 +54,7 @@ public class RecordService {
 
     @Transactional
     public ProfileDto findRanking(String userNm) {
-        List<Profile> profileList = bestRepository.findallf("FOURMAJOR");
+        List<Profile> profileList = bestRepository.findRankingByCid("FOURMAJOR");
         ProfileDto profileDto = profileList.stream()
                 .filter(profile -> profile.getNickname().equals(userNm))
                 .map(profile -> {
@@ -72,4 +83,5 @@ public class RecordService {
 
         return bestRepository.findPBRByCategory(uid, c);
     }
+
 }

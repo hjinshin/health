@@ -7,27 +7,33 @@ import com.health.springbootback.dto.KakaoTokenDto;
 import com.health.springbootback.dto.LoginResponseDto;
 import com.health.springbootback.dto.UserInfoDto;
 import com.health.springbootback.entity.User;
+import com.health.springbootback.enums.RoleType;
+import com.health.springbootback.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import javax.servlet.http.HttpServletResponse;
+import java.util.Objects;
+
 @Service
 public class AuthService {
 
     private final UserService userService;
+    @Autowired
+    private UserRepository userRepository;
 
     @Value("${kakao_client_id}")
     private String client_id;
     @Value("${kakao_redirect_uri}")
     private String redirect_uri;
-
+    @Value("${admin_passwd}")
+    private String admin_passwd;
     public AuthService(UserService userService) {
         this.userService = userService;
     }
@@ -104,7 +110,7 @@ public class AuthService {
         assert kakaoAccountDto != null;
         String name = kakaoAccountDto.getKakao_account().getProfile().getNickname();
         int num = userService.countNickname(name) + 1;
-        System.out.println(num);
+
         return User.builder()
                 .uid(kakaoAccountDto.getId())
                 .nickname(name + num)
@@ -112,9 +118,10 @@ public class AuthService {
     }
 
     public ResponseEntity<LoginResponseDto> kakaoLogin(String kakaoAccessToken) {
+        HttpServletResponse response = null;
+        HttpHeaders headers = new HttpHeaders();
         User user = getKakaoProfile(kakaoAccessToken);
 
-        LoginResponseDto loginResponseDto = new LoginResponseDto();
         UserInfoDto userInfoDto;
         User existUser = userService.findMember(user.getUid());
         try {
@@ -122,15 +129,35 @@ public class AuthService {
                 System.out.println("처음 로그인 하는 회원입니다.");
                 userService.signUp(user);
             }
+            
+            headers.add("Content-type", "application/json");
+            
+            ResponseCookie cookie = ResponseCookie.from("access_token", kakaoAccessToken)
+                    .httpOnly(true)
+                    .secure(true)
+                    .path("/")
+                    .build();
+            headers.add(HttpHeaders.SET_COOKIE, cookie.toString());
 
+            System.out.println(headers);
+            
             userInfoDto = userService.findNicknameAndRoleById(user.getUid());
-            loginResponseDto.setUserInfo(userInfoDto);
-            loginResponseDto.setLoginSuccess(true);
+            LoginResponseDto loginResponseDto = new LoginResponseDto(true, userInfoDto);
 
-            return ResponseEntity.ok().body(loginResponseDto);
+            return ResponseEntity.ok().headers(headers).body(loginResponseDto);
         } catch (Exception e) {
-            loginResponseDto.setLoginSuccess(false);
+            LoginResponseDto loginResponseDto = new LoginResponseDto(false, null);
             return ResponseEntity.badRequest().body(loginResponseDto);
         }
+    }
+
+    public ResponseEntity<String> adminAuth(Long uid, String passwd) {
+        User user = userRepository.findById(uid).get();
+        if(Objects.equals(passwd, admin_passwd)){
+            userRepository.save(new User(user.getUid(), user.getNickname(), RoleType.ADMIN, user.getCreateDate()));
+            return ResponseEntity.ok("관리자 인증 완료");
+        }
+        else
+            return ResponseEntity.badRequest().body("비밀번호가 틀렸습니다");
     }
 }

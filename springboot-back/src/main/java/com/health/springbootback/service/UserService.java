@@ -20,6 +20,14 @@ public class UserService {
         userRepository.save(user);
     }
 
+    @Transactional
+    public void updateNickname(Long uid, String nickname) {
+        User user = userRepository.findById(uid).get();
+        User new_user = new User(user.getUid(), nickname, user.getRole(), user.getCreateDate());
+        System.out.println("닉네임 변경: " + user.getNickname() + " -> " + nickname);
+        userRepository.save(new_user);
+    }
+
     @Transactional(readOnly = true)
     public User findMember(Long id) {
         return userRepository.findById(id).orElse(null);
@@ -39,6 +47,11 @@ public class UserService {
             return (long) -1;
         }
         return user.getUid();
+    }
+
+    @Transactional(readOnly = true)
+    public User findUserByNickname(String nickname) {
+        return userRepository.findByNickname(nickname);
     }
 
     @Transactional(readOnly = true)

@@ -5,8 +5,8 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class LoginResponseDto {
-    public boolean loginSuccess;
-    public UserInfoDto userInfo;
-
+public class UpdateRecordDto {
+    private String nickname;
+    private String exerciseName;
+    private float value;
 }

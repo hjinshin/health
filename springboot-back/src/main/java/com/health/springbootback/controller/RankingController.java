@@ -3,10 +3,7 @@ package com.health.springbootback.controller;
 import com.health.springbootback.dto.UserListDto;
 import com.health.springbootback.model.FitnessList;
 import com.health.springbootback.service.RankingService;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,6 +1,7 @@
 package com.health.springbootback.repository;
 
 import com.health.springbootback.dto.BestRecordDto;
+import com.health.springbootback.enums.SubCategoryType;
 import com.health.springbootback.model.Profile;
 import com.health.springbootback.entity.PersonalBestRecord;
 import com.health.springbootback.enums.CategoryType;
@@ -63,5 +64,7 @@ public interface BestRepository extends JpaRepository<PersonalBestRecord, Intege
             "WHERE cid = :cid " +
             "GROUP BY User.uid", nativeQuery = true)
 
-    List<Profile> findallf(@Param("cid") String cid);
+    List<Profile> findRankingByCid(@Param("cid") String cid);
+
+    PersonalBestRecord findByUid_UidAndEid_Eid(@Param("uid") Long uid, @Param("eid") SubCategoryType eid);
 }

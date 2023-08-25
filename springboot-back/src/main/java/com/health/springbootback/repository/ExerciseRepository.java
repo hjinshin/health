@@ -9,4 +9,5 @@ import java.util.List;
 
 public interface ExerciseRepository extends JpaRepository<ExerciseType, SubCategoryType> {
 
+    ExerciseType findByExerciseName(String exerciseName);
 }

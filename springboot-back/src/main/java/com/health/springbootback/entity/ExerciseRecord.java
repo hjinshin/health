@@ -30,5 +30,8 @@ public class ExerciseRecord {
     @Column(nullable = false)
     private float recordValue;
 
+    @CreationTimestamp
     private Timestamp recordDate; // 기록일
+
+
 }

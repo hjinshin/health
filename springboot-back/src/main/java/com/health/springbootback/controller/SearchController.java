@@ -21,7 +21,7 @@ public class SearchController {
     }
 
     @GetMapping("/api/search")
-    public SearchResultDto search(/*@RequestParam String category,*/ String userNm) {
+    public SearchResultDto search(@RequestParam String userNm/*, String category*/) {
         System.out.println(userNm);
         String category1 = "whole";
         String category2 = "4major";
@@ -46,27 +46,25 @@ public class SearchController {
 
     @GetMapping("/api/search/records")
     public SearchResultDto searchRecords(@RequestParam String category, String userNm) {
-        String category1 = category;
 
         Long uid = userService.findUidByNickname(userNm);
         List<RecordsDto> recordsDtos;
 
         if(uid == -1) return new SearchResultDto(false, null, null, null);
 
-        recordsDtos = recordService.findRecords(uid, category1);
+        recordsDtos = recordService.findRecords(uid, category);
         return new SearchResultDto(true, null, recordsDtos, null);
     }
 
     @GetMapping("/api/search/pbr")
     public SearchResultDto searchPersonalBestRecord(@RequestParam String category,String userNm) {
-        String category2 = category;
 
         Long uid = userService.findUidByNickname(userNm);
         List<BestRecordDto> bestRecordDtos;
 
         if(uid == -1)   return new SearchResultDto(false, null, null, null);
 
-        bestRecordDtos = recordService.findPBR(uid, category2);
+        bestRecordDtos = recordService.findPBR(uid, category);
         return new SearchResultDto(true, null, null, bestRecordDtos);
     }
 }

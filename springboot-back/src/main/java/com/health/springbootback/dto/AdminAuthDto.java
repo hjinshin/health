@@ -5,8 +5,6 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class LoginResponseDto {
-    public boolean loginSuccess;
-    public UserInfoDto userInfo;
-
+public class AdminAuthDto {
+    private String passwd;
 }
