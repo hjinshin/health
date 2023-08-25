@@ -1,6 +1,5 @@
 package com.health.springbootback.service;
 
-import com.health.springbootback.dto.LoginResponseDto;
 import com.health.springbootback.dto.UserInfoDto;
 import com.health.springbootback.enums.RoleType;
 import com.health.springbootback.entity.User;

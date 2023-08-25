@@ -1,7 +1,6 @@
 package com.health.springbootback.service;
 
 import com.health.springbootback.dto.UserListDto;
-import com.health.springbootback.entity.ExerciseType;
 import com.health.springbootback.enums.CategoryType;
 import com.health.springbootback.enums.SubCategoryType;
 import com.health.springbootback.model.UserList;

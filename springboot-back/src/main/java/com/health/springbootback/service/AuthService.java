@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletResponse;
@@ -78,7 +79,7 @@ public class AuthService {
         return kakaoTokenDto.getAccess_token();
     }
 
-    public User getKakaoProfile(String kakaoAccessToken) {
+    public User getKakaoProfile(String kakaoAccessToken) throws HttpStatusCodeException, JsonProcessingException {
         // HttpHeader 오브젝트 생성
         HttpHeaders headers = new HttpHeaders();
         headers.add("Authorization", "Bearer " + kakaoAccessToken);
@@ -91,64 +92,77 @@ public class AuthService {
         // POST방식으로 key=value 데이터를 요청(카카오쪽으로)
         RestTemplate rt = new RestTemplate();
         // Http 요청하기 - POST - response 변수에 응답받음
-        ResponseEntity<String> response = rt.exchange(
-                "https://kapi.kakao.com/v2/user/me",
-                HttpMethod.POST,
-                kakaoInfoRequest,
-                String.class
-        );
+        ResponseEntity<String> response;
 
-        // json parsing
-        ObjectMapper objectMapper = new ObjectMapper();
-        KakaoAccountDto kakaoAccountDto = null;
         try {
-            kakaoAccountDto = objectMapper.readValue(response.getBody(), KakaoAccountDto.class);
+            response = rt.exchange(
+                    "https://kapi.kakao.com/v2/user/me",
+                    HttpMethod.POST,
+                    kakaoInfoRequest,
+                    String.class
+            );
+
+
+            ObjectMapper objectMapper = new ObjectMapper();
+            KakaoAccountDto kakaoAccountDto = objectMapper.readValue(response.getBody(), KakaoAccountDto.class);
+
+            String name = kakaoAccountDto.getKakao_account().getProfile().getNickname();
+            int num = userService.countNickname(name) + 1;
+
+            return User.builder()
+                    .uid(kakaoAccountDto.getId())
+                    .nickname(name + num)
+                    .build();
+
+        } catch (HttpStatusCodeException e) {
+            // Handle different HTTP status code errors here
+            // You can extract the status code using e.getStatusCode()
+            System.out.println(e.getStatusCode());
+            throw e;
         } catch (JsonProcessingException e) {
             e.printStackTrace();
+            throw e;
         }
-
-        assert kakaoAccountDto != null;
-        String name = kakaoAccountDto.getKakao_account().getProfile().getNickname();
-        int num = userService.countNickname(name) + 1;
-
-        return User.builder()
-                .uid(kakaoAccountDto.getId())
-                .nickname(name + num)
-                .build();
     }
 
-    public ResponseEntity<LoginResponseDto> kakaoLogin(String kakaoAccessToken) {
+    public ResponseEntity<LoginResponseDto> kakaoLogin(String kakaoAccessToken){
         HttpServletResponse response = null;
         HttpHeaders headers = new HttpHeaders();
-        User user = getKakaoProfile(kakaoAccessToken);
-
-        UserInfoDto userInfoDto;
-        User existUser = userService.findMember(user.getUid());
         try {
-            if(existUser == null) {
-                System.out.println("처음 로그인 하는 회원입니다.");
-                userService.signUp(user);
+            User user = getKakaoProfile(kakaoAccessToken);
+
+            UserInfoDto userInfoDto;
+            User existUser = userService.findMember(user.getUid());
+            try {
+                if(existUser == null) {
+                    System.out.println("처음 로그인 하는 회원입니다.");
+                    userService.signUp(user);
+                }
+
+                headers.add("Content-type", "application/json");
+
+                ResponseCookie cookie = ResponseCookie.from("access_token", kakaoAccessToken)
+                        .httpOnly(true)
+                        .secure(true)
+                        .path("/")
+                        .build();
+                headers.add(HttpHeaders.SET_COOKIE, cookie.toString());
+
+                System.out.println(headers);
+
+                userInfoDto = userService.findNicknameAndRoleById(user.getUid());
+                LoginResponseDto loginResponseDto = new LoginResponseDto(true, userInfoDto);
+
+                return ResponseEntity.ok().headers(headers).body(loginResponseDto);
+            } catch (Exception e) {
+                LoginResponseDto loginResponseDto = new LoginResponseDto(false, null);
+                return ResponseEntity.badRequest().body(loginResponseDto);
             }
-            
-            headers.add("Content-type", "application/json");
-            
-            ResponseCookie cookie = ResponseCookie.from("access_token", kakaoAccessToken)
-                    .httpOnly(true)
-                    .secure(true)
-                    .path("/")
-                    .build();
-            headers.add(HttpHeaders.SET_COOKIE, cookie.toString());
-
-            System.out.println(headers);
-            
-            userInfoDto = userService.findNicknameAndRoleById(user.getUid());
-            LoginResponseDto loginResponseDto = new LoginResponseDto(true, userInfoDto);
-
-            return ResponseEntity.ok().headers(headers).body(loginResponseDto);
-        } catch (Exception e) {
+        } catch(JsonProcessingException e) {
             LoginResponseDto loginResponseDto = new LoginResponseDto(false, null);
             return ResponseEntity.badRequest().body(loginResponseDto);
         }
+
     }
 
     public ResponseEntity<String> adminAuth(Long uid, String passwd) {
