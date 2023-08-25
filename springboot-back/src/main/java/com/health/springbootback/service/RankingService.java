@@ -1,8 +1,6 @@
 package com.health.springbootback.service;
 
 import com.health.springbootback.dto.UserListDto;
-import com.health.springbootback.enums.CategoryType;
-import com.health.springbootback.enums.SubCategoryType;
 import com.health.springbootback.model.UserList;
 import com.health.springbootback.repository.BestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,11 +20,11 @@ public class RankingService {
     public List<UserListDto> findUserRanking(String c, String subCategory) {
         List<UserList> userList;
         String category = "";
-        if(Objects.equals(c, "4-major"))      category = String.valueOf(CategoryType.FOURMAJOR);
-        if(Objects.equals(c, "freestyle"))    category = String.valueOf(CategoryType.FREESTYLE);
-        if(Objects.equals(c, "bare-body"))    category = String.valueOf(CategoryType.BAREBODY);
+        if(Objects.equals(c, "4-major"))      category = "FOURMAJOR";
+        if(Objects.equals(c, "freestyle"))    category = "FREESTYLE";
+        if(Objects.equals(c, "bare-body"))    category = "BAREBODY";
 
-        if(Objects.equals(subCategory, String.valueOf(SubCategoryType.SUM)))
+        if(Objects.equals(subCategory, "SUM"))
             userList = bestRepository.findByCategory(category);
         else
             userList = bestRepository.findByCategoryAndSubC(category, subCategory);

@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -25,7 +24,11 @@ public class PersonalBestRecord {
 
     @ManyToOne
     @JoinColumn(name="eid", referencedColumnName = "eid")
-    private ExerciseType eid;   // 운동 종목 식별자(외래키)
+    private ExerciseSubCategory eid;   // 운동 종목 식별자(외래키)
+
+    @OneToOne
+    @JoinColumn(name="rid", referencedColumnName = "rid")
+    private ExerciseRecord rid; // 기록 식별자(외래키)
 
     @Column(nullable = false)
     private float bestRecordValue;  // 기록 값

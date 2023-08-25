@@ -135,7 +135,7 @@ public class AuthService {
             User existUser = userService.findMember(user.getUid());
             try {
                 if(existUser == null) {
-                    System.out.println("처음 로그인 하는 회원입니다.");
+                    //System.out.println("처음 로그인 하는 회원입니다.");
                     userService.signUp(user);
                 }
 
@@ -147,8 +147,6 @@ public class AuthService {
                         .path("/")
                         .build();
                 headers.add(HttpHeaders.SET_COOKIE, cookie.toString());
-
-                System.out.println(headers);
 
                 userInfoDto = userService.findNicknameAndRoleById(user.getUid());
                 LoginResponseDto loginResponseDto = new LoginResponseDto(true, userInfoDto);

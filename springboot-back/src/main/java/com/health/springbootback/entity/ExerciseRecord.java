@@ -25,7 +25,7 @@ public class ExerciseRecord {
 
     @ManyToOne
     @JoinColumn(name="eid", referencedColumnName = "eid")
-    private ExerciseType eid;   // 운동 종목 식별자(외래키)
+    private ExerciseSubCategory eid;   // 운동 종목 식별자(외래키)
 
     @Column(nullable = false)
     private float recordValue;

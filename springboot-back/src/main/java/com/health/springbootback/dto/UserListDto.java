@@ -1,6 +1,5 @@
 package com.health.springbootback.dto;
 
-import com.health.springbootback.enums.SubCategoryType;
 import lombok.*;
 
 @Data

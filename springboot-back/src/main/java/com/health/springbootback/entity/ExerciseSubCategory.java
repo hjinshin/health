@@ -1,6 +1,5 @@
 package com.health.springbootback.entity;
 
-import com.health.springbootback.enums.SubCategoryType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,14 +12,12 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ExerciseType {
+public class ExerciseSubCategory {
     @Id
-    @Enumerated(EnumType.STRING)
-    private SubCategoryType eid; // 운동 종목 식별자
+    private String eid; // 운동 종목 식별자
 
     @ManyToOne
     @JoinColumn(name="cid", referencedColumnName = "cid")
-    @Enumerated(EnumType.STRING)
     private ExerciseCategory cid;    // 카테고리 식별자(외래키)
 
     @Column(nullable = false, length = 20)

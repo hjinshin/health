@@ -35,7 +35,7 @@ public class SearchController {
 
         // 프로필(nickname, ranking, 4대 합)
         ProfileDto profileDto = recordService.findRanking(userNm);
-        System.out.println(profileDto);
+
         // 카테고리별 recordDto
         recordsDtos = recordService.findRecords(uid, category1);
         // 종목별 최고기록
