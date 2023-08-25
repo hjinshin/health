@@ -87,10 +87,10 @@ public class DataController {
                 return ResponseEntity.badRequest().body("권한이 존재하지 않습니다.");
             }
 
-            if(categoryService.existCid(categoryDto.getCid())) {
+            if(categoryService.existCategoryByCid(categoryDto.getCid())) {
                 return ResponseEntity.badRequest().body("cid가 이미 존재합니다.");
             }
-            if(categoryService.existCategoryName(categoryDto.getCategoryName()))
+            if(categoryService.existCategoryByCategoryName(categoryDto.getCategoryName()))
                 return ResponseEntity.badRequest().body("categoryName이 이미 존재합니다.");
 
             categoryService.updateCategory(categoryDto);
@@ -111,14 +111,14 @@ public class DataController {
                 return ResponseEntity.badRequest().body("권한이 존재하지 않습니다.");
             }
 
-            if(categoryService.existEid(subCategoryDto.getEid())) {
+            if(categoryService.existSubCategoryByEid(subCategoryDto.getEid())) {
                 return ResponseEntity.badRequest().body("eid가 이미 존재합니다.");
             }
             ExerciseCategory ec = categoryService.findByCid(subCategoryDto.getCid());
             if(ec == null)
                 return ResponseEntity.badRequest().body("cid가 존재하지않습니다.");
 
-            if(categoryService.existExerciseName(subCategoryDto.getExerciseName()))
+            if(categoryService.existSubCategoryByExerciseName(subCategoryDto.getExerciseName()))
                 return ResponseEntity.badRequest().body("exerciseName이 이미 존재합니다.");
 
             categoryService.updateSubCategory(subCategoryDto, ec);
@@ -181,8 +181,10 @@ public class DataController {
                 return ResponseEntity.badRequest().body("권한이 존재하지 않습니다.");
             }
 
-            if(!categoryService.existCategoryName(cid))
+            if(!categoryService.existCategoryByCategoryName(cid))
                 return ResponseEntity.badRequest().body("Category가 존재하지 않습니다.");
+            if(categoryService.existSubCategoryByCid(cid))
+                return ResponseEntity.badRequest().body("Category 내에 SubCategory가 존재합니다.");
             categoryService.deleteCategory(cid);
             return ResponseEntity.ok("Category 삭제");
         } catch(HttpStatusCodeException | JsonProcessingException e) {
@@ -201,7 +203,7 @@ public class DataController {
                 return ResponseEntity.badRequest().body("권한이 존재하지 않습니다.");
             }
 
-            if(!categoryService.existEid(eid))
+            if(!categoryService.existSubCategoryByEid(eid))
                 return ResponseEntity.badRequest().body("SubCategory가 존재하지 않습니다.");
             categoryService.deleteSubCategory(eid);
             return ResponseEntity.ok("SubCategory 삭제");

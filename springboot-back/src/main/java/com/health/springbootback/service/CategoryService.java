@@ -39,23 +39,27 @@ public class CategoryService {
     }
 
     @Transactional(readOnly = true)
-    public boolean existCid(String cid) {
+    public boolean existCategoryByCid(String cid) {
         return categoryRepository.existsById(cid);
     }
 
     @Transactional(readOnly = true)
-    public boolean existCategoryName(String categoryName) {
+    public boolean existCategoryByCategoryName(String categoryName) {
         return categoryRepository.existsByCategoryName(categoryName);
     }
 
     @Transactional(readOnly = true)
-    public boolean existEid(String eid) {
+    public boolean existSubCategoryByEid(String eid) {
         return subCategoryRepository.existsById(eid);
     }
 
     @Transactional(readOnly = true)
-    public boolean existExerciseName(String exerciseName) {
+    public boolean existSubCategoryByExerciseName(String exerciseName) {
         return subCategoryRepository.existsByExerciseName(exerciseName);
+    }
+    @Transactional(readOnly = true)
+    public boolean existSubCategoryByCid(String cid) {
+        return subCategoryRepository.existsByCid_Cid(cid);
     }
 
     @Transactional(readOnly = true)

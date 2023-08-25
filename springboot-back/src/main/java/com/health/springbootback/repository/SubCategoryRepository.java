@@ -12,4 +12,6 @@ public interface SubCategoryRepository extends JpaRepository<ExerciseSubCategory
     boolean existsByExerciseName(String exerciseName);
 
     List<ExerciseSubCategory> findByCid_Cid(String cid);
+
+    boolean existsByCid_Cid(String cid);
 }
