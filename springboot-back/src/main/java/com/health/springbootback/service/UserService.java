@@ -54,6 +54,11 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
+    public boolean existNickname(String nickname) {
+        return userRepository.existsByNickname(nickname);
+    }
+
+    @Transactional(readOnly = true)
     public int countNickname(String nickname) {
         return userRepository.countByNicknameLike(nickname);
     }

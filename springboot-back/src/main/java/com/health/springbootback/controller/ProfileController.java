@@ -32,6 +32,10 @@ public class ProfileController {
 
         try {
             User user = authService.getKakaoProfile(authToken);
+
+            // 닉네임이 이미 존재할 경우
+            if(userService.existNickname(nickname))
+                return ResponseEntity.badRequest().body(new UserInfoDto("이미 존재하는 닉네임입니다.", null));
             userService.updateNickname(user.getUid(), nickname);
             UserInfoDto userInfoDto = userService.findNicknameAndRoleById(user.getUid());
             return ResponseEntity.ok(userInfoDto);
