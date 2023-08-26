@@ -20,7 +20,6 @@ function Fourmajor(props) {
 
     const category = '4-major';
     const [subcategory, setSubcategory] = useState(SC_TYPE.SUM);
-
     const [userList, setUserList] = useState([]);
 
     useEffect(() => {
@@ -44,7 +43,7 @@ function Fourmajor(props) {
         <div className='tier-list-container'>
             <div className='subcategory-button-container'>
                 {buttons.map((button) => (
-                    <button className='subcategory-button' key={button.id} onClick={()=>setSubcategory(button.type)}>{button.label}</button>    
+                    <button className={`subcategory-button ${subcategory === button.type ? 'selected' : 'unselected'}`} key={button.id} onClick={()=>setSubcategory(button.type)}>{button.label}</button>    
                 ))}
             </div>
             <Table data={userList} onSubmit={props.onSubmit}/>

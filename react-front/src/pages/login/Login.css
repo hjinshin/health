@@ -1,18 +1,17 @@
 .login-tool{
-    margin: 200px;
-    padding: 100px;
+    padding: 50px;
     border: 1px solid black;
     border-radius: 5px;
     width: 300px;
-    height: 250px;
-    margin-left: 720px;
+    height: 200px;
+    margin: 100px auto;
     background-color: #7C878B;
 }
 
 .login-text{
     font-size: 20px;
     color: rgb(0, 0, 0);
-    margin-top: 40px;
+    margin-top: 20px;
 
 }
 

@@ -18,9 +18,13 @@
     
 }
 
-.category-button:hover {
-    background-color: gray;
+.category-button.unselected:hover {
+    background-color: lightgray;
     cursor: pointer;
+}
+
+.category-button.selected {
+    background-color: gray;
 }
 
 .tier-list-container {
@@ -49,8 +53,11 @@
     height: 25px;
 }
 
-.subcategory-button:hover {
-    background-color: gray;
+.subcategory-button.unselected:hover {
+    background-color: lightgray;
     cursor: pointer;
 }
 
+.subcategory-button.selected {
+    background-color: gray;
+}

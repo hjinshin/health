@@ -1,14 +1,18 @@
-.navbar {
+.navbar-container {
     height: 40px;
-    width: 97%;
+    width: 97vw;
+    min-width: 970px;
     background-color: white;
     text-align: center;
     margin: 0 auto;
     line-height: 40px;  
     vertical-align: middle;
     border-top: 3px solid rgb(0, 0, 0);
-    border-bottom: 3px solid rgb(0, 0, 0);
-    
+    border-bottom: 3px solid rgb(0, 0, 0);  
+}
+.navbar {
+    width: 1000px;
+    margin: 0 auto;
 }
 .navbarline{
     font-size: 20px;
@@ -19,9 +23,13 @@
     font-size: 20px;
     display: inline-block;
     width: 250px;
-
 }
 
-.navbarMenu:hover {
+.navbarMenu.selected {
+    background-color: gray;
+    color: white;
+}
+
+.navbarMenu.unselected:hover {
     background-color: lightgray;
 }

@@ -19,7 +19,7 @@ function Home() {
     }
 
     return (
-        <div>
+        <div className='home-container'>
             <Routes>
                 <Route path='/' element={<Search onSubmit={handleSearchSubmit}/>} />
                 <Route path='/userRank/*' element={<UserRank onSubmit={handleSearchSubmit}/>}/>

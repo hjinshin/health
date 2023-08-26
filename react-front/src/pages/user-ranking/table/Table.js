@@ -1,7 +1,7 @@
 import React, {useMemo} from 'react';
 import {useTable} from 'react-table';
 import {COLUMNS} from '../columns';
-import './Table2.css'
+import './Table.css'
 
 function Table(props) {
     const columns = useMemo(() => COLUMNS, []);

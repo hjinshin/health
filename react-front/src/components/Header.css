@@ -20,13 +20,15 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-left: 200px;
+    margin: 0 auto;
+    width: 1000px;
 }
   
 .logo-container {
     flex-grow: 1;
     display: flex;
     justify-content: center;
+    margin-left: 200px;
 }
 
 .logo {

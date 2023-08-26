@@ -10,9 +10,11 @@
 }
 
 .table1 tr.header {background-color: #7C878B;}    
-
   
-.table1 tr.list:hover {background-color: #646f74;}
+.table1 tr.list:hover {
+    background-color: #646f74;
+    cursor: pointer;
+}
   
 .table1 th {
     padding-top: 12px;

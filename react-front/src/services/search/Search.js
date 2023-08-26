@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 
 import './Search.css'
 import bodybuildingIcon from '../../images/Bodybuilding-icon.png'
@@ -6,6 +6,19 @@ import searchIcon from '../../images/search.png'
 
 function Search({onSubmit}) {
     const [searchTerm, setSearchTerm] = useState('');
+
+    // 브라우저의 뒤로가기 이벤트 감지
+    useEffect(() => {
+        const handlePopstate = () => {
+            setSearchTerm('');
+        };
+
+        window.addEventListener('popstate', handlePopstate);
+
+        return () => {
+            window.removeEventListener('popstate', handlePopstate);
+        };
+    }, []);
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -28,6 +41,7 @@ function Search({onSubmit}) {
                                 placeholder='사용자명...'
                                 name='search'
                                 id='searchHome'
+                                value={searchTerm}
                                 onChange={(e)=>setSearchTerm(e.target.value)}
                                 />                                    
                         </div>

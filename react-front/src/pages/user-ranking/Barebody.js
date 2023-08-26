@@ -49,7 +49,7 @@ function Barebody(props) {
         <div className='tier-list-container'>
             <div className='subcategory-button-container'>
                 {buttons.map((button) => (
-                    <button className='subcategory-button' key={button.id} onClick={()=>setSubcategory(button.type)}>{button.label}</button>    
+                    <button className={`subcategory-button ${subcategory === button.type ? 'selected' : 'unselected'}`} key={button.id} onClick={()=>setSubcategory(button.type)}>{button.label}</button>    
                 ))}
             </div>
             <Table data={userList} onSubmit={props.onSubmit}/>
