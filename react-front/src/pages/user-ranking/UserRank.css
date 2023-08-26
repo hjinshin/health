@@ -20,6 +20,7 @@
 
 .category-button:hover {
     background-color: gray;
+    cursor: pointer;
 }
 
 .tier-list-container {
@@ -50,5 +51,6 @@
 
 .subcategory-button:hover {
     background-color: gray;
+    cursor: pointer;
 }
 

@@ -1,11 +1,9 @@
 package com.health.springbootback.controller;
 
-import com.health.springbootback.model.UserList;
+import com.health.springbootback.dto.UserListDto;
 import com.health.springbootback.model.FitnessList;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import com.health.springbootback.service.RankingService;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,25 +11,16 @@ import java.util.List;
 @CrossOrigin
 @RestController
 public class RankingController {
+    private final RankingService rankingService;
+
+    public RankingController(RankingService rankingService) {
+        this.rankingService = rankingService;
+    }
 
     @GetMapping("/api/user-ranking")
-    public List<UserList> userRanking(@RequestParam String category, String subcategory) {
-        List<UserList> res = new ArrayList<>();
-        System.out.println(category);
-        if(category.equals("4-major")) {
-            res.add(new UserList("신형진", 1));
-            res.add(new UserList("오창호", 2));
-            res.add(new UserList("차준규", 3));
-        } else if(category.equals("freestyle")) {
-            res.add(new UserList("오창호", 1));
-            res.add(new UserList("차준규", 2));
-            res.add(new UserList("신형진", 3));
-        } else {
-            res.add(new UserList("차준규", 1));
-            res.add(new UserList("신형진", 2));
-            res.add(new UserList("오창호", 3));
-        }
-        return res;
+    public List<UserListDto> userRanking(@RequestParam String category, String subcategory) {
+        System.out.println(category + ", " + subcategory);
+        return rankingService.findUserRanking(category, subcategory);
     }
 
     @GetMapping("/api/fitness-ranking")

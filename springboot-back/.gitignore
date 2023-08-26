@@ -39,3 +39,4 @@ out/
 ### 민감정보 ###
 application-kakao.properties
 application-mysql.properties
+application-admin.properties

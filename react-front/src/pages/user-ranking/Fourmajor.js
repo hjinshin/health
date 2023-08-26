@@ -3,9 +3,24 @@ import axios from 'axios';
 import Table from './table/Table';
 import './UserRank.css';
 
+const SC_TYPE  = {
+    SUM: "SUM", BENCH: "BENCH", DEAD: "DEAD", 
+    SQUAT: "SQUAT", MILPRESS: "MILPRESS"
+};
+
+const buttons = [
+    {id: 1, label: "합계", type: SC_TYPE.SUM}, 
+    {id: 2, label: "벤치프레스", type: SC_TYPE.BENCH},
+    {id: 3, label: "데드리프트", type: SC_TYPE.DEAD}, 
+    {id: 4, label: "스쿼트", type: SC_TYPE.SQUAT},
+    {id: 5, label: "밀리터리프레스", type: SC_TYPE.MILPRESS}
+]
+
 function Fourmajor(props) {
+
     const category = '4-major';
-    const [subcategory, setSubcategory] = useState('sum');
+    const [subcategory, setSubcategory] = useState(SC_TYPE.SUM);
+
     const [userList, setUserList] = useState([]);
 
     useEffect(() => {
@@ -27,6 +42,7 @@ function Fourmajor(props) {
 
     return (
         <div className='tier-list-container'>
+<<<<<<< HEAD
 
             <div className='subcategory-button-container'>
                 <button className='subcategory-button' onClick={()=>setSubcategory('sum')}>합계</button>
@@ -37,6 +53,14 @@ function Fourmajor(props) {
             </div>
             <div style={{'height': '50px'}}></div>
             <Table data={userList} />
+=======
+            <div className='subcategory-button-container'>
+                {buttons.map((button) => (
+                    <button className='subcategory-button' key={button.id} onClick={()=>setSubcategory(button.type)}>{button.label}</button>    
+                ))}
+            </div>
+            <Table data={userList} onSubmit={props.onSubmit}/>
+>>>>>>> database
         </div>
     );
 }

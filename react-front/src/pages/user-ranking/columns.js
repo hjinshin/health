@@ -4,12 +4,13 @@ export const COLUMNS = [
         accessor: 'rank'
     },
     {
-        Header: '유저',
-        accessor: 'userNm'
+
+        Header: '사용자',
+        accessor: 'nickname'
     },
     {
         Header: '점수',
-        accessor: 'score'
+        accessor: 'b_sum'
     },
     {
         Header: '모스트',
