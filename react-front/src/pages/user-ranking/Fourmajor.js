@@ -10,10 +10,10 @@ const SC_TYPE  = {
 
 const buttons = [
     {id: 1, label: "합계", type: SC_TYPE.SUM}, 
-    {id: 2, label: "벤치프레스", type: SC_TYPE.BENCH},
-    {id: 3, label: "데드리프트", type: SC_TYPE.DEAD}, 
+    {id: 2, label: "벤치", type: SC_TYPE.BENCH},
+    {id: 3, label: "데드", type: SC_TYPE.DEAD}, 
     {id: 4, label: "스쿼트", type: SC_TYPE.SQUAT},
-    {id: 5, label: "밀리터리프레스", type: SC_TYPE.MILPRESS}
+    {id: 5, label: "밀프", type: SC_TYPE.MILPRESS}
 ]
 
 function Fourmajor(props) {
@@ -41,6 +41,9 @@ function Fourmajor(props) {
 
     return (
         <div className='tier-list-container'>
+            <div className='tier-font'>
+                티어 순위표
+            </div>
             <div className='subcategory-button-container'>
                 {buttons.map((button) => (
                     <button className={`subcategory-button ${subcategory === button.type ? 'selected' : 'unselected'}`} key={button.id} onClick={()=>setSubcategory(button.type)}>{button.label}</button>    

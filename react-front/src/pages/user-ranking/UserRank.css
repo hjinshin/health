@@ -39,18 +39,17 @@
     display: inline-block;
     margin: 20px auto;
     border-radius: 10px;
-    background-color: #177394;
+    background-color: #7C878B;
     width: 760px;
     height: 100px;
 }
 
 .subcategory-button {
-    margin-top: 10px;
-    margin-left: 5px;
-    margin-right: 5px;
+    margin-top: 80px;
     border-radius: 5px;
     width: 50px;
     height: 25px;
+    font-size: 11px;
 }
 
 .subcategory-button.unselected:hover {
@@ -60,4 +59,7 @@
 
 .subcategory-button.selected {
     background-color: gray;
+}
+.tier-font{
+    font-size: 30px;
 }
