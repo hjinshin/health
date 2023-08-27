@@ -181,7 +181,7 @@ public class DataController {
                 return ResponseEntity.badRequest().body("권한이 존재하지 않습니다.");
             }
 
-            if(!categoryService.existCategoryByCategoryName(cid))
+            if(!categoryService.existCategoryByCid(cid))
                 return ResponseEntity.badRequest().body("Category가 존재하지 않습니다.");
             if(categoryService.existSubCategoryByCid(cid))
                 return ResponseEntity.badRequest().body("Category 내에 SubCategory가 존재합니다.");
