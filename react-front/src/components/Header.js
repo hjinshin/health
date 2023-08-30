@@ -1,22 +1,16 @@
 import React, {useEffect, useState} from 'react';
-import { useNavigate } from 'react-router-dom';
-
+import { KAKAO_LOGOUT_URL } from '../services/loginoutHandler/OAuth';
 import './Header.css'
 
 import muscleleft from '../images/muscleleft.png'
 import muscleright from '../images/muscleright.png'
 
 function Header() {
-    const navigate = useNavigate();
     const [nick, setNick] = useState();
-    function onClick(e) {
-        console.log('click');
-    }
+
     useEffect(() => {
-        console.log("test");
         function checkUserNick() {
             const item = localStorage.getItem('nickname');
-
             if (item) {
                 setNick(item);
             }
@@ -31,23 +25,18 @@ function Header() {
     }, [])
 
     function log_on(){
-        console.log(nick);
         if(!nick){
             return <a href={'/login'}>
-                <button type='button' className='login-button' onClick={onClick}>Login</button>
+                <button type='button' className='login-button'>Login</button>
             </a>
         }
         else{
-            return <><a href={'/mypage'}>{nick}</a>
-                <button type='button' className='login-button' onClick={log_out}>logout</button>
+            return <><a href={'/mypage'} className='mypage'>{nick}</a>
+                <a href={KAKAO_LOGOUT_URL}>
+                    <button type='button' className='logout-button'>logout</button>
+                </a>
             </>
         }
-    }
-
-    function log_out(){
-        localStorage.removeItem('nickname');
-        setNick(null);
-        navigate('/');
     }
 
     return (

@@ -15,9 +15,10 @@ import org.springframework.web.client.HttpStatusCodeException;
 @CrossOrigin
 @RestController
 public class LoginController {
-    private final AuthService authService;
-    private final UserService userService;
     @Autowired
+    private final AuthService authService;
+    @Autowired
+    private final UserService userService;
     public LoginController(AuthService authService, UserService userService) {
         this.authService = authService;
         this.userService = userService;
@@ -31,7 +32,7 @@ public class LoginController {
 
         return authService.kakaoLogin(kakaoAccessToken);
     }
-
+/*
     @GetMapping("/api/access-token")
     public ResponseEntity<?> login(@RequestHeader("Cookie") String cookieHeader) {
         try {
@@ -67,4 +68,5 @@ public class LoginController {
         LoginResponseDto loginResponseDto = new LoginResponseDto(false, null);
         return ResponseEntity.ok().body(loginResponseDto);
     }
+ */
 }

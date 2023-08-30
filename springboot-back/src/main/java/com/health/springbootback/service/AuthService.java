@@ -1,6 +1,7 @@
 package com.health.springbootback.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.health.springbootback.dto.KakaoAccountDto;
 import com.health.springbootback.dto.KakaoTokenDto;
@@ -126,7 +127,6 @@ public class AuthService {
     }
 
     public ResponseEntity<LoginResponseDto> kakaoLogin(String kakaoAccessToken){
-        HttpServletResponse response = null;
         HttpHeaders headers = new HttpHeaders();
         try {
             User user = getKakaoProfile(kakaoAccessToken);
@@ -161,6 +161,31 @@ public class AuthService {
             return ResponseEntity.badRequest().body(loginResponseDto);
         }
 
+    }
+
+    public ResponseEntity<String> kakaoLogout(String kakaoAccessToken) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Authorization", "Bearer " + kakaoAccessToken);
+        headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+
+        // HttpHeader와 HttpBody를 하나의 오브젝트에 담기
+        HttpEntity<MultiValueMap<String, String>> kakaoInfoRequest =
+                new HttpEntity<>(headers);
+
+        // POST방식으로 key=value 데이터를 요청(카카오쪽으로)
+        RestTemplate rt = new RestTemplate();
+        // Http 요청하기 - POST - response 변수에 응답받음
+        ResponseEntity<String> response;
+
+        response = rt.exchange(
+                "https://kapi.kakao.com/v1/user/logout",
+                HttpMethod.POST,
+                kakaoInfoRequest,
+                String.class
+        );
+
+        System.out.println(response);
+        return ResponseEntity.ok("success");
     }
 
     public ResponseEntity<String> adminAuth(Long uid, String passwd) {
