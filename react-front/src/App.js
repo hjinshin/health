@@ -1,22 +1,18 @@
 import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Header from "./components/Header"
-import Navbar from "./components/Navbar"
-import Home from "./pages/home/Home"
-import { useEffect } from 'react';
-import axios from 'axios';
-//import Footer from "./components/Footer"
+import Home from './components/Home';
+import LoginHandler from './services/loginHandler/LoginHandler';
+import Login from './pages/login/Login';
 
 function App() {
   return (
     <BrowserRouter>
       <div className="App">
-        <Header/>
-        <Navbar/>
-        <Routes>
-          <Route path='/*' element={<Home />}/>
-        </Routes>
-        {/* <Footer/> */}
+          <Routes>
+		  		<Route path='/*' element={<Home />}/>
+            	<Route path='/login' element={<Login />}/>
+                <Route path='/auth/kakao/callback' element={<LoginHandler />}/>
+            </Routes>
       </div>
     </BrowserRouter>
   );

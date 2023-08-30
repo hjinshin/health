@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import './Header.css'
 
@@ -6,26 +7,26 @@ import muscleleft from '../images/muscleleft.png'
 import muscleright from '../images/muscleright.png'
 
 function Header() {
+    const navigate = useNavigate();
     const [nick, setNick] = useState();
     function onClick(e) {
         console.log('click');
     }
     useEffect(() => {
-        console.log("asdsadasdsa");
+        console.log("test");
         function checkUserNick() {
-            const item = localStorage.getItem('nickname')
+            const item = localStorage.getItem('nickname');
 
             if (item) {
-                setNick(item)
+                setNick(item);
             }
-            window.dispatchEvent(new Event("storage"));
         }
 
-        checkUserNick()
-        window.addEventListener('storage', checkUserNick)
+        checkUserNick();
+        window.addEventListener('storage', checkUserNick);
 
         return () => {
-            window.removeEventListener('storage', checkUserNick)
+            window.removeEventListener('storage', checkUserNick);
         }
     }, [])
 
@@ -46,6 +47,7 @@ function Header() {
     function log_out(){
         localStorage.removeItem('nickname');
         setNick(null);
+        navigate('/');
     }
 
     return (
