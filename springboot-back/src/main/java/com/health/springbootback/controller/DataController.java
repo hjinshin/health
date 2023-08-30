@@ -211,7 +211,7 @@ public class DataController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
-    public String getAccessToken(String cookieHeader) {
+    private String getAccessToken(String cookieHeader) {
         String[] cookies = cookieHeader.split(";");
         String authToken = null;
 

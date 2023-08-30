@@ -24,7 +24,6 @@ public class ProfileController {
         this.userService = userService;
     }
 
-    // 내 프로필 업데이트
     @PutMapping("/api/profile")
     public ResponseEntity<UserInfoDto> updateProfile(@RequestHeader("Cookie") String cookieHeader,
                                                      @RequestParam String nickname) {
@@ -44,6 +43,18 @@ public class ProfileController {
         }
     }
 
+    @GetMapping("/api/profile")
+    public ResponseEntity<String> getProfile(@RequestHeader("Cookie") String cookieHeader) {
+        String authToken = getAccessToken(cookieHeader);
+
+        try {
+            User user = authService.getKakaoProfile(authToken);
+            return ResponseEntity.ok(String.valueOf(user.getRole()));
+        } catch (HttpStatusCodeException | JsonProcessingException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
     // 관리자 권한 인증
     @PostMapping("/api/auth")
     public ResponseEntity<String> adminAuth(@RequestHeader("Cookie") String cookieHeader,
@@ -58,7 +69,7 @@ public class ProfileController {
         }
     }
 
-    public String getAccessToken(String cookieHeader) {
+    private String getAccessToken(String cookieHeader) {
         String[] cookies = cookieHeader.split(";");
         String authToken = null;
 
