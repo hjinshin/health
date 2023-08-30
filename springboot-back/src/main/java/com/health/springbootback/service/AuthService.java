@@ -184,7 +184,6 @@ public class AuthService {
                 String.class
         );
 
-        System.out.println(response);
         return ResponseEntity.ok("success");
     }
 

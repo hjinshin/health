@@ -39,12 +39,10 @@ public class DataController {
 
     // user 기록 업데이트
     @PutMapping("/api/record")
-    public ResponseEntity<String> updateRecords(@RequestHeader("Cookie") String cookieHeader,
+    public ResponseEntity<String> updateRecords(@CookieValue(name = "access_token") String cookie,
                                                 @RequestBody UpdateRecordDto updateRecordDto) {
-        String authToken = getAccessToken(cookieHeader);
-
         try {
-            Long adminId = authService.getKakaoProfile(authToken).getUid();
+            Long adminId = authService.getKakaoProfile(cookie).getUid();
             User admin = userService.findMember(adminId);
             if(admin.getRole() != RoleType.ADMIN) {
                 return ResponseEntity.badRequest().body("권한이 존재하지 않습니다.");
@@ -76,12 +74,10 @@ public class DataController {
         }
     }
     @PutMapping("/api/category")
-    public ResponseEntity<String> updateCategory(@RequestHeader("Cookie") String cookieHeader,
+    public ResponseEntity<String> updateCategory(@CookieValue(name = "access_token") String cookie,
                                                  @RequestBody CategoryDto categoryDto) {
-        String authToken = getAccessToken(cookieHeader);
-
         try {
-            Long adminId = authService.getKakaoProfile(authToken).getUid();
+            Long adminId = authService.getKakaoProfile(cookie).getUid();
             User admin = userService.findMember(adminId);
             if(admin.getRole() != RoleType.ADMIN) {
                 return ResponseEntity.badRequest().body("권한이 존재하지 않습니다.");
@@ -100,12 +96,10 @@ public class DataController {
         }
     }
     @PutMapping("/api/subcategory")
-    public ResponseEntity<String> updateSubCategory(@RequestHeader("Cookie") String cookieHeader,
+    public ResponseEntity<String> updateSubCategory(@CookieValue(name = "access_token") String cookie,
                                                     @RequestBody SubCategoryDto subCategoryDto) {
-        String authToken = getAccessToken(cookieHeader);
-
         try {
-            Long adminId = authService.getKakaoProfile(authToken).getUid();
+            Long adminId = authService.getKakaoProfile(cookie).getUid();
             User admin = userService.findMember(adminId);
             if(admin.getRole() != RoleType.ADMIN) {
                 return ResponseEntity.badRequest().body("권한이 존재하지 않습니다.");
@@ -143,12 +137,10 @@ public class DataController {
     }
 
     @DeleteMapping("/api/record")
-    public ResponseEntity<String> deleteRecords(@RequestHeader("Cookie") String cookieHeader,
+    public ResponseEntity<String> deleteRecords(@CookieValue(name = "access_token") String cookie,
                                                 @RequestParam int rid) {
-        String authToken = getAccessToken(cookieHeader);
-
         try {
-            Long adminId = authService.getKakaoProfile(authToken).getUid();
+            Long adminId = authService.getKakaoProfile(cookie).getUid();
             User admin = userService.findMember(adminId);
             if(admin.getRole() != RoleType.ADMIN) {
                 return ResponseEntity.badRequest().body("권한이 존재하지 않습니다.");
@@ -170,12 +162,10 @@ public class DataController {
         }
     }
     @DeleteMapping("/api/category")
-    public ResponseEntity<String> deleteCategory(@RequestHeader("Cookie") String cookieHeader,
+    public ResponseEntity<String> deleteCategory(@CookieValue(name = "access_token") String cookie,
                                                  @RequestParam String cid) {
-        String authToken = getAccessToken(cookieHeader);
-
         try {
-            Long adminId = authService.getKakaoProfile(authToken).getUid();
+            Long adminId = authService.getKakaoProfile(cookie).getUid();
             User admin = userService.findMember(adminId);
             if(admin.getRole() != RoleType.ADMIN) {
                 return ResponseEntity.badRequest().body("권한이 존재하지 않습니다.");
@@ -192,12 +182,11 @@ public class DataController {
         }
     }
     @DeleteMapping("/api/subcategory")
-    public ResponseEntity<String> deleteSubCategory(@RequestHeader("Cookie") String cookieHeader,
+    public ResponseEntity<String> deleteSubCategory(@CookieValue(name = "access_token") String cookie,
                                                     @RequestParam String eid) {
-        String authToken = getAccessToken(cookieHeader);
 
         try {
-            Long adminId = authService.getKakaoProfile(authToken).getUid();
+            Long adminId = authService.getKakaoProfile(cookie).getUid();
             User admin = userService.findMember(adminId);
             if(admin.getRole() != RoleType.ADMIN) {
                 return ResponseEntity.badRequest().body("권한이 존재하지 않습니다.");
@@ -211,16 +200,5 @@ public class DataController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
-    private String getAccessToken(String cookieHeader) {
-        String[] cookies = cookieHeader.split(";");
-        String authToken = null;
 
-        for (String cookie : cookies) {
-            if (cookie.trim().startsWith("access_token=")) {
-                authToken = cookie.trim().substring("access_token=".length());
-                break;
-            }
-        }
-        return authToken;
-    }
 }

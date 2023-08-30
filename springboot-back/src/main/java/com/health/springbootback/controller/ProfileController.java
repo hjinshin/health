@@ -25,12 +25,10 @@ public class ProfileController {
     }
 
     @PutMapping("/api/profile")
-    public ResponseEntity<UserInfoDto> updateProfile(@RequestHeader("Cookie") String cookieHeader,
+    public ResponseEntity<UserInfoDto> updateProfile(@CookieValue(name = "access_token") String cookie,
                                                      @RequestParam String nickname) {
-        String authToken = getAccessToken(cookieHeader);
-
         try {
-            User user = authService.getKakaoProfile(authToken);
+            User user = authService.getKakaoProfile(cookie);
 
             // 닉네임이 이미 존재할 경우
             if(userService.existNickname(nickname))
@@ -44,11 +42,9 @@ public class ProfileController {
     }
 
     @GetMapping("/api/profile")
-    public ResponseEntity<String> getProfile(@RequestHeader("Cookie") String cookieHeader) {
-        String authToken = getAccessToken(cookieHeader);
-
+    public ResponseEntity<String> getProfile(@CookieValue(name = "access_token") String cookie) {
         try {
-            User user = authService.getKakaoProfile(authToken);
+            User user = authService.getKakaoProfile(cookie);
             return ResponseEntity.ok(String.valueOf(user.getRole()));
         } catch (HttpStatusCodeException | JsonProcessingException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -57,28 +53,15 @@ public class ProfileController {
 
     // 관리자 권한 인증
     @PostMapping("/api/auth")
-    public ResponseEntity<String> adminAuth(@RequestHeader("Cookie") String cookieHeader,
+    public ResponseEntity<String> adminAuth(@CookieValue(name = "access_token") String cookie,
                                             @RequestBody AdminAuthDto adminAuthDto){
-        String authToken = getAccessToken(cookieHeader);
-        System.out.println(authToken);
+        System.out.println(cookie);
         try {
-            User user = authService.getKakaoProfile(authToken);
+            User user = authService.getKakaoProfile(cookie);
             return authService.adminAuth(user.getUid(), adminAuthDto.getPasswd());
         } catch(HttpStatusCodeException | JsonProcessingException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
-    private String getAccessToken(String cookieHeader) {
-        String[] cookies = cookieHeader.split(";");
-        String authToken = null;
-
-        for (String cookie : cookies) {
-            if (cookie.trim().startsWith("access_token=")) {
-                authToken = cookie.trim().substring("access_token=".length());
-                break;
-            }
-        }
-        return authToken;
-    }
 }
