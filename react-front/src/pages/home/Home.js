@@ -8,6 +8,7 @@ import UserRank from "../user-ranking/UserRank";
 import FitnessRank from "../fitness-ranking/FitnessRank";
 import Login from "../login/Login";
 import LoginHandler from "../../services/loginHandler/LoginHandler";
+import Mypage from "../mypage/Mypage";
 
 function Home() {
     async function handleSearchSubmit(searchTerm) {
@@ -25,6 +26,7 @@ function Home() {
                 <Route path='/userRank/*' element={<UserRank onSubmit={handleSearchSubmit}/>}/>
                 <Route path='/fitnessRank/*' element={<FitnessRank />}/>
                 <Route path='/login' element={<Login />}/>
+                <Route path='/mypage/*' element={<Mypage/>}/>
                 <Route path='/auth/kakao/callback' element={<LoginHandler />}/>
                 <Route path='/search/:query' element={<Info/>} />
             </Routes>

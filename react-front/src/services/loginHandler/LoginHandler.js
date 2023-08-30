@@ -16,6 +16,12 @@ function Loginhandler(props) {
                 }
             }).then((res) => {
                 console.log(res);
+                if(res.data.loginSuccess){
+                    localStorage.setItem('nickname', res.data.userInfo.nickname);
+                }
+                else{
+                    alert("로그인 실패");
+                }
                 navigate("/");
             });
         };

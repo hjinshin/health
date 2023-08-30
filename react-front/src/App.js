@@ -8,21 +8,6 @@ import axios from 'axios';
 //import Footer from "./components/Footer"
 
 function App() {
-  useEffect(() => {
-    async function login() {
-      await axios({
-          method: "GET",
-          url: `/api/access-token`,
-          headers: {
-              "Content-Type": "application/json;charset=utf-8"
-          }
-      }).then((res) => {
-          console.log(res);
-      });
-  };
-  login();
-  }, []);
-  
   return (
     <BrowserRouter>
       <div className="App">
