@@ -16,7 +16,7 @@ function LogoutHandler(props) {
             }).then((res) => {
                 console.log(res.data);
                 if(res.data.success){
-                    localStorage.removeItem('nickname');
+                    sessionStorage.removeItem('nickname');
                 }
                 else{
                     alert("로그아웃 실패");

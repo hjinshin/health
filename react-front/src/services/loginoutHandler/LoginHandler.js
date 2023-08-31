@@ -16,7 +16,7 @@ function Loginhandler(props) {
                 }
             }).then((res) => {
                 if(res.data.loginSuccess){
-                    localStorage.setItem('nickname', res.data.userInfo.nickname);
+                    sessionStorage.setItem('nickname', res.data.userInfo.nickname);
                 }
                 else{
                     alert("로그인 실패");

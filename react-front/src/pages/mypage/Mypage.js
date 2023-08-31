@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import axios from 'axios';
 function Mypage() {
-    const [nickname, setNickname] = useState(localStorage.getItem('nickname')); // 초기값은 빈 문자열
+    const [nickname, setNickname] = useState(sessionStorage.getItem('nickname')); // 초기값은 빈 문자열
 
     async function fetchNick () {
         await axios({
@@ -17,7 +17,7 @@ function Mypage() {
             console.log(res.data);
             if(res.data.success){
                 setNickname(res.data.message);
-                localStorage.setItem("nickname", nickname);
+                sessionStorage.setItem("nickname", nickname);
             }
             else{
                 alert(res.data.message);

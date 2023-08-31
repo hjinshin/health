@@ -10,7 +10,7 @@ function Header() {
 
     useEffect(() => {
         function checkUserNick() {
-            const item = localStorage.getItem('nickname');
+            const item = sessionStorage.getItem('nickname');
             if (item) {
                 setNick(item);
             }
