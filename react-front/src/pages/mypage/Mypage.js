@@ -4,17 +4,32 @@ function Mypage() {
     const [nickname, setNickname] = useState(localStorage.getItem('nickname')); // 초기값은 빈 문자열
 
     async function fetchNick () {
-        console.log("sssssss");
-        try {
-            await axios.put(`api/profile?${nickname}`);
-        } catch(error) {
-            console.error(error);
-        };
-    }
+        await axios({
+            method: "PUT",
+            url: `/api/profile`,
+            headers: {
+                "Content-Type": "application/json;charset=utf-8"
+            },
+            params: {
+                "nickname": nickname
+            }
+        }).then((res) => {
+            console.log(res.data);
+            if(res.data.success){
+                setNickname(res.data.message);
+                localStorage.setItem("nickname", nickname);
+            }
+            else{
+                alert(res.data.message);
+            }
+            window.location.reload();
+        });
+    };
+    
     const handleChangeNickname = () => {
         // 입력된 값을 닉네임 상태로 설정
-        if(nickname.length <3 || nickname.length >8){
-            alert("닉네임은 최소 3글자 및 최대 7글자까지 가능합니다.")
+        if(nickname.length <2 || nickname.length >21){
+            alert("닉네임은 최소 3글자 및 최대 20글자까지 가능합니다.")
         }
         else{
             fetchNick();

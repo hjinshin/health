@@ -3,10 +3,7 @@ package com.health.springbootback.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.health.springbootback.dto.KakaoAccountDto;
-import com.health.springbootback.dto.KakaoTokenDto;
-import com.health.springbootback.dto.LoginResponseDto;
-import com.health.springbootback.dto.UserInfoDto;
+import com.health.springbootback.dto.*;
 import com.health.springbootback.entity.User;
 import com.health.springbootback.enums.RoleType;
 import com.health.springbootback.repository.UserRepository;
@@ -163,7 +160,7 @@ public class AuthService {
 
     }
 
-    public ResponseEntity<String> kakaoLogout(String kakaoAccessToken) {
+    public ResponseEntity<MsgResponseDto> kakaoLogout(String kakaoAccessToken) {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Authorization", "Bearer " + kakaoAccessToken);
         headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
@@ -183,17 +180,16 @@ public class AuthService {
                 kakaoInfoRequest,
                 String.class
         );
-
-        return ResponseEntity.ok("success");
+        return ResponseEntity.ok().body(new MsgResponseDto(true, "로그아웃 성공"));
     }
 
-    public ResponseEntity<String> adminAuth(Long uid, String passwd) {
+    public ResponseEntity<MsgResponseDto> adminAuth(Long uid, String passwd) {
         User user = userRepository.findById(uid).get();
         if(Objects.equals(passwd, admin_passwd)){
             userRepository.save(new User(user.getUid(), user.getNickname(), RoleType.ADMIN, user.getCreateDate()));
-            return ResponseEntity.ok("관리자 인증 완료");
+            return ResponseEntity.ok().body(new MsgResponseDto(true, "관리자 인증 완료"));
         }
         else
-            return ResponseEntity.badRequest().body("비밀번호가 틀렸습니다");
+            return ResponseEntity.badRequest().body(new MsgResponseDto(false, "비밀번호가 틀렸습니다"));
     }
 }

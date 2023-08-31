@@ -1,5 +1,6 @@
 package com.health.springbootback.controller;
 
+import com.health.springbootback.dto.MsgResponseDto;
 import com.health.springbootback.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,8 +20,8 @@ public class LogoutController {
     }
 
     @GetMapping("/auth/kakao/logout")
-    public ResponseEntity<String> kakaoLogout(HttpServletResponse response,
-                                              @CookieValue(name = "access_token") String cookie) {
+    public ResponseEntity<MsgResponseDto> kakaoLogout(HttpServletResponse response,
+                                                      @CookieValue(name = "access_token") String cookie) {
         deleteTokenFromCookie(response, cookie);
         return authService.kakaoLogout(cookie);
     }

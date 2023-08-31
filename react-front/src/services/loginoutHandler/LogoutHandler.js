@@ -14,7 +14,8 @@ function LogoutHandler(props) {
                     "Content-Type": "application/json;charset=utf-8"
                 }
             }).then((res) => {
-                if(res.status === 200){
+                console.log(res.data);
+                if(res.data.success){
                     localStorage.removeItem('nickname');
                 }
                 else{

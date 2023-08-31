@@ -2,6 +2,7 @@ package com.health.springbootback.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.health.springbootback.dto.CategoryDto;
+import com.health.springbootback.dto.MsgResponseDto;
 import com.health.springbootback.dto.SubCategoryDto;
 import com.health.springbootback.dto.UpdateRecordDto;
 import com.health.springbootback.entity.*;
@@ -39,23 +40,23 @@ public class DataController {
 
     // user 기록 업데이트
     @PutMapping("/api/record")
-    public ResponseEntity<String> updateRecords(@CookieValue(name = "access_token") String cookie,
-                                                @RequestBody UpdateRecordDto updateRecordDto) {
+    public ResponseEntity<MsgResponseDto> updateRecords(@CookieValue(name = "access_token") String cookie,
+                                                        @RequestBody UpdateRecordDto updateRecordDto) {
         try {
             Long adminId = authService.getKakaoProfile(cookie).getUid();
             User admin = userService.findMember(adminId);
             if(admin.getRole() != RoleType.ADMIN) {
-                return ResponseEntity.badRequest().body("권한이 존재하지 않습니다.");
+                return ResponseEntity.ok().body(new MsgResponseDto(false, "권한이 존재하지 않습니다"));
             }
 
             User user = userService.findUserByNickname(updateRecordDto.getNickname());
             if(user == null) {
-                return ResponseEntity.badRequest().body( updateRecordDto.getNickname() + "가 존재하지 않습니다.");
+                return ResponseEntity.ok().body(new MsgResponseDto(false, updateRecordDto.getNickname() + "가 존재하지 않습니다"));
             }
 
             ExerciseSubCategory et = categoryService.findERByExerciseName(updateRecordDto.getExerciseName());
             if(et == null) {
-                return ResponseEntity.badRequest().body(updateRecordDto.getExerciseName() + "는 존재하지 않는 운동종목입니다.");
+                return ResponseEntity.ok().body(new MsgResponseDto(false, updateRecordDto.getExerciseName() + "는 존재하지 않는 운동종목입니다"));
             }
 
             ExerciseRecord er = new ExerciseRecord(0, user, et, updateRecordDto.getValue(), null);
@@ -67,58 +68,57 @@ public class DataController {
                 recordService.updatePBR(new PersonalBestRecord(0, er.getUid(), er.getEid(), er, er.getRecordValue(), er.getRecordDate()));
             else if(pbr.getBestRecordValue() < er.getRecordValue())
                 recordService.updatePBR(new PersonalBestRecord(pbr.getBid(), er.getUid(), er.getEid(), er, er.getRecordValue(), er.getRecordDate()));
-
-            return ResponseEntity.ok("update records");
+            return ResponseEntity.ok().body(new MsgResponseDto(true, "기록 업데이트"));
         } catch(HttpStatusCodeException | JsonProcessingException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.badRequest().body(new MsgResponseDto(false, e.getMessage()));
         }
     }
     @PutMapping("/api/category")
-    public ResponseEntity<String> updateCategory(@CookieValue(name = "access_token") String cookie,
+    public ResponseEntity<MsgResponseDto> updateCategory(@CookieValue(name = "access_token") String cookie,
                                                  @RequestBody CategoryDto categoryDto) {
         try {
             Long adminId = authService.getKakaoProfile(cookie).getUid();
             User admin = userService.findMember(adminId);
             if(admin.getRole() != RoleType.ADMIN) {
-                return ResponseEntity.badRequest().body("권한이 존재하지 않습니다.");
+                return ResponseEntity.ok().body(new MsgResponseDto(false, "권한이 존재하지 않습니다"));
             }
 
             if(categoryService.existCategoryByCid(categoryDto.getCid())) {
-                return ResponseEntity.badRequest().body("cid가 이미 존재합니다.");
+                return ResponseEntity.ok().body(new MsgResponseDto(false, "cid가 이미 존재합니다"));
             }
             if(categoryService.existCategoryByCategoryName(categoryDto.getCategoryName()))
-                return ResponseEntity.badRequest().body("categoryName이 이미 존재합니다.");
+                return ResponseEntity.ok().body(new MsgResponseDto(false, "categoryName이 이미 존재합니다"));
 
             categoryService.updateCategory(categoryDto);
-            return ResponseEntity.ok("Category 업데이트");
+            return ResponseEntity.ok().body(new MsgResponseDto(true, "Category 업데이트"));
         } catch(HttpStatusCodeException | JsonProcessingException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.badRequest().body(new MsgResponseDto(false, e.getMessage()));
         }
     }
     @PutMapping("/api/subcategory")
-    public ResponseEntity<String> updateSubCategory(@CookieValue(name = "access_token") String cookie,
+    public ResponseEntity<MsgResponseDto> updateSubCategory(@CookieValue(name = "access_token") String cookie,
                                                     @RequestBody SubCategoryDto subCategoryDto) {
         try {
             Long adminId = authService.getKakaoProfile(cookie).getUid();
             User admin = userService.findMember(adminId);
-            if(admin.getRole() != RoleType.ADMIN) {
-                return ResponseEntity.badRequest().body("권한이 존재하지 않습니다.");
-            }
+            if(admin.getRole() != RoleType.ADMIN)
+                return ResponseEntity.ok().body(new MsgResponseDto(false, "권한이 존재하지 않습니다"));
 
-            if(categoryService.existSubCategoryByEid(subCategoryDto.getEid())) {
-                return ResponseEntity.badRequest().body("eid가 이미 존재합니다.");
-            }
+
+            if(categoryService.existSubCategoryByEid(subCategoryDto.getEid()))
+                return ResponseEntity.ok().body(new MsgResponseDto(false, "eid가 이미 존재합니다"));
+
             ExerciseCategory ec = categoryService.findByCid(subCategoryDto.getCid());
             if(ec == null)
-                return ResponseEntity.badRequest().body("cid가 존재하지않습니다.");
+                return ResponseEntity.ok().body(new MsgResponseDto(false, "cid가 존재하지않습니다"));
 
             if(categoryService.existSubCategoryByExerciseName(subCategoryDto.getExerciseName()))
-                return ResponseEntity.badRequest().body("exerciseName이 이미 존재합니다.");
+                return ResponseEntity.ok().body(new MsgResponseDto(false, "exerciseName이 이미 존재합니다"));
 
             categoryService.updateSubCategory(subCategoryDto, ec);
-            return ResponseEntity.ok("SubCategory 업데이트");
+            return ResponseEntity.ok().body(new MsgResponseDto(true, "SubCategory 업데이트"));
         } catch(HttpStatusCodeException | JsonProcessingException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.badRequest().body(new MsgResponseDto(false, e.getMessage()));
         }
     }
 
@@ -137,17 +137,17 @@ public class DataController {
     }
 
     @DeleteMapping("/api/record")
-    public ResponseEntity<String> deleteRecords(@CookieValue(name = "access_token") String cookie,
+    public ResponseEntity<MsgResponseDto> deleteRecords(@CookieValue(name = "access_token") String cookie,
                                                 @RequestParam int rid) {
         try {
             Long adminId = authService.getKakaoProfile(cookie).getUid();
             User admin = userService.findMember(adminId);
             if(admin.getRole() != RoleType.ADMIN) {
-                return ResponseEntity.badRequest().body("권한이 존재하지 않습니다.");
+                return ResponseEntity.ok().body(new MsgResponseDto(false, "권한이 존재하지 않습니다"));
             }
             ExerciseRecord er = recordService.findRecordByRid(rid);
             if(er == null)
-                return ResponseEntity.badRequest().body("record가 존재하지 않습니다.");
+                return ResponseEntity.ok().body(new MsgResponseDto(false, "record가 존재하지 않습니다"));
 
             if(recordService.existPBRByRecord(er)) {
                 recordService.deletePBRByRecord(er);
@@ -156,48 +156,46 @@ public class DataController {
                     recordService.updatePBR(new PersonalBestRecord(0, new_pbr.getUid(), new_pbr.getEid(), new_pbr, new_pbr.getRecordValue(), new_pbr.getRecordDate()));
             }
             recordService.deleteRecordByRid(rid);
-            return ResponseEntity.ok("Record 삭제");
+            return ResponseEntity.ok().body(new MsgResponseDto(true, "Record 삭제"));
         } catch(HttpStatusCodeException | JsonProcessingException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.badRequest().body(new MsgResponseDto(false, e.getMessage()));
         }
     }
     @DeleteMapping("/api/category")
-    public ResponseEntity<String> deleteCategory(@CookieValue(name = "access_token") String cookie,
+    public ResponseEntity<MsgResponseDto> deleteCategory(@CookieValue(name = "access_token") String cookie,
                                                  @RequestParam String cid) {
         try {
             Long adminId = authService.getKakaoProfile(cookie).getUid();
             User admin = userService.findMember(adminId);
-            if(admin.getRole() != RoleType.ADMIN) {
-                return ResponseEntity.badRequest().body("권한이 존재하지 않습니다.");
-            }
+            if(admin.getRole() != RoleType.ADMIN)
+                return ResponseEntity.ok().body(new MsgResponseDto(false, "권한이 존재하지 않습니다"));
 
             if(!categoryService.existCategoryByCid(cid))
-                return ResponseEntity.badRequest().body("Category가 존재하지 않습니다.");
+                return ResponseEntity.ok().body(new MsgResponseDto(false, "Category가 존재하지 않습니다"));
             if(categoryService.existSubCategoryByCid(cid))
-                return ResponseEntity.badRequest().body("Category 내에 SubCategory가 존재합니다.");
+                return ResponseEntity.ok().body(new MsgResponseDto(false, "Category 내에 SubCategory가 존재합니다"));
             categoryService.deleteCategory(cid);
-            return ResponseEntity.ok("Category 삭제");
+            return ResponseEntity.ok().body(new MsgResponseDto(true, "Category 삭제"));
         } catch(HttpStatusCodeException | JsonProcessingException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.badRequest().body(new MsgResponseDto(false, e.getMessage()));
         }
     }
     @DeleteMapping("/api/subcategory")
-    public ResponseEntity<String> deleteSubCategory(@CookieValue(name = "access_token") String cookie,
+    public ResponseEntity<MsgResponseDto> deleteSubCategory(@CookieValue(name = "access_token") String cookie,
                                                     @RequestParam String eid) {
 
         try {
             Long adminId = authService.getKakaoProfile(cookie).getUid();
             User admin = userService.findMember(adminId);
-            if(admin.getRole() != RoleType.ADMIN) {
-                return ResponseEntity.badRequest().body("권한이 존재하지 않습니다.");
-            }
+            if(admin.getRole() != RoleType.ADMIN)
+                return ResponseEntity.ok().body(new MsgResponseDto(false, "권한이 존재하지 않습니다"));
 
             if(!categoryService.existSubCategoryByEid(eid))
-                return ResponseEntity.badRequest().body("SubCategory가 존재하지 않습니다.");
+                return ResponseEntity.ok().body(new MsgResponseDto(false, "SubCategory가 존재하지 않습니다"));
             categoryService.deleteSubCategory(eid);
-            return ResponseEntity.ok("SubCategory 삭제");
+            return ResponseEntity.ok().body(new MsgResponseDto(true, "SubCategory 삭제"));
         } catch(HttpStatusCodeException | JsonProcessingException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.badRequest().body(new MsgResponseDto(false, e.getMessage()));
         }
     }
 
