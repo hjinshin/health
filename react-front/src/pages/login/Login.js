@@ -2,7 +2,7 @@ import React from 'react';
 import './Login.css'
 
 import login_button from '../../images/kakao_login_button.png';
-import { KAKAO_AUTH_URL } from '../../services/loginHandler/OAuth';
+import { KAKAO_AUTH_URL } from '../../services/loginoutHandler/OAuth';
 
 function Login() {
     return (
