@@ -139,8 +139,9 @@ public class AuthService {
                 headers.add("Content-type", "application/json");
 
                 ResponseCookie cookie = ResponseCookie.from("access_token", kakaoAccessToken)
-                //        .httpOnly(true)
+                        .httpOnly(true)
                         .secure(true)
+                        .domain("https://web-health-6w1j2alm0gkf3r.sel5.cloudtype.app")
                         .path("/")
                         .build();
                 headers.add(HttpHeaders.SET_COOKIE, cookie.toString());
