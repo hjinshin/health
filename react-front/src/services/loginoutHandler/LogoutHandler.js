@@ -13,12 +13,14 @@ function LogoutHandler(props) {
                 method: "GET",
                 url: SERVER_SEARCH_URL + `/auth/kakao/logout`,
                 headers: {
-                    "Content-Type": "application/json;charset=utf-8"
+                    "Content-Type": "application/json;charset=utf-8",
+                    "Authorization": sessionStorage.getItem('Authorization'),
                 }
             }).then((res) => {
                 console.log(res.data);
                 if(res.data.success){
                     sessionStorage.removeItem('nickname');
+                    sessionStorage.removeItem('Authorization');
                 }
                 else{
                     alert("로그아웃 실패");

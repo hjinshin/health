@@ -137,14 +137,7 @@ public class AuthService {
                 }
 
                 headers.add("Content-type", "application/json");
-
-                ResponseCookie cookie = ResponseCookie.from("access_token", kakaoAccessToken)
-                        .httpOnly(true)
-                        .secure(true)
-                        .domain(".sel5.cloudtype.app")
-                        .path("/")
-                        .build();
-                headers.add(HttpHeaders.SET_COOKIE, cookie.toString());
+                headers.add("Authorization", "Bearer " + kakaoAccessToken);
 
                 userInfoDto = userService.findNicknameAndRoleById(user.getUid());
                 LoginResponseDto loginResponseDto = new LoginResponseDto(true, userInfoDto);

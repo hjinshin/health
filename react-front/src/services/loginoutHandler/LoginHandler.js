@@ -20,6 +20,8 @@ function Loginhandler(props) {
                 console.log(res);
                 if(res.data.loginSuccess){
                     sessionStorage.setItem('nickname', res.data.userInfo.nickname);
+                    const token = res.headers.get('Authorization');
+                    sessionStorage.setItem('Authorization', token);
                 }
                 else{
                     alert("로그인 실패");
