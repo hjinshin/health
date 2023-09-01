@@ -17,6 +17,7 @@ function Loginhandler(props) {
                     "Content-Type": "application/json;charset=utf-8"
                 }
             }).then((res) => {
+                console.log(res);
                 if(res.data.loginSuccess){
                     sessionStorage.setItem('nickname', res.data.userInfo.nickname);
                 }
