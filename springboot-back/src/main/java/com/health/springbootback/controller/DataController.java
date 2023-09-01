@@ -59,7 +59,7 @@ public class DataController {
                 return ResponseEntity.ok().body(new MsgResponseDto(false, updateRecordDto.getExerciseName() + "는 존재하지 않는 운동종목입니다"));
             }
 
-            ExerciseRecord er = new ExerciseRecord(0, user, et, updateRecordDto.getValue(), null);
+            ExerciseRecord er = new ExerciseRecord(0, user, et, updateRecordDto.getValue(), null, updateRecordDto.getLocation());
             // 기록 업데이트
             recordService.updateRecords(er);
             // 최고기록 업데이트

@@ -25,7 +25,7 @@ public interface BestRepository extends JpaRepository<PersonalBestRecord, Intege
             "u.nickname as nickname, SUM(br.bestRecordValue) AS b_sum, " +
             "(" +
             "   SELECT et_sub.exerciseName " +
-            "   FROM personalbestrecord br_sub " +
+            "   FROM PersonalBestRecord br_sub " +
             "   INNER JOIN ExerciseSubCategory et_sub ON br_sub.eid = et_sub.eid " +
             "   WHERE et_sub.cid = :cid" +
             "   ORDER BY br_sub.bestRecordValue DESC LIMIT 1" +
@@ -42,7 +42,7 @@ public interface BestRepository extends JpaRepository<PersonalBestRecord, Intege
             "u.nickname as nickname, SUM(br.bestRecordValue) AS b_sum, " +
             "(" +
             "   SELECT et_sub.exerciseName " +
-            "   FROM personalbestrecord br_sub " +
+            "   FROM PersonalBestRecord br_sub " +
             "   INNER JOIN ExerciseSubCategory et_sub ON br_sub.eid = et_sub.eid " +
             "   WHERE et_sub.cid = :cid AND et_sub.eid = :eid " +
             "   ORDER BY br_sub.bestRecordValue DESC LIMIT 1" +

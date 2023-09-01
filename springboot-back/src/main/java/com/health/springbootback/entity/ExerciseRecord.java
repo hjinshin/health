@@ -33,5 +33,6 @@ public class ExerciseRecord {
     @CreationTimestamp
     private Timestamp recordDate; // 기록일
 
-
+    @Column(nullable = true)
+    private String recordLocation; // 측정 장소
 }

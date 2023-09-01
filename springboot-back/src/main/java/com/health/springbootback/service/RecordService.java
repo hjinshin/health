@@ -26,7 +26,6 @@ public class RecordService {
     @Transactional
     public void updateRecords(ExerciseRecord er) {
         recordRepository.save(er);
-        PersonalBestRecord pbr = bestRepository.findByUid_UidAndEid_Eid(er.getUid().getUid(), er.getEid().getEid());
     }
     @Transactional
     public void updatePBR(PersonalBestRecord pbr) {

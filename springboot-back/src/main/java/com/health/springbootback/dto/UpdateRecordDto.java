@@ -11,4 +11,5 @@ public class UpdateRecordDto {
     private String nickname;
     private String exerciseName;
     private float value;
+    private String location;
 }
