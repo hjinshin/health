@@ -26,13 +26,13 @@ function Header() {
 
     function log_on(){
         if(!nick){
-            return <a href={'/login'}>
+            return <a href={'/login'} className='log-in-out'>
                 <button type='button' className='login-button'>Login</button>
             </a>
         }
         else{
             return <><a href={'/mypage'} className='mypage'>{nick}</a>
-                <a href={KAKAO_LOGOUT_URL}>
+                <a href={KAKAO_LOGOUT_URL} className='log-in-out'>
                     <button type='button' className='logout-button'>logout</button>
                 </a>
             </>

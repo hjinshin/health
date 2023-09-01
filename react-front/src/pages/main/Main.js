@@ -7,6 +7,8 @@ import './Main.css'
 import UserRank from "../user-ranking/UserRank";
 import FitnessRank from "../fitness-ranking/FitnessRank";
 import Mypage from "../mypage/Mypage";
+import ChangeInfo from "../mypage/ChangeInfo";
+import ChangeSite from "../mypage/ChangeSite";
 
 function Home() {
     async function handleSearchSubmit(searchTerm) {
@@ -24,6 +26,8 @@ function Home() {
                 <Route path='/fitnessRank/*' element={<FitnessRank />}/>
                 <Route path='/mypage/*' element={<Mypage/>}/>
                 <Route path='/search/:query' element={<Info/>} />
+                <Route path='/mypage/changeInfo' element={<ChangeInfo/>} />
+                <Route path='/mypage/changeSite' element={<ChangeSite />} />
             </Routes>
         </div>
     );
