@@ -138,7 +138,7 @@ public class AuthService {
 
                 headers.add("Content-type", "application/json");
                 headers.add("Authorization", "Bearer " + kakaoAccessToken);
-
+                
                 userInfoDto = userService.findNicknameAndRoleById(user.getUid());
                 LoginResponseDto loginResponseDto = new LoginResponseDto(true, userInfoDto);
 

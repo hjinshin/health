@@ -12,7 +12,7 @@ import org.springframework.web.bind.MissingRequestHeaderException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpStatusCodeException;
 
-@CrossOrigin
+@CrossOrigin(exposedHeaders  = {"*"})
 @RestController
 public class LoginController {
     @Autowired
