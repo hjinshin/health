@@ -26,7 +26,7 @@ public class LoginController {
 
     @GetMapping("/auth/kakao/callback")
     public ResponseEntity<LoginResponseDto> kakaoCallback(@RequestParam String code){
-        //System.out.println("카카오 인가코드: " + code);
+        System.out.println("카카오 인가코드: " + code);
         String kakaoAccessToken = authService.getKakaoAccessToken(code);
         System.out.println("카카오 엑세스토큰: " + kakaoAccessToken);
 
