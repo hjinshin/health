@@ -3,6 +3,8 @@ import axios from 'axios';
 import Table from './table/Table';
 import './FitnessRank.css';
 
+const SERVER_SEARCH_URL = process.env.REACT_APP_SPRINGBOOT_BACK_URL;
+
 function Lower(props) {
     const category = 'lower';
     const [FitnessList, setFitnessList] = useState([]);
@@ -10,7 +12,7 @@ function Lower(props) {
     useEffect(() => {
         async function fetchFitnessList () {
             try {
-                const res = await axios.get(`/api/fitness-ranking?category=${category}&subcategory=`);
+                const res = await axios.get(SERVER_SEARCH_URL + `/api/fitness-ranking?category=${category}&subcategory=`);
                 // 데이터에 순위 부여
                 const dataWithRanking = res.data.map((data, rank) =>(
                     {...data, rank: rank+1}

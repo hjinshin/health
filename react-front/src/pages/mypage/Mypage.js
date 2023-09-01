@@ -1,12 +1,15 @@
 import React, {useState} from 'react';
 import axios from 'axios';
+
+const SERVER_SEARCH_URL = process.env.REACT_APP_SPRINGBOOT_BACK_URL;
+
 function Mypage() {
     const [nickname, setNickname] = useState(sessionStorage.getItem('nickname')); // 초기값은 빈 문자열
-
+    
     async function fetchNick () {
         await axios({
             method: "PUT",
-            url: `/api/profile`,
+            url: SERVER_SEARCH_URL + `/api/profile`,
             headers: {
                 "Content-Type": "application/json;charset=utf-8"
             },

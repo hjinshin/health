@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
+const SERVER_SEARCH_URL = process.env.REACT_APP_SPRINGBOOT_BACK_URL;
+
 function Loginhandler(props) {
     const navigate = useNavigate();
     const code = new URL(window.location.href).searchParams.get("code");
@@ -10,7 +12,7 @@ function Loginhandler(props) {
         async function kakaoLogin() {
             await axios({
                 method: "GET",
-                url: `/auth/kakao/callback/?code=${code}`,
+                url: SERVER_SEARCH_URL + `/auth/kakao/callback/?code=${code}`,
                 headers: {
                     "Content-Type": "application/json;charset=utf-8"
                 }

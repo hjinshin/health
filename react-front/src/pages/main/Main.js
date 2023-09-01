@@ -11,7 +11,6 @@ import Mypage from "../mypage/Mypage";
 function Home() {
     async function handleSearchSubmit(searchTerm) {
         if(searchTerm !== "" && searchTerm !==null) {
-
             window.location.href = '/search/' + searchTerm;
         }
         

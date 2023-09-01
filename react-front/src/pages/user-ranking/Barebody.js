@@ -3,6 +3,8 @@ import axios from 'axios';
 import Table from './table/Table';
 import './UserRank.css';
 
+const SERVER_SEARCH_URL = process.env.REACT_APP_SPRINGBOOT_BACK_URL;
+
 const SC_TYPE = {
     SUM: "SUM", PUSHUP: "PUSHUP", PULLUP: "PULLUP", DIPS: "DIPS",
     SITUP: "SITUP", BARESQUAT: "BARESQUAT", BURPEE: "BURPEE", 
@@ -29,7 +31,7 @@ function Barebody(props) {
     useEffect(() => {
         async function fetchUserList () {
             try {
-                const res = await axios.get(`/api/user-ranking?category=${category}&subcategory=${subcategory}`);
+                const res = await axios.get(SERVER_SEARCH_URL + `/api/user-ranking?category=${category}&subcategory=${subcategory}`);
                 // 데이터에 순위 부여
                 const dataWithRanking = res.data.map((data, rank) =>(
                     {...data, rank: rank+1}

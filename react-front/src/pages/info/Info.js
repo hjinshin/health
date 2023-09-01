@@ -4,7 +4,7 @@ import axios from 'axios';
 import Table from './table/Table';
 import './Info.css'
 
-const SERVER_SEARCH_URL = 'http://localhost:8080';
+const SERVER_SEARCH_URL = process.env.REACT_APP_SPRINGBOOT_BACK_URL;
 
 function Info(props) {
     const { query } = useParams();
