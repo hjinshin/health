@@ -21,9 +21,10 @@ public class LogoutController {
 
     @GetMapping("/auth/kakao/logout")
     public ResponseEntity<MsgResponseDto> kakaoLogout(HttpServletResponse response,
-                                                      @CookieValue(name = "access_token") String cookie) {
-        deleteTokenFromCookie(response, cookie);
-        return authService.kakaoLogout(cookie);
+                                                      @RequestHeader("Authorization") String authorizationHeader) {
+        String token = authorizationHeader.split(" ")[1];
+        deleteTokenFromCookie(response, token);
+        return authService.kakaoLogout(token);
     }
 
     private void deleteTokenFromCookie(HttpServletResponse response, String cookieHeader) {
