@@ -87,7 +87,7 @@ function Info(props) {
                     <p>랭킹:</p>
                     <p>분류:</p>
                     <p>Tier:</p>
-                    <p>3대:</p>
+                    <p>4대:</p>
                     <p>최근 갱신일:</p>
                 </div>
                 <div className='left_low'>

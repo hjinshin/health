@@ -9,7 +9,7 @@
     padding: 8px;
 }
 
-.infoTable2 tr.header {background-color: #5CA2B8;}
+.infoTable2 tr.header {background-color: #7C878B;}
 
 .infoTable2 tr.list:nth-child(even){background-color: #f2f2f2;}
   
@@ -20,4 +20,5 @@
     padding-bottom: 12px;
     text-align: center;
     color: white;
+    font-size: 13px;
 }

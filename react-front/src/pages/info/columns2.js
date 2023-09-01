@@ -13,7 +13,7 @@ export const COLUMNS2 = [
         accessor: 'bestRecordValue'
     },
     {
-        Header: '측정 시간',
+        Header: '측정 날짜',
         accessor: 'bestRecordDate'
     }
 ]
