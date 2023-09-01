@@ -139,7 +139,7 @@ public class AuthService {
                 headers.add("Content-type", "application/json");
 
                 ResponseCookie cookie = ResponseCookie.from("access_token", kakaoAccessToken)
-                        .httpOnly(true)
+                //        .httpOnly(true)
                         .secure(true)
                         .path("/")
                         .build();
