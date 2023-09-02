@@ -14,14 +14,14 @@ function FreeStyle(props) {
         async function fetchSubCategories() {
             try {
                 const res = await axios.get(SERVER_SEARCH_URL + '/api/subcategory?cid=FREESTYLE');
+                buttons.push({id: 1, label: "합계", type: "SUM"});
                 res.data.forEach((subcategory, index) => {
                     buttons.push({
-                        id: buttons.length + 2,
+                        id: buttons.length + 1,
                         label: subcategory.exerciseName,
                         type: subcategory.eid
                     });
                 });
-                buttons.push({id: 1, label: "합계", type: "SUM"});
             } catch(error) {
                 console.error(error);
             };
@@ -48,10 +48,17 @@ function FreeStyle(props) {
 
     return (
         <div className='tier-list-container'>
-            <div className='subcategory-button-container'>
-                {buttons.map((button) => (
-                    <button className={`subcategory-button ${subcategory === button.type ? 'selected' : 'unselected'}`} key={button.id} onClick={()=>setSubcategory(button.type)}>{button.label}</button>        
-                ))}
+            <div className='box'>
+                <div className='tier-font'>
+                    티어 순위표
+                </div>
+                <div className='subcategory-button-container'>
+                    <div className='subcategory-bottons'>
+                        {buttons.map((button) => (
+                            <button className={`subcategory-button ${subcategory === button.type ? 'selected' : 'unselected'}`} key={button.id} onClick={()=>setSubcategory(button.type)}>{button.label}</button>        
+                        ))}
+                    </div>
+                </div>
             </div>
             <Table data={userList} onSubmit={props.onSubmit}/>
         </div>

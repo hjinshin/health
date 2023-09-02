@@ -6,6 +6,10 @@
     margin: 10px;
 }
 
+.box {
+    display: flex;
+}
+
 .category-button {
     margin: 50px;
     margin-left: 10px;
@@ -44,13 +48,17 @@
     height: 20px;
 }
 
-.subcategory-button {
-    margin-top: 15px;
-    border-radius: 5px;
-    width: 50px;
-    height: 25px;
-    font-size: 11px;
+.subcategory-bottons {
     float: right;
+}
+
+.subcategory-button {
+    margin-top: 100px;
+    margin-right: 10px;
+    border-radius: 5px;
+    width: 80px;
+    height: 30px;
+    font-size: 11px;
 }
 
 .subcategory-button.unselected:hover {
@@ -63,6 +71,6 @@
 }
 .tier-font{
     font-size: 30px;
-    padding-top: 60px;
-    padding-right:500px ;
+    padding: 60px;
+    width: 250px;
 }
