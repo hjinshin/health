@@ -22,6 +22,7 @@ function Loginhandler(props) {
                     sessionStorage.setItem('nickname', res.data.userInfo.nickname);
                     const token = res.headers.get('Authorization');
                     sessionStorage.setItem('Authorization', token);
+                    sessionStorage.setItem('auth', res.data.userInfo.role);
                 }
                 else{
                     alert("로그인 실패");

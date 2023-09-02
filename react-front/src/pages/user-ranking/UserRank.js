@@ -6,6 +6,7 @@ import Freestyle from './Freestyle';
 import Barebody from './Barebody';
 import './UserRank.css';
 
+
 function UserRank({onSubmit}) {
     const [category, setCateogry] = useState('4-major');
 

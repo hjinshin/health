@@ -1,10 +1,7 @@
 package com.health.springbootback.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.health.springbootback.dto.CategoryDto;
-import com.health.springbootback.dto.MsgResponseDto;
-import com.health.springbootback.dto.SubCategoryDto;
-import com.health.springbootback.dto.UpdateRecordDto;
+import com.health.springbootback.dto.*;
 import com.health.springbootback.entity.*;
 import com.health.springbootback.enums.RoleType;
 import com.health.springbootback.service.AuthService;
@@ -12,10 +9,13 @@ import com.health.springbootback.service.RecordService;
 import com.health.springbootback.service.CategoryService;
 import com.health.springbootback.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpStatusCodeException;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @CrossOrigin
@@ -125,6 +125,23 @@ public class DataController {
         }
     }
 
+    @PostMapping(value = "/api/image")
+    public ResponseEntity<MsgResponseDto> updateImage(@RequestHeader("Authorization") String authorizationHeader,
+                                                      @RequestParam("file") MultipartFile file) {
+        try {
+            String token = authorizationHeader.split(" ")[1];
+            Long uid = authService.getKakaoProfile(token).getUid();
+            byte[] imageData = file.getBytes();
+            System.out.println(imageData.length);
+            userService.updateImage(uid, imageData);
+            return ResponseEntity.ok().body(new MsgResponseDto(true, "image 업데이트"));
+        } catch(HttpStatusCodeException | JsonProcessingException e) {
+            return ResponseEntity.badRequest().body(new MsgResponseDto(false, e.getMessage()));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     @GetMapping("/api/record")
     public List<ExerciseRecord> getRecords(@RequestParam String nickname) {
         User uid = userService.findUserByNickname(nickname);
@@ -137,6 +154,18 @@ public class DataController {
     @GetMapping("/api/subcategory")
     public List<ExerciseSubCategory> getSubCategories(@RequestParam String cid) {
         return categoryService.getSubCategoryByCategory(cid);
+    }
+
+    @GetMapping(value = "/api/image", produces = MediaType.IMAGE_PNG_VALUE)
+    public @ResponseBody ResponseEntity<byte[]> getImage(@RequestHeader("Authorization") String authorizationHeader) {
+        try {
+            String token = authorizationHeader.split(" ")[1];
+            Long uid = authService.getKakaoProfile(token).getUid();
+            byte[] file = userService.findImageByUid(uid);
+            return ResponseEntity.ok().body(file);
+        } catch(HttpStatusCodeException | JsonProcessingException e) {
+            return ResponseEntity.badRequest().body(new byte[]{-1});
+        }
     }
 
     @DeleteMapping("/api/record")
@@ -204,5 +233,4 @@ public class DataController {
             return ResponseEntity.badRequest().body(new MsgResponseDto(false, e.getMessage()));
         }
     }
-
 }

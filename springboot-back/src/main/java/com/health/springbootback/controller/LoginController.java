@@ -1,16 +1,11 @@
 package com.health.springbootback.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.health.springbootback.dto.LoginResponseDto;
-import com.health.springbootback.dto.UserInfoDto;
-import com.health.springbootback.entity.User;
 import com.health.springbootback.service.AuthService;
 import com.health.springbootback.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.MissingRequestHeaderException;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.HttpStatusCodeException;
 
 @CrossOrigin(exposedHeaders = {"*"})
 @RestController
