@@ -3,33 +3,34 @@ import axios from 'axios';
 import Table from './table/Table';
 import './UserRank.css';
 const SERVER_SEARCH_URL = process.env.REACT_APP_SPRINGBOOT_BACK_URL;
-const buttons = [];
 
 function Fourmajor(props) {
     const category = '4-major';
     const [subcategory, setSubcategory] = useState("SUM");
     const [userList, setUserList] = useState([]);
+    const [buttons, setButtons] = useState([]);
 
     useEffect(() => {
         async function fetchSubCategories() {
+            let tempButton = [{id: 1, label: "합계", type: "SUM"}];
             try {
                 const res = await axios.get(SERVER_SEARCH_URL + '/api/subcategory?cid=FOURMAJOR');
-                buttons.push({id: 1, label: "합계", type: "SUM"});
                 res.data.forEach((subcategory, index) => {
-                    buttons.push({
-                        id: buttons.length + 1,
+                    tempButton.push({
+                        id: tempButton.length + 1,
                         label: subcategory.exerciseName,
                         type: subcategory.eid
                     });
                 });
+                console.log(tempButton);
+                setButtons(tempButton);
             } catch(error) {
                 console.error(error);
             };
         }
         if(buttons.length === 0) 
             fetchSubCategories();
-        console.log(buttons);
-    }, []);
+    }, [buttons]);
 
     useEffect(() => {
         async function fetchUserList () {
