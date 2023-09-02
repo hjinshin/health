@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import React, {useEffect, useState} from 'react';
+import {useParams} from 'react-router-dom';
 import axios from 'axios';
 import Table from './table/Table';
 import './Info.css'
@@ -17,7 +17,6 @@ function Info(props) {
 
     useEffect(() => {
         if(chang === 'bpr'){
-            console.log('bprbprbprbprbprbprbprbprbprbpr');
             async function searchBpr(userNm) {
                 const res = await axios.get(SERVER_SEARCH_URL+`/api/search/pbr?category=${encodeURIComponent(bprCate)}&userNm=${encodeURIComponent(userNm)}`)
                     .catch((error) => {
@@ -26,13 +25,12 @@ function Info(props) {
 
                 if(res.data.searchSuccess) {
                     console.log(res.data);
-                    setBpr(res.data.bestRecordDtoList);
+                    setBpr(parseDate(res.data.bestRecordDtoList, 'bpr'));
                 }
             }
             searchBpr(query);
         }
         else if(chang === 'records'){
-            console.log('recordsrecordsrecordsrecordsrecordsrecords');
             async function searchRecords(userNm) {
                 const res = await axios.get(SERVER_SEARCH_URL+`/api/search/records?category=${encodeURIComponent(cate)}&userNm=${encodeURIComponent(userNm)}`)
                     .catch((error) => {
@@ -41,14 +39,13 @@ function Info(props) {
 
                 if(res.data.searchSuccess) {
                     console.log(res.data);
-                    setSearchResult(res.data.recordsDtoList);
+                    setSearchResult(parseDate(res.data.recordsDtoList));
                 }
             }
             searchRecords(query);
         }
 
         else{
-            console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
             async function search(userNm) {
                 const res = await axios.get(SERVER_SEARCH_URL+`/api/search?userNm=${encodeURIComponent(userNm)}`)
                     .catch((error) => {
@@ -57,15 +54,30 @@ function Info(props) {
 
                 if(res.data.searchSuccess) {
                     console.log(res.data);
-                    setSearchResult(res.data.recordsDtoList);
+                    setSearchResult(parseDate(res.data.recordsDtoList, 'searchResult'));
                     setProfile(res.data.profileDto);
-                    setBpr(res.data.bestRecordDtoList);
+                    setBpr(parseDate(res.data.bestRecordDtoList, 'bpr'));
                 }
             }
             search(query);
 
         }
     }, [query, cate, bprCate, chang]);
+
+    function parseDate(data, id) {
+        return data.map(item => {
+            // 기존 객체 복사
+            const newItem = {...item};
+            // 특정 key의 값을 변경
+            if (id === 'searchResult') {
+                newItem.recordDate = newItem.recordDate.split("T")[0];
+            }
+            else{
+                newItem.bestRecordDate = newItem.bestRecordDate.split("T")[0];
+            }
+            return newItem;
+        });
+    }
 
     function change(categoryNm){
         setChang('records');
