@@ -120,19 +120,19 @@ function Info(props) {
                 </div>
                 <div className='left_low'>
                     <div className='left_low_button'>
-                        <button onClick={()=>changeBpr('4major')}>4대운동</button>
-                        <button onClick={()=>changeBpr('free-style')}>자유운동</button>
-                        <button onClick={()=>changeBpr('bare-body')}>맨몸운동</button>
+                        <button className={`${bprCate === '4major' ? 'selected':'unselected'}`} onClick={()=>changeBpr('4major')}>4대운동</button>
+                        <button className={`${bprCate === 'free-style' ? 'selected':'unselected'}`} onClick={()=>changeBpr('free-style')}>자유운동</button>
+                        <button className={`${bprCate === 'bare-body' ? 'selected':'unselected'}`} onClick={()=>changeBpr('bare-body')}>맨몸운동</button>
                     </div>
                     <Table data={bpr} name={0}/>
                 </div>
             </div>
             <div className='right'>
                 <div className='right_button'>
-                    <button onClick={()=>change('whole')}>전체</button>
-                    <button onClick={()=>change('4major')}>4대운동</button>
-                    <button onClick={()=>change('free-style')}>자유운동</button>
-                    <button onClick={()=>change('bare-body')}>맨몸운동</button>
+                    <button className={`${cate === 'whole' ? 'selected':'unselected'}`} onClick={()=>change('whole')}>전체</button>
+                    <button className={`${cate === '4major' ? 'selected':'unselected'}`} onClick={()=>change('4major')}>4대운동</button>
+                    <button className={`${cate === 'free-style' ? 'selected':'unselected'}`} onClick={()=>change('free-style')}>자유운동</button>
+                    <button className={`${cate === 'bare-body' ? 'selected':'unselected'}`} onClick={()=>change('bare-body')}>맨몸운동</button>
                 </div>
                 <Table data={searchResult} name={1}/>
             </div>
