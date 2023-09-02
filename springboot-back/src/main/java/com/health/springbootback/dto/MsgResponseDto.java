@@ -5,8 +5,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class ProfileDto {
-    private String nickname;
-    private int ranking;
-    private float b_sum;
+public class MsgResponseDto {
+    private boolean success;
+    private String message;
 }

@@ -9,7 +9,7 @@
     padding: 8px;
 }
 
-.infoTable tr.header {background-color: #5CA2B8;}
+.infoTable tr.header {background-color: #7C878B;}
 
 .infoTable tr.list:nth-child(even){background-color: #f2f2f2;}
   

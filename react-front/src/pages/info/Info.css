@@ -10,12 +10,16 @@
 }
 
 .left_middle{
-    text-align: center;
-    border: 1px solid black;
-    margin: 25px;
+    border: 2px solid black;
+    margin: 10px;
+    font-size: 13px;
+    width: 250px;
+    margin-left: 25px;  
+    text-align: left;
 }
 
 .left_low{
+    font-size: 10px;
 }
 
 
@@ -50,18 +54,24 @@
 
 .right button{
     color: white;
-    border: #9ECBDA solid 1px;
-    background-color:#98B9C8;
-    width: 90px;
-    height:40px;
+    border: #3f4142 solid 1px;
+    background-color:#7C878B;
+    width: 70px;
+    height:30px;
+    font-size: 13px;
+    border-radius: 15px;
+    margin: 10px;
 }
 
 .left_low button{
     margin-right: 20px;
     margin-left: 20px;
     color: white;
-    border: #9ECBDA solid 1px;
-    background-color:#98B9C8;
-    width: 90px;
-    height:40px;
+    border: #7C878B solid 2px;
+    background-color:#7C878B;
+    width: 60px;
+    height:30px;
+    font-size: 10px;
+    border-radius: 10px;
+    margin: 15px;
 }

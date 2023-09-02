@@ -13,7 +13,7 @@ export const COLUMNS = [
         accessor: 'recordValue'
     },
     {
-        Header: '측정 시간',
+        Header: '측정 날짜',
         accessor: 'recordDate'
     }
 ]

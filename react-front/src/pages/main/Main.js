@@ -3,30 +3,31 @@ import { Route, Routes } from 'react-router-dom';
 
 import Search from '../../services/search/Search';
 import Info from '../info/Info'
-import './Home.css'
+import './Main.css'
 import UserRank from "../user-ranking/UserRank";
 import FitnessRank from "../fitness-ranking/FitnessRank";
-import Login from "../login/Login";
-import LoginHandler from "../../services/loginHandler/LoginHandler";
+import Mypage from "../mypage/Mypage";
+import ChangeInfo from "../mypage/ChangeInfo";
+import ChangeSite from "../mypage/ChangeSite";
 
 function Home() {
     async function handleSearchSubmit(searchTerm) {
         if(searchTerm !== "" && searchTerm !==null) {
-
             window.location.href = '/search/' + searchTerm;
         }
         
     }
 
     return (
-        <div className='home-container'>
+        <div className='main-container'>
             <Routes>
                 <Route path='/' element={<Search onSubmit={handleSearchSubmit}/>} />
                 <Route path='/userRank/*' element={<UserRank onSubmit={handleSearchSubmit}/>}/>
                 <Route path='/fitnessRank/*' element={<FitnessRank />}/>
-                <Route path='/login' element={<Login />}/>
-                <Route path='/auth/kakao/callback' element={<LoginHandler />}/>
+                <Route path='/mypage/*' element={<Mypage/>}/>
                 <Route path='/search/:query' element={<Info/>} />
+                <Route path='/mypage/changeInfo' element={<ChangeInfo/>} />
+                <Route path='/mypage/changeSite' element={<ChangeSite />} />
             </Routes>
         </div>
     );

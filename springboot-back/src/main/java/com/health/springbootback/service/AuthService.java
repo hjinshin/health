@@ -1,11 +1,9 @@
 package com.health.springbootback.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.health.springbootback.dto.KakaoAccountDto;
-import com.health.springbootback.dto.KakaoTokenDto;
-import com.health.springbootback.dto.LoginResponseDto;
-import com.health.springbootback.dto.UserInfoDto;
+import com.health.springbootback.dto.*;
 import com.health.springbootback.entity.User;
 import com.health.springbootback.enums.RoleType;
 import com.health.springbootback.repository.UserRepository;
@@ -126,7 +124,6 @@ public class AuthService {
     }
 
     public ResponseEntity<LoginResponseDto> kakaoLogin(String kakaoAccessToken){
-        HttpServletResponse response = null;
         HttpHeaders headers = new HttpHeaders();
         try {
             User user = getKakaoProfile(kakaoAccessToken);
@@ -140,14 +137,7 @@ public class AuthService {
                 }
 
                 headers.add("Content-type", "application/json");
-
-                ResponseCookie cookie = ResponseCookie.from("access_token", kakaoAccessToken)
-                        .httpOnly(true)
-                        .secure(true)
-                        .path("/")
-                        .build();
-                headers.add(HttpHeaders.SET_COOKIE, cookie.toString());
-
+                headers.add("Authorization", "Bearer " + kakaoAccessToken);
                 userInfoDto = userService.findNicknameAndRoleById(user.getUid());
                 LoginResponseDto loginResponseDto = new LoginResponseDto(true, userInfoDto);
 
@@ -163,13 +153,36 @@ public class AuthService {
 
     }
 
-    public ResponseEntity<String> adminAuth(Long uid, String passwd) {
+    public ResponseEntity<MsgResponseDto> kakaoLogout(String kakaoAccessToken) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Authorization", "Bearer " + kakaoAccessToken);
+        headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+
+        // HttpHeader와 HttpBody를 하나의 오브젝트에 담기
+        HttpEntity<MultiValueMap<String, String>> kakaoInfoRequest =
+                new HttpEntity<>(headers);
+
+        // POST방식으로 key=value 데이터를 요청(카카오쪽으로)
+        RestTemplate rt = new RestTemplate();
+        // Http 요청하기 - POST - response 변수에 응답받음
+        ResponseEntity<String> response;
+
+        response = rt.exchange(
+                "https://kapi.kakao.com/v1/user/logout",
+                HttpMethod.POST,
+                kakaoInfoRequest,
+                String.class
+        );
+        return ResponseEntity.ok().body(new MsgResponseDto(true, "로그아웃 성공"));
+    }
+
+    public ResponseEntity<MsgResponseDto> adminAuth(Long uid, String passwd) {
         User user = userRepository.findById(uid).get();
         if(Objects.equals(passwd, admin_passwd)){
-            userRepository.save(new User(user.getUid(), user.getNickname(), RoleType.ADMIN, user.getCreateDate()));
-            return ResponseEntity.ok("관리자 인증 완료");
+            userRepository.save(new User(user.getUid(), user.getNickname(), RoleType.ADMIN, user.getCreateDate(), user.getImageData()));
+            return ResponseEntity.ok().body(new MsgResponseDto(true, "관리자 인증 완료"));
         }
         else
-            return ResponseEntity.badRequest().body("비밀번호가 틀렸습니다");
+            return ResponseEntity.badRequest().body(new MsgResponseDto(false, "비밀번호가 틀렸습니다"));
     }
 }

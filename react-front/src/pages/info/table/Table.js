@@ -16,7 +16,7 @@ function Table(props) {
         tablecss='infoTable';
     }
 
-    const columns = useMemo(() => cl, []);
+    const columns = useMemo(() => cl, [cl]);
     const data = useMemo(() => props.data, [props.data]);
 
     const tableInstance = useTable({
