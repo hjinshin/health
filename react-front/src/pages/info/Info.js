@@ -60,12 +60,12 @@ function Info(props) {
                     setBpr(parseDate(res.data.bestRecordDtoList, 'bpr'));
                 }
             }
-            async function loadImg() {
+            async function loadImg(userNm) {
                 await axios({
                     method: "GET",
                     url: SERVER_SEARCH_URL + `/api/image`,
-                    headers: {
-                        "Authorization": sessionStorage.getItem('Authorization'),
+                    params: {
+                        "nickname": `${userNm}`,
                     },
                     responseType: 'arraybuffer',
                 }).then((res) => {
@@ -75,7 +75,7 @@ function Info(props) {
                 });
                }
             search(query);
-            loadImg();
+            loadImg(query);
         }
     }, [query, cate, bprCate, chang]);
 

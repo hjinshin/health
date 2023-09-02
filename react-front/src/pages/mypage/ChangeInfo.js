@@ -13,8 +13,8 @@ function ChangeInfo(props) {
             await axios({
                 method: "GET",
                 url: SERVER_SEARCH_URL + `/api/image`,
-                headers: {
-                    "Authorization": sessionStorage.getItem('Authorization'),
+                params: {
+                    "nickname": `${sessionStorage.getItem('nickname')}`,
                 },
                 responseType: 'arraybuffer',
             }).then((res) => {

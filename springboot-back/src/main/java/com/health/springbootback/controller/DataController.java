@@ -157,13 +157,13 @@ public class DataController {
     }
 
     @GetMapping(value = "/api/image", produces = MediaType.IMAGE_PNG_VALUE)
-    public @ResponseBody ResponseEntity<byte[]> getImage(@RequestHeader("Authorization") String authorizationHeader) {
+    public @ResponseBody ResponseEntity<byte[]> getImage(@RequestParam String nickname) {
         try {
-            String token = authorizationHeader.split(" ")[1];
-            Long uid = authService.getKakaoProfile(token).getUid();
+            System.out.println(nickname);
+            Long uid = userService.findUidByNickname(nickname);
             byte[] file = userService.findImageByUid(uid);
             return ResponseEntity.ok().body(file);
-        } catch(HttpStatusCodeException | JsonProcessingException e) {
+        } catch(HttpStatusCodeException e) {
             return ResponseEntity.badRequest().body(new byte[]{-1});
         }
     }
