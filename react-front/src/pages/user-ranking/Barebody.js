@@ -14,14 +14,14 @@ function Barebody(props) {
         async function fetchSubCategories() {
             try {
                 const res = await axios.get(SERVER_SEARCH_URL + '/api/subcategory?cid=BAREBODY');
-                buttons.push({id: 1, label: "합계", type: "SUM"});
                 res.data.forEach((subcategory, index) => {
                     buttons.push({
-                        id: buttons.length + 1,
+                        id: buttons.length + 2,
                         label: subcategory.exerciseName,
                         type: subcategory.eid
                     });
                 });
+                buttons.push({id: 1, label: "합계", type: "SUM"});
             } catch(error) {
                 console.error(error);
             };
