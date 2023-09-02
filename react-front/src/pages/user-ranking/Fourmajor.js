@@ -40,10 +40,13 @@ function Fourmajor(props) {
     }, [category, subcategory]);
 
     return (
+        
         <div className='tier-list-container'>
+        <div>
             <div className='tier-font'>
                 티어 순위표
             </div>
+        </div>
             <div className='subcategory-button-container'>
                 {buttons.map((button) => (
                     <button className={`subcategory-button ${subcategory === button.type ? 'selected' : 'unselected'}`} key={button.id} onClick={()=>setSubcategory(button.type)}>{button.label}</button>    
