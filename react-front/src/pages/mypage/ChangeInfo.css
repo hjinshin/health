@@ -1,0 +1,12 @@
+.image-update {
+    width: 200px;
+}
+
+.image {
+    height: 150px;
+    width: 150px;
+}
+
+.image-input {
+    display: none;
+}
