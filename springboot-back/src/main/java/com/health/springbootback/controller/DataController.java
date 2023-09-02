@@ -16,7 +16,6 @@ import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 
 @CrossOrigin
@@ -131,9 +130,10 @@ public class DataController {
                                                       @RequestParam("file") MultipartFile file) {
         try {
             String token = authorizationHeader.split(" ")[1];
-            User user = authService.getKakaoProfile(token);
+            Long uid = authService.getKakaoProfile(token).getUid();
             byte[] imageData = file.getBytes();
-            userService.updateImage(user, imageData);
+            System.out.println(imageData.length);
+            userService.updateImage(uid, imageData);
             return ResponseEntity.ok().body(new MsgResponseDto(true, "image 업데이트"));
         } catch(HttpStatusCodeException | JsonProcessingException e) {
             return ResponseEntity.badRequest().body(new MsgResponseDto(false, e.getMessage()));
@@ -160,9 +160,8 @@ public class DataController {
     public @ResponseBody ResponseEntity<byte[]> getImage(@RequestHeader("Authorization") String authorizationHeader) {
         try {
             String token = authorizationHeader.split(" ")[1];
-            User user = authService.getKakaoProfile(token);
-            byte[] file = userService.findImageByUid(user.getUid());
-            System.out.println(Arrays.toString(file));
+            Long uid = authService.getKakaoProfile(token).getUid();
+            byte[] file = userService.findImageByUid(uid);
             return ResponseEntity.ok().body(file);
         } catch(HttpStatusCodeException | JsonProcessingException e) {
             return ResponseEntity.badRequest().body(new byte[]{-1});
@@ -234,5 +233,4 @@ public class DataController {
             return ResponseEntity.badRequest().body(new MsgResponseDto(false, e.getMessage()));
         }
     }
-
 }

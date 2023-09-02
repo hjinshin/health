@@ -4,30 +4,33 @@ import Table from './table/Table';
 import './UserRank.css';
 
 const SERVER_SEARCH_URL = process.env.REACT_APP_SPRINGBOOT_BACK_URL;
-
-const SC_TYPE = {
-    SUM: "SUM", PUSHUP: "PUSHUP", PULLUP: "PULLUP", DIPS: "DIPS",
-    SITUP: "SITUP", BARESQUAT: "BARESQUAT", BURPEE: "BURPEE", 
-    PLANK: "PLANK", BRIDGE: "BRIDGE"
-};
-
-const buttons = [
-    {id: 1, label: "합계", type: SC_TYPE.SUM}, 
-    {id: 2, label: "푸쉬업", type: SC_TYPE.PUSHUP},
-    {id: 3, label: "풀업", type: SC_TYPE.PULLUP}, 
-    {id: 4, label: "딥스", type: SC_TYPE.DIPS},
-    {id: 5, label: "윗몸일으키기", type: SC_TYPE.SITUP},
-    {id: 6, label: "맨몸스쿼트", type: SC_TYPE.BARESQUAT},
-    {id: 7, label: "버피", type: SC_TYPE.BURPEE},
-    {id: 8, label: "플랭크", type: SC_TYPE.PLANK},
-    {id: 9, label: "브릿지", type: SC_TYPE.BRIDGE},
-]
+let buttons = [];
 
 function Barebody(props) {
     const category = 'bare-body';
-    const [subcategory, setSubcategory] = useState(SC_TYPE.SUM);
+    const [subcategory, setSubcategory] = useState("SUM");
     const [userList, setUserList] = useState([]);
 
+    useEffect(() => {
+        async function fetchSubCategories() {
+            try {
+                const res = await axios.get(SERVER_SEARCH_URL + '/api/subcategory?cid=FOURMAJOR');
+                buttons.push({id: 1, label: "합계", type: "SUM"});
+                res.data.forEach((subcategory, index) => {
+                    console.log(subcategory);
+                    buttons.push({
+                        id: buttons.length + 1,
+                        label: subcategory.exerciseName,
+                        type: subcategory.eid
+                    });
+                });
+            } catch(error) {
+                console.error(error);
+            };
+        }
+        if(buttons.length === 0)
+            fetchSubCategories();
+    }, []);
     useEffect(() => {
         async function fetchUserList () {
             try {
@@ -41,10 +44,7 @@ function Barebody(props) {
                 console.error(error);
             };
         } 
-
-        if(category && subcategory) {
-            fetchUserList();  
-        }
+        fetchUserList();  
     }, [category, subcategory]);
 
     return (
