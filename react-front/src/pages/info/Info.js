@@ -39,7 +39,7 @@ function Info(props) {
 
                 if(res.data.searchSuccess) {
                     console.log(res.data);
-                    setSearchResult(parseDate(res.data.recordsDtoList));
+                    setSearchResult(parseDate(res.data.recordsDtoList, 'searchResult'));
                 }
             }
             searchRecords(query);
@@ -96,11 +96,9 @@ function Info(props) {
                     <h1>{profile.nickname}</h1>
                 </div>
                 <div className='left_middle'>
-                    <p>랭킹:</p>
-                    <p>분류:</p>
-                    <p>Tier:</p>
-                    <p>4대:</p>
-                    <p>최근 갱신일:</p>
+                    <p>랭킹: {profile.ranking}</p>
+                    <p>분류: 4대운동</p>
+                    <p>4대: {profile.b_sum}</p>
                 </div>
                 <div className='left_low'>
                     <div className='left_low_button'>
