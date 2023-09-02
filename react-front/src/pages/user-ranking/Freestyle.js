@@ -3,7 +3,6 @@ import axios from 'axios';
 import Table from './table/Table';
 import './UserRank.css';
 const SERVER_SEARCH_URL = process.env.REACT_APP_SPRINGBOOT_BACK_URL;
-
 let buttons = [];
 
 function FreeStyle(props) {
@@ -14,10 +13,9 @@ function FreeStyle(props) {
     useEffect(() => {
         async function fetchSubCategories() {
             try {
-                const res = await axios.get(SERVER_SEARCH_URL + '/api/subcategory?cid=FOURMAJOR');
+                const res = await axios.get(SERVER_SEARCH_URL + '/api/subcategory?cid=FREESTYLE');
                 buttons.push({id: 1, label: "합계", type: "SUM"});
                 res.data.forEach((subcategory, index) => {
-                    console.log(subcategory);
                     buttons.push({
                         id: buttons.length + 1,
                         label: subcategory.exerciseName,

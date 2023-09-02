@@ -2,9 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Table from './table/Table';
 import './UserRank.css';
-
 const SERVER_SEARCH_URL = process.env.REACT_APP_SPRINGBOOT_BACK_URL;
-
 let buttons = [];
 
 function Fourmajor(props) {
@@ -18,7 +16,6 @@ function Fourmajor(props) {
                 const res = await axios.get(SERVER_SEARCH_URL + '/api/subcategory?cid=FOURMAJOR');
                 buttons.push({id: 1, label: "합계", type: "SUM"});
                 res.data.forEach((subcategory, index) => {
-                    console.log(subcategory);
                     buttons.push({
                         id: buttons.length + 1,
                         label: subcategory.exerciseName,
@@ -50,10 +47,13 @@ function Fourmajor(props) {
     }, [category, subcategory]);
 
     return (
+        
         <div className='tier-list-container'>
+        <div>
             <div className='tier-font'>
                 티어 순위표
             </div>
+        </div>
             <div className='subcategory-button-container'>
                 {buttons.map((button) => (
                     <button className={`subcategory-button ${subcategory === button.type ? 'selected' : 'unselected'}`} key={button.id} onClick={()=>setSubcategory(button.type)}>{button.label}</button>    

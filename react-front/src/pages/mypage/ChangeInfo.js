@@ -1,11 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import axios from "axios";
+import {useNavigate} from "react-router-dom";
 
 const SERVER_SEARCH_URL = process.env.REACT_APP_SPRINGBOOT_BACK_URL;
 function ChangeInfo(props) {
     const [nickname, setNickname] = useState(sessionStorage.getItem('nickname')); // 초기값은 빈 문자열
-
     const [img, setImg] = useState();
+    const navigate = useNavigate();
 
     useEffect(() => {
         async function loadImg() {
@@ -50,7 +51,6 @@ function ChangeInfo(props) {
         })   
         window.location.reload();  
       }
-
     async function fetchNick () {
         await axios({
             method: "PUT",
@@ -58,6 +58,7 @@ function ChangeInfo(props) {
             headers: {
                 "Content-Type": "application/json;charset=utf-8",
                 "Authorization": sessionStorage.getItem('Authorization'),
+
             },
             params: {
                 "nickname": nickname
@@ -67,6 +68,7 @@ function ChangeInfo(props) {
             if(res.data.success){
                 setNickname(res.data.message);
                 sessionStorage.setItem("nickname", nickname);
+                navigate('/mypage');
             }
             else{
                 alert(res.data.message);
@@ -90,7 +92,7 @@ function ChangeInfo(props) {
         setNickname(event.target.value);
     };
 
-    return (
+        return (
         <div>
             <img src = {img} width={'100px'} height={'100px'} alt='프로필 이미지'/>
             <input type="file" id="file" onChange={handleChangeFile}></input>
@@ -100,7 +102,7 @@ function ChangeInfo(props) {
                 value={nickname}
                 onChange={handleInputChange}
             />
-            <button onClick={handleChangeNickname}>프로필 변경</button>
+            <button onClick={handleChangeNickname}>정보 변경</button>
         </div>
     );
 }
