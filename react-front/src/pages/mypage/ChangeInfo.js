@@ -47,9 +47,11 @@ function ChangeInfo(props) {
           }
         })
         .then((res) => {
-          console.log(res.data);
-        })   
-        window.location.reload();  
+            const blob = new Blob([file], { type: 'image/png' });
+            const imageUrl = URL.createObjectURL(blob);
+            setImg(imageUrl);
+            window.location.reload();
+        })
       }
     async function fetchNick () {
         await axios({

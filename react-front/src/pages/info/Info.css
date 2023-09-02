@@ -16,8 +16,16 @@
     width: 250px;
     margin-left: 25px;  
     text-align: left;
+    display: flex;
 }
-
+.profile-img {
+    margin: 10px;
+    border-radius: 100%;
+    background-color: #F7F7F9;
+}
+.profile-info {
+    margin-left: 10px;
+}
 .left_low{
     font-size: 10px;
 }

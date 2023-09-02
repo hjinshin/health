@@ -14,6 +14,7 @@ function Info(props) {
     const [cate, setCate] = useState("whole");
     const [bprCate, setBprCate] = useState("4major")
     const [chang, setChang] = useState();
+    const [img, setImg] = useState();
 
     useEffect(() => {
         if(chang === 'bpr'){
@@ -59,8 +60,22 @@ function Info(props) {
                     setBpr(parseDate(res.data.bestRecordDtoList, 'bpr'));
                 }
             }
+            async function loadImg() {
+                await axios({
+                    method: "GET",
+                    url: SERVER_SEARCH_URL + `/api/image`,
+                    headers: {
+                        "Authorization": sessionStorage.getItem('Authorization'),
+                    },
+                    responseType: 'arraybuffer',
+                }).then((res) => {
+                    const blob = new Blob([res.data], { type: 'image/png' });
+                    const imageUrl = URL.createObjectURL(blob);
+                    setImg(imageUrl);
+                });
+               }
             search(query);
-
+            loadImg();
         }
     }, [query, cate, bprCate, chang]);
 
@@ -96,9 +111,12 @@ function Info(props) {
                     <h1>{profile.nickname}</h1>
                 </div>
                 <div className='left_middle'>
-                    <p>랭킹: {profile.ranking}</p>
-                    <p>분류: 4대운동</p>
-                    <p>4대: {profile.b_sum}</p>
+                    <img src={img} className='profile-img' alt='프로필 이미지' width={'80px'} height={'80px'}/>
+                    <div className='profile-info'>
+                        <p>랭킹: {profile.ranking}</p>
+                        <p>분류: 4대운동</p>
+                        <p>4대: {profile.b_sum}</p>
+                    </div>
                 </div>
                 <div className='left_low'>
                     <div className='left_low_button'>
