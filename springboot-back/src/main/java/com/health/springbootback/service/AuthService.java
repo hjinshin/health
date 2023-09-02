@@ -138,7 +138,6 @@ public class AuthService {
 
                 headers.add("Content-type", "application/json");
                 headers.add("Authorization", "Bearer " + kakaoAccessToken);
-                
                 userInfoDto = userService.findNicknameAndRoleById(user.getUid());
                 LoginResponseDto loginResponseDto = new LoginResponseDto(true, userInfoDto);
 
@@ -180,7 +179,7 @@ public class AuthService {
     public ResponseEntity<MsgResponseDto> adminAuth(Long uid, String passwd) {
         User user = userRepository.findById(uid).get();
         if(Objects.equals(passwd, admin_passwd)){
-            userRepository.save(new User(user.getUid(), user.getNickname(), RoleType.ADMIN, user.getCreateDate()));
+            userRepository.save(new User(user.getUid(), user.getNickname(), RoleType.ADMIN, user.getCreateDate(), user.getImageData()));
             return ResponseEntity.ok().body(new MsgResponseDto(true, "관리자 인증 완료"));
         }
         else

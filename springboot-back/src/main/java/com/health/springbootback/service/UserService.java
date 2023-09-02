@@ -3,10 +3,21 @@ package com.health.springbootback.service;
 import com.health.springbootback.dto.UserInfoDto;
 import com.health.springbootback.enums.RoleType;
 import com.health.springbootback.entity.User;
+import com.health.springbootback.model.CustomMultipartFile;
 import com.health.springbootback.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Arrays;
 
 @Service
 public class UserService {
@@ -14,16 +25,24 @@ public class UserService {
     private UserRepository userRepository;
 
     @Transactional
-    public void signUp(User user) {
+    public void signUp(User user) throws IOException {
         user.setRole(RoleType.USER);
+        File fi = new File("src/main/java/com/health/springbootback/image/default.png");
+        user.setImageData(Files.readAllBytes(fi.toPath()));
         userRepository.save(user);
     }
 
     @Transactional
     public void updateNickname(Long uid, String nickname) {
         User user = userRepository.findById(uid).get();
-        User new_user = new User(user.getUid(), nickname, user.getRole(), user.getCreateDate());
+        User new_user = new User(user.getUid(), nickname, user.getRole(), user.getCreateDate(), null);
         System.out.println("닉네임 변경: " + user.getNickname() + " -> " + nickname);
+        userRepository.save(new_user);
+    }
+
+    @Transactional
+    public void updateImage(User user, byte[] imageData) {
+        User new_user = new User(user.getUid(), user.getNickname(), user.getRole(), user.getCreateDate(), imageData);
         userRepository.save(new_user);
     }
 
@@ -51,6 +70,11 @@ public class UserService {
     @Transactional(readOnly = true)
     public User findUserByNickname(String nickname) {
         return userRepository.findByNickname(nickname);
+    }
+    @Transactional(readOnly = true)
+    public byte[] findImageByUid(Long uid) {
+        User user = userRepository.findById(uid).get();
+        return user.getImageData();
     }
 
     @Transactional(readOnly = true)
