@@ -22,36 +22,50 @@ public interface BestRepository extends JpaRepository<PersonalBestRecord, Intege
     List<BestRecordDto> findPBRByCategory(@Param("uid") Long uid, @Param("cid") String cid);
 
     @Query(value = "SELECT " +
-            "u.nickname as nickname, SUM(br.bestRecordValue) AS b_sum, " +
-            "(" +
-            "   SELECT et_sub.exerciseName " +
-            "   FROM PersonalBestRecord br_sub " +
-            "   INNER JOIN ExerciseSubCategory et_sub ON br_sub.eid = et_sub.eid " +
-            "   WHERE et_sub.cid = :cid" +
-            "   ORDER BY br_sub.bestRecordValue DESC LIMIT 1" +
-            ") as most " +
-            "FROM PersonalBestRecord br " +
-            "INNER JOIN ExerciseSubCategory et ON et.eid = br.eid " +
-            "INNER JOIN User u ON u.uid = br.uid " +
-            "WHERE et.cid = :cid " +
-            "GROUP BY u.nickname " +
+            "    subquery.nickname, " +
+            "    SUM(subquery.bestrecordvalue) AS b_sum, " +
+            "    ( " +
+            "        SELECT et_sub.exercisename " +
+            "        FROM PersonalBestRecord br_sub " +
+            "        INNER JOIN ExerciseSubCategory et_sub ON br_sub.eid = et_sub.eid " +
+            "        WHERE et_sub.cid = :cid AND br_sub.uid = subquery.uid " +
+            "        ORDER BY br_sub.bestrecordvalue DESC LIMIT 1 " +
+            "    ) AS most " +
+            "FROM (" +
+            "    SELECT " +
+            "        u.nickname, " +
+            "        br.bestrecordvalue, " +
+            "        br.uid " +
+            "    FROM PersonalBestRecord br " +
+            "    INNER JOIN ExerciseSubCategory et ON et.eid = br.eid " +
+            "    INNER JOIN User u ON u.uid = br.uid " +
+            "    WHERE et.cid = :cid " +
+            ") AS subquery " +
+            "GROUP BY subquery.nickname, subquery.uid " +
             "ORDER BY b_sum DESC", nativeQuery = true)
     List<UserList> findByCategory(@Param("cid")String cid);
 
     @Query(value = "SELECT " +
-            "u.nickname as nickname, SUM(br.bestRecordValue) AS b_sum, " +
-            "(" +
-            "   SELECT et_sub.exerciseName " +
-            "   FROM PersonalBestRecord br_sub " +
-            "   INNER JOIN ExerciseSubCategory et_sub ON br_sub.eid = et_sub.eid " +
-            "   WHERE et_sub.cid = :cid AND et_sub.eid = :eid " +
-            "   ORDER BY br_sub.bestRecordValue DESC LIMIT 1" +
-            ") as most " +
-            "FROM PersonalBestRecord br " +
-            "INNER JOIN ExerciseSubCategory et ON et.eid = br.eid " +
-            "INNER JOIN User u ON u.uid = br.uid " +
-            "WHERE et.cid = :cid AND et.eid = :eid " +
-            "GROUP BY u.nickname " +
+            "    subquery.nickname, " +
+            "    SUM(subquery.bestrecordvalue) AS b_sum, " +
+            "    ( " +
+            "        SELECT et_sub.exercisename " +
+            "        FROM PersonalBestRecord br_sub " +
+            "        INNER JOIN ExerciseSubCategory et_sub ON br_sub.eid = et_sub.eid " +
+            "        WHERE et_sub.cid = :cid AND br_sub.uid = subquery.uid " +
+            "        ORDER BY br_sub.bestrecordvalue DESC LIMIT 1 " +
+            "    ) AS most " +
+            "FROM (" +
+            "    SELECT " +
+            "        u.nickname, " +
+            "        br.bestrecordvalue, " +
+            "        br.uid " +
+            "    FROM PersonalBestRecord br " +
+            "    INNER JOIN ExerciseSubCategory et ON et.eid = br.eid " +
+            "    INNER JOIN User u ON u.uid = br.uid " +
+            "    WHERE et.cid = :cid AND et.eid = :eid " +
+            ") AS subquery " +
+            "GROUP BY subquery.nickname, subquery.uid " +
             "ORDER BY b_sum DESC", nativeQuery = true)
     List<UserList> findByCategoryAndSubC(@Param("cid")String cid,@Param("eid") String eid);
 
