@@ -28,7 +28,8 @@ function Lower(props) {
 
     return (
         <div className='fi-tier-list-container'>
-            <div style={{'height': '50px'}}></div>
+            <div className='fi-head'>티어순위표</div>
+            <div style={{'height': '20px'}}></div>
             <Table data={FitnessList} />
         </div>
     );

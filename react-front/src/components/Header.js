@@ -4,7 +4,6 @@ import './Header.css'
 
 import muscleleft from '../images/muscleleft.png'
 import muscleright from '../images/muscleright.png'
-
 function Header() {
     const [nick, setNick] = useState();
 

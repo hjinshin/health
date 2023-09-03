@@ -18,7 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.List;
 
-@CrossOrigin
+//@CrossOrigin
 @RestController
 public class DataController {
 
@@ -195,7 +195,7 @@ public class DataController {
         }
     }
     @DeleteMapping("/api/category")
-    public ResponseEntity<MsgResponseDto> deleteCategory(@RequestHeader("Authorization") String authorizationHeader,
+    public ResponseEntity<MsgResponseDto> deleteCategory(@RequestHeader("Authorization") String  authorizationHeader,
                                                  @RequestParam String cid) {
         try {
             String token = authorizationHeader.split(" ")[1];
@@ -227,10 +227,13 @@ public class DataController {
 
             if(!categoryService.existSubCategoryByEid(eid))
                 return ResponseEntity.ok().body(new MsgResponseDto(false, "SubCategory가 존재하지 않습니다"));
+            if(recordService.exeistRecordBySubCategory(eid))
+                return ResponseEntity.ok().body(new MsgResponseDto(false, "SubCategory가 내에 Record 존재합니다"));
+
             categoryService.deleteSubCategory(eid);
             return ResponseEntity.ok().body(new MsgResponseDto(true, "SubCategory 삭제"));
         } catch(HttpStatusCodeException | JsonProcessingException e) {
-            return ResponseEntity.badRequest().body(new MsgResponseDto(false, e.getMessage()));
+            return ResponseEntity.ok().body(new MsgResponseDto(false, e.getMessage()));
         }
     }
 }

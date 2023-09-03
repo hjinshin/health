@@ -181,6 +181,6 @@ public class AuthService {
             return ResponseEntity.ok().body(new MsgResponseDto(true, "관리자 인증 완료"));
         }
         else
-            return ResponseEntity.badRequest().body(new MsgResponseDto(false, "비밀번호가 틀렸습니다"));
+            return ResponseEntity.ok().body(new MsgResponseDto(false, "비밀번호가 틀렸습니다"));
     }
 }

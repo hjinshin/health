@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 
-@CrossOrigin
+//@CrossOrigin
 @RestController
 public class LogoutController {
     @Autowired
@@ -18,8 +18,7 @@ public class LogoutController {
     }
 
     @GetMapping("/auth/kakao/logout")
-    public ResponseEntity<MsgResponseDto> kakaoLogout(HttpServletResponse response,
-                                                      @RequestHeader("Authorization") String authorizationHeader) {
+    public ResponseEntity<MsgResponseDto> kakaoLogout(@RequestHeader("Authorization") String authorizationHeader) {
         String token = authorizationHeader.split(" ")[1];
         return authService.kakaoLogout(token);
     }
