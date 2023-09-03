@@ -2,26 +2,35 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Table from './table/Table';
 import './UserRank.css';
-
 const SERVER_SEARCH_URL = process.env.REACT_APP_SPRINGBOOT_BACK_URL;
-const SC_TYPE  = {
-    SUM: "SUM", BENCH: "BENCH", DEAD: "DEAD", 
-    SQUAT: "SQUAT", MILPRESS: "MILPRESS"
-};
-
-const buttons = [
-    {id: 1, label: "합계", type: SC_TYPE.SUM}, 
-    {id: 2, label: "벤치", type: SC_TYPE.BENCH},
-    {id: 3, label: "데드", type: SC_TYPE.DEAD}, 
-    {id: 4, label: "스쿼트", type: SC_TYPE.SQUAT},
-    {id: 5, label: "밀프", type: SC_TYPE.MILPRESS}
-]
 
 function Fourmajor(props) {
-
     const category = '4-major';
-    const [subcategory, setSubcategory] = useState(SC_TYPE.SUM);
+    const [subcategory, setSubcategory] = useState("SUM");
     const [userList, setUserList] = useState([]);
+    const [buttons, setButtons] = useState([]);
+
+    useEffect(() => {
+        async function fetchSubCategories() {
+            let tempButton = [{id: 1, label: "합계", type: "SUM"}];
+            try {
+                const res = await axios.get(SERVER_SEARCH_URL + '/api/subcategory?cid=FOURMAJOR');
+                res.data.forEach((subcategory, index) => {
+                    tempButton.push({
+                        id: tempButton.length + 1,
+                        label: subcategory.exerciseName,
+                        type: subcategory.eid
+                    });
+                });
+                console.log(tempButton);
+                setButtons(tempButton);
+            } catch(error) {
+                console.error(error);
+            };
+        }
+        if(buttons.length === 0) 
+            fetchSubCategories();
+    }, [buttons]);
 
     useEffect(() => {
         async function fetchUserList () {
@@ -36,22 +45,23 @@ function Fourmajor(props) {
                 console.error(error);
             };
         } 
-
         fetchUserList();       
     }, [category, subcategory]);
 
     return (
         
         <div className='tier-list-container'>
-        <div>
-            <div className='tier-font'>
-                티어 순위표
-            </div>
-        </div>
-            <div className='subcategory-button-container'>
-                {buttons.map((button) => (
-                    <button className={`subcategory-button ${subcategory === button.type ? 'selected' : 'unselected'}`} key={button.id} onClick={()=>setSubcategory(button.type)}>{button.label}</button>    
-                ))}
+            <div className='box'>
+                <div className='tier-font'>
+                    티어 순위표
+                </div>
+                <div className='subcategory-button-container'>
+                    <div className='subcategory-bottons'>
+                        {buttons.map((button) => (
+                            <button className={`subcategory-button ${subcategory === button.type ? 'selected' : 'unselected'}`} key={button.id} onClick={()=>setSubcategory(button.type)}>{button.label}</button>    
+                        ))}
+                    </div>
+                </div>
             </div>
             <Table data={userList} onSubmit={props.onSubmit}/>
         </div>

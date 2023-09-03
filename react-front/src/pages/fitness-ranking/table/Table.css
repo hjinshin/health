@@ -2,6 +2,8 @@
     font-family: Arial, Helvetica, sans-serif;
     border-collapse: collapse;
     width: 100%;
+    border-radius: 5px;
+    margin-top: 20px;
 }
 
 .table2 td, .table2 th {
@@ -9,7 +11,7 @@
     padding: 8px;
 }
 
-.table2 tr.header {background-color: #1881a7;}
+.table2 tr.header {background-color: #7C878B;}
 
   
 .table2 tr.list:hover {background-color: #ddd;}
@@ -19,4 +21,5 @@
     padding-bottom: 12px;
     text-align: center;
     color: white;
+    border-radius: 5px;
 }

@@ -30,13 +30,13 @@ public class ProfileController {
                                                         @RequestParam String nickname) {
         try {
             String token = authorizationHeader.split(" ")[1];
-            User user = authService.getKakaoProfile(token);
+            Long uid = authService.getKakaoProfile(token).getUid();
 
             // 닉네임이 이미 존재할 경우
             if(userService.existNickname(nickname))
                 return ResponseEntity.ok().body(new MsgResponseDto(false, "이미 존재하는 닉네임입니다"));
-            userService.updateNickname(user.getUid(), nickname);
-            UserInfoDto userInfoDto = userService.findNicknameAndRoleById(user.getUid());
+            userService.updateNickname(uid, nickname);
+            UserInfoDto userInfoDto = userService.findNicknameAndRoleById(uid);
             return ResponseEntity.ok(new MsgResponseDto(true, userInfoDto.getNickname()));
         } catch (HttpStatusCodeException | JsonProcessingException e) {
             return ResponseEntity.badRequest().body(new MsgResponseDto(false, e.getMessage()));
@@ -47,7 +47,8 @@ public class ProfileController {
     public ResponseEntity<MsgResponseDto> getProfile(@RequestHeader("Authorization") String authorizationHeader) {
         try {
             String token = authorizationHeader.split(" ")[1];
-            User user = authService.getKakaoProfile(token);
+            Long uid = authService.getKakaoProfile(token).getUid();
+            User user = userService.findMember(uid);
             return ResponseEntity.ok(new MsgResponseDto(true, String.valueOf(user.getRole())));
         } catch (HttpStatusCodeException | JsonProcessingException e) {
             return ResponseEntity.badRequest().body(new MsgResponseDto(false, e.getMessage()));
@@ -61,8 +62,8 @@ public class ProfileController {
         try {
             String token = authorizationHeader.split(" ")[1];
             System.out.println(token);
-            User user = authService.getKakaoProfile(token);
-            return authService.adminAuth(user.getUid(), adminAuthDto.getPasswd());
+            Long uid = authService.getKakaoProfile(token).getUid();
+            return authService.adminAuth(uid, adminAuthDto.getPasswd());
         } catch(HttpStatusCodeException | JsonProcessingException e) {
             return ResponseEntity.badRequest().body(new MsgResponseDto(false, e.getMessage()));
         }

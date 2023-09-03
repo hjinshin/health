@@ -1,0 +1,22 @@
+.image-update {
+    width: 200px;
+    margin-top: 50px;
+    position: absolute;
+}
+
+.image {
+    height: 150px;
+    width: 150px;
+    margin-bottom: 10px;
+
+}
+
+.image-input {
+    display: none;
+}
+.image-button{
+    margin-top: 10px;
+}
+.nickname-button{
+    margin-top: 100px;
+}

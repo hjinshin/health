@@ -2,7 +2,7 @@
     height: 40px;
     width: 97vw;
     min-width: 970px;
-    background-color: white;
+    background-color: rgb(255, 255, 255);
     text-align: center;
     margin: 0 auto;
     line-height: 40px;  
@@ -13,6 +13,7 @@
 .navbar {
     width: 1000px;
     margin: 0 auto;
+    font-family: 'Black Han Sans', sans-serif;
 }
 .navbarline{
     font-size: 20px;

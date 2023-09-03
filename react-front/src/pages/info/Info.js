@@ -14,6 +14,7 @@ function Info(props) {
     const [cate, setCate] = useState("whole");
     const [bprCate, setBprCate] = useState("4major")
     const [chang, setChang] = useState();
+    const [img, setImg] = useState();
 
     useEffect(() => {
         if(chang === 'bpr'){
@@ -59,8 +60,22 @@ function Info(props) {
                     setBpr(parseDate(res.data.bestRecordDtoList, 'bpr'));
                 }
             }
+            async function loadImg(userNm) {
+                await axios({
+                    method: "GET",
+                    url: SERVER_SEARCH_URL + `/api/image`,
+                    params: {
+                        "nickname": `${userNm}`,
+                    },
+                    responseType: 'arraybuffer',
+                }).then((res) => {
+                    const blob = new Blob([res.data], { type: 'image/png' });
+                    const imageUrl = URL.createObjectURL(blob);
+                    setImg(imageUrl);
+                });
+               }
             search(query);
-
+            loadImg(query);
         }
     }, [query, cate, bprCate, chang]);
 
@@ -96,25 +111,28 @@ function Info(props) {
                     <h1>{profile.nickname}</h1>
                 </div>
                 <div className='left_middle'>
-                    <p>랭킹: {profile.ranking}</p>
-                    <p>분류: 4대운동</p>
-                    <p>4대: {profile.b_sum}</p>
+                    <img src={img} className='profile-img' alt='프로필 이미지' width={'80px'} height={'80px'}/>
+                    <div className='profile-info'>
+                        <p>랭킹: {profile.ranking}</p>
+                        <p>분류: 4대운동</p>
+                        <p>4대: {profile.b_sum}</p>
+                    </div>
                 </div>
                 <div className='left_low'>
                     <div className='left_low_button'>
-                        <button onClick={()=>changeBpr('4major')}>4대운동</button>
-                        <button onClick={()=>changeBpr('free-style')}>자유운동</button>
-                        <button onClick={()=>changeBpr('bare-body')}>맨몸운동</button>
+                        <button className={`${bprCate === '4major' ? 'selected':'unselected'}`} onClick={()=>changeBpr('4major')}>4대운동</button>
+                        <button className={`${bprCate === 'free-style' ? 'selected':'unselected'}`} onClick={()=>changeBpr('free-style')}>자유운동</button>
+                        <button className={`${bprCate === 'bare-body' ? 'selected':'unselected'}`} onClick={()=>changeBpr('bare-body')}>맨몸운동</button>
                     </div>
                     <Table data={bpr} name={0}/>
                 </div>
             </div>
             <div className='right'>
                 <div className='right_button'>
-                    <button onClick={()=>change('whole')}>전체</button>
-                    <button onClick={()=>change('4major')}>4대운동</button>
-                    <button onClick={()=>change('free-style')}>자유운동</button>
-                    <button onClick={()=>change('bare-body')}>맨몸운동</button>
+                    <button className={`${cate === 'whole' ? 'selected':'unselected'}`} onClick={()=>change('whole')}>전체</button>
+                    <button className={`${cate === '4major' ? 'selected':'unselected'}`} onClick={()=>change('4major')}>4대운동</button>
+                    <button className={`${cate === 'free-style' ? 'selected':'unselected'}`} onClick={()=>change('free-style')}>자유운동</button>
+                    <button className={`${cate === 'bare-body' ? 'selected':'unselected'}`} onClick={()=>change('bare-body')}>맨몸운동</button>
                 </div>
                 <Table data={searchResult} name={1}/>
             </div>
