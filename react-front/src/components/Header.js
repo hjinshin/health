@@ -4,7 +4,9 @@ import './Header.css'
 
 import muscleleft from '../images/muscleleft.png'
 import muscleright from '../images/muscleright.png'
-
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Gasoek+One&display=swap');
+</style>
 function Header() {
     const [nick, setNick] = useState();
 

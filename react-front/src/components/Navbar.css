@@ -13,6 +13,7 @@
 .navbar {
     width: 1000px;
     margin: 0 auto;
+    font-family: 'Black Han Sans', sans-serif;
 }
 .navbarline{
     font-size: 20px;

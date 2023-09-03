@@ -1,5 +1,5 @@
 .fitness-ranking-container{
-    margin: 30px auto;
+    margin: 40px auto;
 }
 .p_style{
     text-align: left;
@@ -20,4 +20,11 @@
     width: 800px;
     border-radius: 10px;
     background-color: #7C878B;
+    margin-top:40px ;
+}
+.fi-head{
+    font-size: 30px;
+    padding-top: 50px;
+    text-align: left;
+    padding-left: 50px;
 }
