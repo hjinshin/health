@@ -1,10 +1,6 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 import './Navbar.css'
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Hahmlet:wght@100&display=swap');
-</style>
-
 function Navbar() {
     const location = useLocation();
     const {pathname} = location;
