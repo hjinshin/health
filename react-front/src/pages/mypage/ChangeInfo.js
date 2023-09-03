@@ -127,57 +127,57 @@ function ChangeInfo(props) {
         })
     };
 
-        const handleChangeNickname = () => {
-            // 입력된 값을 닉네임 상태로 설정
-            if (nickname.length < 2 || nickname.length > 21)
-                alert("닉네임은 최소 3글자 및 최대 20글자까지 가능합니다.")
-            else
-                fetchNick();
-        }
-
-        const handleInputChange = (event) => {
-            // input 요소의 값이 변경될 때마다 상태 업데이트
-            setNickname(event.target.value);
-        };
-
-        const changeAN = (event) => {
-            setAdminNumber(event.target.value);
-        };
-
-        function adminRequest() {
-            if (sessionStorage.getItem('auth') !== 'ADMIN') {
-                return <div>
-                    <input type="text" placeholder="관리자번호를 입력하세요" value={adminNumber} onChange={changeAN}/>
-                    <button onClick={confrimAdmin}>관리자 요청</button>
-                </div>
-            }
-        }
-
-        return (
-            <div>
-                {adminRequest()}
-                <div className='image-update'>
-                    <img className='image' src={img.url} alt='프로필 이미지'/>
-                    <input className='image-input' type="file" id="file" ref={imageInputRef}
-                           onChange={handleChangeFile}></input>
-                    <button onClick={onClickImageUpload}>이미지 선택</button>
-                    <button className='image-button' onClick={() => {
-                        sendImg(img.tempData);
-                    }}>프로필 이미지 변경
-                    </button>
-                </div>
-                <div className='nickname-update'>
-                    <input
-                        className='nickname-input'
-                        type="text"
-                        placeholder="새로운 닉네임을 입력하세요"
-                        value={nickname}
-                        onChange={handleInputChange}
-                    />
-                    <button className='nickname-button' onClick={handleChangeNickname}>정보 변경</button>
-                </div>
-            </div>
-        );
+    const handleChangeNickname = () => {
+        // 입력된 값을 닉네임 상태로 설정
+        if (nickname.length < 2 || nickname.length > 21)
+            alert("닉네임은 최소 3글자 및 최대 20글자까지 가능합니다.")
+        else
+            fetchNick();
     }
+
+    const handleInputChange = (event) => {
+        // input 요소의 값이 변경될 때마다 상태 업데이트
+        setNickname(event.target.value);
+    };
+
+    const changeAN = (event) => {
+        setAdminNumber(event.target.value);
+    };
+
+    function adminRequest() {
+        if (sessionStorage.getItem('auth') !== 'ADMIN') {
+            return <div>
+                <input type="text" placeholder="관리자번호를 입력하세요" value={adminNumber} onChange={changeAN}/>
+                <button onClick={confrimAdmin}>관리자 요청</button>
+            </div>
+        }
+    }
+
+    return (
+        <div>
+            {adminRequest()}
+            <div className='image-update'>
+                <img className='image' src={img.url} alt='프로필 이미지'/>
+                <input className='image-input' type="file" id="file" ref={imageInputRef}
+                        onChange={handleChangeFile}></input>
+                <button onClick={onClickImageUpload}>이미지 선택</button>
+                <button className='image-button' onClick={() => {
+                    sendImg(img.tempData);
+                }}>프로필 이미지 변경
+                </button>
+            </div>
+            <div className='nickname-update'>
+                <input
+                    className='nickname-input'
+                    type="text"
+                    placeholder="새로운 닉네임을 입력하세요"
+                    value={nickname}
+                    onChange={handleInputChange}
+                />
+                <button className='nickname-button' onClick={handleChangeNickname}>정보 변경</button>
+            </div>
+        </div>
+    );
+}
 
 export default ChangeInfo;

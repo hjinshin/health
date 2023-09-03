@@ -227,6 +227,11 @@ public class DataController {
 
             if(!categoryService.existSubCategoryByEid(eid))
                 return ResponseEntity.ok().body(new MsgResponseDto(false, "SubCategory가 존재하지 않습니다"));
+            System.out.println("1");
+            if(recordService.exeistRecordBySubCategory(eid))
+                return ResponseEntity.ok().body(new MsgResponseDto(false, "SubCategory가 내에 Record 존재합니다"));
+            System.out.println("2");
+
             categoryService.deleteSubCategory(eid);
             return ResponseEntity.ok().body(new MsgResponseDto(true, "SubCategory 삭제"));
         } catch(HttpStatusCodeException | JsonProcessingException e) {

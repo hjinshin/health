@@ -15,7 +15,6 @@ function Home() {
         if(searchTerm !== "" && searchTerm !==null) {
             window.location.href = '/search/' + searchTerm;
         }
-        
     }
 
     return (
