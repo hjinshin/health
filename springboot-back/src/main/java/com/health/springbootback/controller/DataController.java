@@ -196,7 +196,7 @@ public class DataController {
         }
     }
     @DeleteMapping("/api/category")
-    public ResponseEntity<MsgResponseDto> deleteCategory(@RequestHeader("Authorization") String authorizationHeader,
+    public ResponseEntity<MsgResponseDto> deleteCategory(@RequestHeader("Authorization") String  authorizationHeader,
                                                  @RequestParam String cid) {
         try {
             String token = authorizationHeader.split(" ")[1];
@@ -231,7 +231,7 @@ public class DataController {
             categoryService.deleteSubCategory(eid);
             return ResponseEntity.ok().body(new MsgResponseDto(true, "SubCategory 삭제"));
         } catch(HttpStatusCodeException | JsonProcessingException e) {
-            return ResponseEntity.badRequest().body(new MsgResponseDto(false, e.getMessage()));
+            return ResponseEntity.ok().body(new MsgResponseDto(false, e.getMessage()));
         }
     }
 

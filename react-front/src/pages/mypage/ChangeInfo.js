@@ -6,6 +6,7 @@ const SERVER_SEARCH_URL = process.env.REACT_APP_SPRINGBOOT_BACK_URL;
 function ChangeInfo(props) {
     const [nickname, setNickname] = useState(sessionStorage.getItem('nickname')); // 초기값은 빈 문자열
     const navigate = useNavigate();
+    const [adminNumber, setAdminNumber] = useState('');
     async function fetchNick () {
         await axios({
             method: "PUT",
@@ -31,6 +32,20 @@ function ChangeInfo(props) {
         });
     };
 
+    async function confrimAdmin () {
+        await axios({
+            method: "POST",
+            url: SERVER_SEARCH_URL + `/api/auth`,
+            headers: {
+                "Content-Type": "application/json;charset=utf-8",
+                "Authorization": sessionStorage.getItem('Authorization')
+            },
+            data: {
+                passwd: adminNumber
+            }
+        })
+    };
+
     const handleChangeNickname = () => {
         // 입력된 값을 닉네임 상태로 설정
         if(nickname.length <2 || nickname.length >21){
@@ -46,15 +61,30 @@ function ChangeInfo(props) {
         setNickname(event.target.value);
     };
 
+    const changeAN = (event) => {
+        setAdminNumber(event.target.value);
+    };
+
+    function adminRequest(){
+        if(sessionStorage.getItem('auth') !== 'ADMIN'){
+            return <div>
+                <input type="text" placeholder="관리자번호를 입력하세요" value={adminNumber} onChange={changeAN}/>
+                <button onClick={confrimAdmin}>관리자 요청</button>
+            </div>;
+        }
+    }
         return (
         <div>
-            <input
-                type="text"
-                placeholder="새로운 닉네임을 입력하세요"
-                value={nickname}
-                onChange={handleInputChange}
-            />
-            <button onClick={handleChangeNickname}>정보 변경</button>
+            <div>
+                <input
+                    type="text"
+                    placeholder="새로운 닉네임을 입력하세요"
+                    value={nickname}
+                    onChange={handleInputChange}
+                />
+                <button onClick={handleChangeNickname}>정보 변경</button>
+            </div>
+            {adminRequest};
         </div>
     );
 }

@@ -17,7 +17,8 @@ public interface RecordRepository extends JpaRepository<ExerciseRecord, Integer>
             "FROM ExerciseRecord er " +
             "INNER JOIN er.eid et " +
             "INNER JOIN et.cid ec " +
-            "WHERE er.uid.uid = :uid")
+            "WHERE er.uid.uid = :uid " +
+            "ORDER BY er.recordDate DESC ")
     List<RecordsDto> findRecordsDtoByUid(@Param("uid") Long uid);
 
     List<ExerciseRecord> findByUid(User user);
@@ -28,7 +29,8 @@ public interface RecordRepository extends JpaRepository<ExerciseRecord, Integer>
             "INNER JOIN er.eid et " +
             "INNER JOIN et.cid ec " +
             "WHERE er.uid.uid = :uid " +
-            "AND ec.cid = :cid")
+            "AND ec.cid = :cid " +
+            "ORDER BY er.recordDate DESC ")
     List<RecordsDto> findByUidAndCid(@Param("uid") Long uid,  @Param("cid") String cid);
 
     List<ExerciseRecord> findByUidAndEidOrderByRecordValueDesc(User uid, ExerciseSubCategory eid);
