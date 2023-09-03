@@ -129,9 +129,9 @@ function ChangeInfo(props) {
                 <img className='image' src={img.url} alt='프로필 이미지'/>
                 <input className='image-input' type="file" id="file" ref={imageInputRef} onChange={handleChangeFile}></input>
                 <button onClick={onClickImageUpload}>이미지 선택</button>
-                <button className='image-button' onClick={() => {sendImg(img.tempData)}}>프로필 이미지 변경</button>                
+                <button className='image-button' onClick={() => {sendImg(img.tempData)}}>프로필 이미지 변경</button>          
             </div>
-            <div className='nickname-update'>
+            <div className='nickname-update'>    
                 <input
                     className='nickname-input'
                     type="text"
