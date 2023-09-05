@@ -4,6 +4,7 @@ import com.health.springbootback.dto.UserInfoDto;
 import com.health.springbootback.enums.RoleType;
 import com.health.springbootback.entity.User;
 import com.health.springbootback.repository.UserRepository;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
@@ -12,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 
 @Service
@@ -29,8 +31,8 @@ public class UserService {
     public void signUp(User user) throws IOException {
         user.setRole(RoleType.USER);
         Resource resource = resourceLoader.getResource("classpath:image/default.png");
-        File fi = new File(resource.getURI());
-        user.setImageData(Files.readAllBytes(fi.toPath()));
+        InputStream inputStream = resource.getInputStream();
+        user.setImageData(IOUtils.toByteArray(inputStream));
         userRepository.save(user);
     }
 
