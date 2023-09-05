@@ -58,12 +58,12 @@ public class ProfileController {
     // 관리자 권한 인증
     @PostMapping("/api/auth")
     public ResponseEntity<MsgResponseDto> adminAuth(@RequestHeader("Authorization") String authorizationHeader,
-                                            @RequestBody AdminAuthDto adminAuthDto){
+                                            @RequestHeader("Passwd") String passwd){
         try {
             String token = authorizationHeader.split(" ")[1];
             System.out.println(token);
             Long uid = authService.getKakaoProfile(token).getUid();
-            return authService.adminAuth(uid, adminAuthDto.getPasswd());
+            return authService.adminAuth(uid, passwd);
         } catch(HttpStatusCodeException | JsonProcessingException e) {
             return ResponseEntity.badRequest().body(new MsgResponseDto(false, e.getMessage()));
         }

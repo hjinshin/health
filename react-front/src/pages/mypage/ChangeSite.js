@@ -180,8 +180,14 @@ function ChangeSite(props) {
             params: {
                 "cid": selectedOption
             }
-        });
-        window.location.reload();
+        }).then((res)=>{
+            if(res.data.success){
+                //나중에 메시지 추가
+            }
+            else{
+                alert(res.data.message);
+            }
+        })
     };
 
     const [subSelectedOption, setSubSelectedOption] = useState('');

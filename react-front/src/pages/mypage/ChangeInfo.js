@@ -1,6 +1,5 @@
 import React, {useEffect, useState, useRef } from 'react';
 import axios from "axios";
-import {useNavigate} from "react-router-dom";
 import './ChangeInfo.css'
 
 const SERVER_SEARCH_URL = process.env.REACT_APP_SPRINGBOOT_BACK_URL;
@@ -11,7 +10,6 @@ function ChangeInfo(props) {
         tempData: undefined,
         origin: undefined
     });
-    const navigate = useNavigate();
     const [adminNumber, setAdminNumber] = useState('');
     const imageInputRef = useRef(null);
 
@@ -105,7 +103,6 @@ function ChangeInfo(props) {
             if (res.data.success) {
                 setNickname(res.data.message);
                 sessionStorage.setItem("nickname", nickname);
-                navigate('/mypage');
             } else {
                 alert(res.data.message);
             }
@@ -119,10 +116,15 @@ function ChangeInfo(props) {
             url: SERVER_SEARCH_URL + `/api/auth`,
             headers: {
                 "Content-Type": "application/json;charset=utf-8",
-                "Authorization": sessionStorage.getItem('Authorization')
+                "Authorization": sessionStorage.getItem('Authorization'),
+                "Passwd":adminNumber
             },
-            data: {
-                passwd: adminNumber
+        }).then((res)=>{
+            if(res.data.success){
+                sessionStorage.setItem('auth', res.data.message);
+            }
+            else{
+                alert(res.data.message);
             }
         })
     };

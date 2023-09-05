@@ -21,6 +21,7 @@ function LogoutHandler(props) {
                 if(res.data.success){
                     sessionStorage.removeItem('nickname');
                     sessionStorage.removeItem('Authorization');
+                    sessionStorage.removeItem('auth');
                 }
                 else{
                     alert("로그아웃 실패");

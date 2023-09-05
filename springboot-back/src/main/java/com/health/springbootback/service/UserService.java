@@ -20,7 +20,7 @@ public class UserService {
     @Transactional
     public void signUp(User user) throws IOException {
         user.setRole(RoleType.USER);
-        File fi = new File("src/main/resources/images/default.png");
+        File fi = new File("classpath:images/default.png");
         user.setImageData(Files.readAllBytes(fi.toPath()));
         userRepository.save(user);
     }
