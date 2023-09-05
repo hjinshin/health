@@ -110,6 +110,11 @@ public class RecordService {
         return bestRepository.existsByRid(er);
     }
 
+    @Transactional(readOnly = true)
+    public boolean exeistRecordBySubCategory(String eid) {
+        return recordRepository.existsByEid_Eid(eid);
+    }
+
     @Transactional
     public void deleteRecordByRid(int rid) {
         recordRepository.deleteById(rid);

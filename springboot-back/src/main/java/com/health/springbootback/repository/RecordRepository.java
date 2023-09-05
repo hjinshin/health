@@ -34,4 +34,6 @@ public interface RecordRepository extends JpaRepository<ExerciseRecord, Integer>
     List<RecordsDto> findByUidAndCid(@Param("uid") Long uid,  @Param("cid") String cid);
 
     List<ExerciseRecord> findByUidAndEidOrderByRecordValueDesc(User uid, ExerciseSubCategory eid);
+
+    boolean existsByEid_Eid(String eid);
 }

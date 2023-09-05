@@ -12,7 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpStatusCodeException;
 
-@CrossOrigin
+//@CrossOrigin
 @RestController
 public class ProfileController {
     @Autowired
