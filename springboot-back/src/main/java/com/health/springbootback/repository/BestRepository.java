@@ -40,6 +40,7 @@ public interface BestRepository extends JpaRepository<PersonalBestRecord, Intege
             "    INNER JOIN ExerciseSubCategory et ON et.eid = br.eid " +
             "    INNER JOIN User u ON u.uid = br.uid " +
             "    WHERE et.cid = :cid " +
+            "    ORDER BY et.eid " +
             ") AS subquery " +
             "GROUP BY subquery.nickname, subquery.uid " +
             "ORDER BY b_sum DESC", nativeQuery = true)
@@ -64,6 +65,7 @@ public interface BestRepository extends JpaRepository<PersonalBestRecord, Intege
             "    INNER JOIN ExerciseSubCategory et ON et.eid = br.eid " +
             "    INNER JOIN User u ON u.uid = br.uid " +
             "    WHERE et.cid = :cid AND et.eid = :eid " +
+            "    ORDER BY et.eid " +
             ") AS subquery " +
             "GROUP BY subquery.nickname, subquery.uid " +
             "ORDER BY b_sum DESC", nativeQuery = true)
