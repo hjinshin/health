@@ -130,7 +130,7 @@ public class AuthService {
             User existUser = userService.findMember(user.getUid());
             try {
                 if(existUser == null) {
-                    //System.out.println("처음 로그인 하는 회원입니다.");
+                    System.out.println("처음 로그인 하는 회원입니다.");
                     userService.signUp(user);
                 }
 
