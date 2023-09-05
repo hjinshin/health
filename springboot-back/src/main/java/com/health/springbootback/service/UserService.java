@@ -20,8 +20,8 @@ public class UserService {
     @Transactional
     public void signUp(User user) throws IOException {
         user.setRole(RoleType.USER);
-        //File fi = new File("src/main/java/com/health/springbootback/image/default.png");
-        //user.setImageData(Files.readAllBytes(fi.toPath()));
+        File fi = new File("src/main/java/com/health/springbootback/image/default.png");
+        user.setImageData(Files.readAllBytes(fi.toPath()));
         userRepository.save(user);
     }
 
