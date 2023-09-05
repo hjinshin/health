@@ -5,6 +5,8 @@ import com.health.springbootback.enums.RoleType;
 import com.health.springbootback.entity.User;
 import com.health.springbootback.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,10 +19,17 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    private final ResourceLoader resourceLoader;
+
+    public UserService(ResourceLoader resourceLoader) {
+        this.resourceLoader = resourceLoader;
+    }
+
     @Transactional
     public void signUp(User user) throws IOException {
         user.setRole(RoleType.USER);
-        File fi = new File("classpath:image/default.png");
+        Resource resource = resourceLoader.getResource("classpath:image/default.png");
+        File fi = new File(resource.getURI());
         user.setImageData(Files.readAllBytes(fi.toPath()));
         userRepository.save(user);
     }
