@@ -31,8 +31,11 @@ public class UserService {
     public void signUp(User user) throws IOException {
         user.setRole(RoleType.USER);
         Resource resource = resourceLoader.getResource("classpath:image/default.png");
-        InputStream inputStream = resource.getInputStream();
-        user.setImageData(IOUtils.toByteArray(inputStream));
+        try (InputStream inputStream = resource.getInputStream()) {
+            user.setImageData(IOUtils.toByteArray(inputStream));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         userRepository.save(user);
     }
 
