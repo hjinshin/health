@@ -9,6 +9,12 @@ on:
       - backend
   workflow_dispatch:
 
+env:
+  DB_HOST: ${{ secrets.DB_HOST }}
+  DB_PASSWD: ${{ secrets.DB_PASSWD }}
+  DB_PORT: ${{ secrets.DB_PORT }}
+  DB_USERNAME: ${{ secrets.DB_USERNAME }}
+
 jobs:
   build:
     runs-on: ubuntu-latest
