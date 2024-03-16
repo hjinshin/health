@@ -14,6 +14,10 @@ env:
   DB_PASSWD: ${{ secrets.DB_PASSWD }}
   DB_PORT: ${{ secrets.DB_PORT }}
   DB_USERNAME: ${{ secrets.DB_USERNAME }}
+  ADMIN_PASSWD: ${{ secrets.ADMIN_PASSWD }}
+  KAKAO_CLIENT_ID: ${{ secrets.KAKAO_CLIENT_ID }}
+  KAKAO_REDIRECT_URI: ${{ secrets.KAKAO_REDIRECT_URI }}
+  CLIENT_URL: ${{ secrets.CLIENT_URL }}
 
 jobs:
   build:
