@@ -14,7 +14,6 @@ function Fourmajor(props) {
         async function fetchSubCategories() {
             let tempButton = [{id: 1, label: "합계", type: "SUM"}];
             try {
-                console.log(process.env.REACT_APP_SPRINGBOOT_BACK_URL);
                 const res = await axios.get(SERVER_SEARCH_URL + '/api/subcategory?cid=FOURMAJOR');
                 res.data.forEach((subcategory, index) => {
                     tempButton.push({
