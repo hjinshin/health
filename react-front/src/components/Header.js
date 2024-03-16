@@ -43,7 +43,7 @@ function Header() {
             <div className='logo-container'>
                 <a href='/' className='logo'>
                     <img className='muscleleft' src={muscleleft} alt='ml' />
-                    <p className='health-logo'>HEALTH.GG?</p>
+                    <p className='health-logo'>HEALTH.GG</p>
                     <img className='muscleright' src={muscleright} alt='mr' />
                 </a>
             </div>
