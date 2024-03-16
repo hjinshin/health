@@ -21,14 +21,14 @@ jobs:
         with:
           java-version: '8'
 
-      - name: Build with Gradle
-        run: gradle build
+      - name: Build with Maven
+        run: mvn clean install
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
         with:
           name: java-app
-          path: '${{ github.workspace }}/build/libs/*.jar'
+          path: '${{ github.workspace }}/target/*.jar'
 
   deploy:
     runs-on: ubuntu-latest
@@ -48,9 +48,9 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v1
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_804A829BAE094D93BAFEFE3A8D45D906 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_0FFCB50ED9F74B9E85ABCFC37C7E836F }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_59BC40239C0A4079B21B518161BB7732 }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_D3B30AE054C04530BB74BDBDEB1F8009 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_806118305E8F40B7B3C6AEC521667ADF }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_FB21BAEAC1AD4FE0889F2F4ED3D13104 }}
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
