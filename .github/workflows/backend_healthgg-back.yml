@@ -71,5 +71,5 @@ jobs:
         with:
           app-name: 'healthgg-back'
           slot-name: 'Production'
-          package: 'healthgg-back-1.0.0.jar'
+          package: 'healthgg-back-0.0.1.jar'
           
