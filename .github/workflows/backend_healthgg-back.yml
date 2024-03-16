@@ -65,6 +65,10 @@ jobs:
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_66DCAD2D2533471A836364BFDE041C2A }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_9C29D1DE03A24C0C9CC01611D1546E8C }}
 
+      - name: Delete existing JAR files
+        run: |
+          rm -f *.jar
+    
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
