@@ -64,10 +64,6 @@ jobs:
           client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_88D63C338FE14DD799673A82064CF37A }}
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_66DCAD2D2533471A836364BFDE041C2A }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_9C29D1DE03A24C0C9CC01611D1546E8C }}
-
-      - name: List JAR files
-        run: |
-          ls -1 *.jar
     
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
@@ -75,5 +71,5 @@ jobs:
         with:
           app-name: 'healthgg-back'
           slot-name: 'Production'
-          package: 'healthgg-back-0.0.1.jar'
+          package: 'springboot-back-0.0.1-SNAPSHOT.jar'
           
