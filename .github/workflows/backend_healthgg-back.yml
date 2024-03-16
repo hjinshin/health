@@ -9,6 +9,16 @@ on:
       - backend
   workflow_dispatch:
 
+env:
+  DB_HOST: ${{ secrets.DB_HOST }}
+  DB_PASSWD: ${{ secrets.DB_PASSWD }}
+  DB_PORT: ${{ secrets.DB_PORT }}
+  DB_USERNAME: ${{ secrets.DB_USERNAME }}
+  ADMIN_PASSWD: ${{ secrets.ADMIN_PASSWD }}
+  KAKAO_CLIENT_ID: ${{ secrets.KAKAO_CLIENT_ID }}
+  KAKAO_REDIRECT_URI: ${{ secrets.KAKAO_REDIRECT_URI }}
+  CLIENT_URL: ${{ secrets.CLIENT_URL }}
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -21,14 +31,14 @@ jobs:
         with:
           java-version: '8'
 
-      - name: Build with Maven
-        run: mvn clean install
+      - name: Build with Gradle
+        run: gradle build
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
         with:
           name: java-app
-          path: '${{ github.workspace }}/target/*.jar'
+          path: '${{ github.workspace }}/build/libs/*.jar'
 
   deploy:
     runs-on: ubuntu-latest
@@ -48,9 +58,9 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v1
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_6EFE6F99243C4CBA897ED35938AA22F5 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_941E0897216644218D837258F8906B60 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_572322EDBF5F40049B79E081BD56A252 }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_D3B30AE054C04530BB74BDBDEB1F8009 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_806118305E8F40B7B3C6AEC521667ADF }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_FB21BAEAC1AD4FE0889F2F4ED3D13104 }}
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
