@@ -66,9 +66,9 @@
 | Data API | PUT </br> /api/record | 사용자 운동기록 업데이트</br>{닉네임, 운동명, 중량or횟수, 위치} | - Authorization: ${access_token} | - nickname: String </br> - exerciseName: String </br> - value: Float </br> - location: String  |
 |  | PUT </br>/api/category | 운동 카테고리(ex.4대운동) 업데이트</br>{카테고리식별자, 카테고리이름} | - Authorization: ${access_token} | - cid: String </br> - categoryName: String|
 |  | PUT </br>/api/subcategory | 세부운동(ex.스쿼트) 업데이트</br>{세부운동식별자, 카테고리식별자, 세부운동이름} | - Authorization: ${access_token} | - eid: String </br> - cid: String </br> - exerciseName: String|
-|  | DEL </br> /api/record | 운동 기록 삭제 | - Authorization: ${access_token} | - rid: String|
-|  | DEL </br> /api/category | 운동 카테고리 삭제 | - Authorization: ${access_token} | - cid: String|
-|  | DEL </br>/api/subcategory | 세부운동 삭제 | - Authorization: ${access_token} | - eid: String|
+|  | DELETE </br> /api/record | 운동 기록 삭제 | - Authorization: ${access_token} | - rid: String|
+|  | DELETE </br> /api/category | 운동 카테고리 삭제 | - Authorization: ${access_token} | - cid: String|
+|  | DELETE </br>/api/subcategory | 세부운동 삭제 | - Authorization: ${access_token} | - eid: String|
 | Login API | GET </br> /auth/kakao/callback | 로그인 요청 |  | - code: String|
 | Logout API | GET </br> /auth/kakao/callback | 로그아웃 요청 | - Authorization: ${access_token} ||
 
