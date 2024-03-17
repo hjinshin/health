@@ -70,7 +70,7 @@
 |  | DELETE </br> /api/category | 운동 카테고리 삭제 | - Authorization: ${access_token} | - cid: String|
 |  | DELETE </br>/api/subcategory | 세부운동 삭제 | - Authorization: ${access_token} | - eid: String|
 | Login API | GET </br> /auth/kakao/callback | 로그인 요청 |  | - code: String|
-| Logout API | GET </br> /auth/kakao/callback | 로그아웃 요청 | - Authorization: ${access_token} ||
+| Logout API | GET </br> /auth/kakao/logout | 로그아웃 요청 | - Authorization: ${access_token} ||
 
 ## 개선하고 싶은 부분
 1. 단일책임 원칙에 따라 하나의 Class가 하나의 역할만 할 수 있게 Service와 Repository의 구조 변경
