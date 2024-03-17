@@ -55,7 +55,6 @@
 
 | 종류 | Endpoint | Description | Header | Request payload |
 |------|---------|-------------------------| ---------|------|
-| | | |
 | Search API | GET</br> /api/search | 유저 프로필 검색  | | - userNm: String |
 | | GET</br>  /api/search/record | 유저의 모든 운동기록 요청 | | - userNm: String </br> - category: String |
 | | GET</br> /api/search/pbr | 유저의 개인 최고기록 요청 ||  - userNm: String </br> - category: String |
