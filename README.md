@@ -2,6 +2,9 @@
 
  React.js와 Springboot Framework를 이용한 운동 기록 관리 웹 프로젝트
 
+ ### 홈페이지 URL
+ [https://white-sea-097a0c500.5.azurestaticapps.net](https://white-sea-097a0c500.5.azurestaticapps.net)
+
  ### 목적
  * 운동을 기록하여 루틴 관리
  * 다른 사용자의 기록 및 랭킹으로 동기부여
