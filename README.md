@@ -13,7 +13,7 @@
 * FE 2인(오창호, 차준규), BE(신형진) 1인 총 3인 팀 프로젝트
 
 ### 기능
-[세부 기능 보기](./DETAILFUNCTION)
+[세부 기능 보기](DETAILFUNCTION.md)
 </br>
 </br>
 
