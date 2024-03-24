@@ -49,7 +49,7 @@
 
 <img src="./readme_img/adminrequire.png" width=700px/>
 
-</br> 관리자 비밀번호를 통해 관리자 권한을 요청할 수 있다.</br></br></br></br></br>
+</br> 관리자 비밀번호를 통해 관리자 권한을 요청할 수 있다.</br>(관리자 비밀번호: admin_0000)</br></br></br></br>
 
 <img src="./readme_img/admin.png" width=700px/>
 
